@@ -1,0 +1,68 @@
+# Armor HUD: the worn armour in a four-line column at the bottom-left,
+# helmet at the top, boots at the bottom; a damaged piece shows its
+# durability bar, an empty slot reads `(empty)`, and a piece about to
+# break keeps its line (its colour flashes, which this script does not
+# check). The player wears a helmet and boots, nothing else.
+#
+# The numbers key and the settings page are not in this script's
+# vocabulary: the sandbox test covers them (K toggles the numbers, the
+# page's buttons toggle both switches).
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 500, id = "minecraft:diamond_helmet", count = 1, damage = 10, max-damage = 363 },
+  { slot = 503, id = "minecraft:diamond_boots", count = 1, damage = 0, max-damage = 429 },
+]
+[step.expect]
+panel = ["Helmet: Diamond Helmet [##########]", "Chestplate: (empty)", "Leggings: (empty)", "Boots: Diamond Boots"]
+corner = "bottom-left"
+
+# A chestplate at a fifth of its durability shows a short bar.
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 500, id = "minecraft:diamond_helmet", count = 1, damage = 10, max-damage = 363 },
+  { slot = 501, id = "minecraft:netherite_chestplate", count = 1, damage = 460, max-damage = 592 },
+  { slot = 503, id = "minecraft:diamond_boots", count = 1, damage = 0, max-damage = 429 },
+]
+[step.expect]
+panel = ["Helmet: Diamond Helmet [##########]", "Chestplate: Netherite Chestplate [##--------]", "Leggings: (empty)", "Boots: Diamond Boots"]
+corner = "bottom-left"
+
+# A chestplate with 32 of 592 left is low: one bar segment, and the line
+# stays put while its colour flashes.
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 500, id = "minecraft:diamond_helmet", count = 1, damage = 10, max-damage = 363 },
+  { slot = 501, id = "minecraft:netherite_chestplate", count = 1, damage = 560, max-damage = 592 },
+  { slot = 503, id = "minecraft:diamond_boots", count = 1, damage = 0, max-damage = 429 },
+]
+[step.expect]
+panel = ["Helmet: Diamond Helmet [##########]", "Chestplate: Netherite Chestplate [#---------]", "Leggings: (empty)", "Boots: Diamond Boots"]
+corner = "bottom-left"
+
+# A reload keeps the column: the numbers were never turned on.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = ["Helmet: Diamond Helmet [##########]", "Chestplate: Netherite Chestplate [#---------]", "Leggings: (empty)", "Boots: Diamond Boots"]
+corner = "bottom-left"
+
+# Leaving the world clears the panel.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []
