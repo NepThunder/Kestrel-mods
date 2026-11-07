@@ -1,0 +1,41 @@
+# The panel follows the player and the clock; /coords hides and shows it,
+# and the game keeps the choice across a reload (the mod's storage).
+
+[player]
+x = 12.5
+z = -3.25
+yaw = 180.0
+
+[clock]
+day-time = 29999
+
+[[step]]
+ticks = 1
+expect.panel = ["XYZ 12.5 / 64.0 / -3.2", "Facing North (-Z)", "Day 2, 12:00"]
+expect.corner = "top-left"
+
+[[step]]
+command = "coords"
+expect.feedback = "Coordinates panel hidden"
+
+[[step]]
+ticks = 1
+expect.panel = []
+
+# A reload reads the stored choice back: still hidden, with no command.
+[[step]]
+reload = true
+ticks = 1
+expect.panel = []
+
+[[step]]
+command = "coords"
+expect.feedback = "Coordinates panel shown"
+
+[[step]]
+ticks = 1
+expect.panel = ["XYZ 12.5 / 64.0 / -3.2", "Facing North (-Z)", "Day 2, 12:00"]
+
+[[step]]
+command = "where"
+expect.chat = ["12, 64, -4 in minecraft:overworld"]
