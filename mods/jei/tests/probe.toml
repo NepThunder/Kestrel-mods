@@ -1,0 +1,21 @@
+# JEI for Horizon: /jei reports the (empty, in this harness) recipe tables,
+# and /jei give toggles "Click gives items" on and off. An unknown option is
+# an error. The harness has no recipe tables to set, so the viewer lists
+# nothing here; the sandbox test covers the panel, search and recipe pages.
+[[step]]
+frames = 1
+command = "jei"
+expect.commands = ["jei"]
+expect.feedback = "JEI 0.1.0: 0 items, 0 recipes"
+
+[[step]]
+command = "jei give"
+expect.feedback = "Click gives items: ON"
+
+[[step]]
+command = "jei give"
+expect.feedback = "Click gives items: OFF"
+
+[[step]]
+command = "jei nonsense"
+expect.error = "Unknown option: use /jei or /jei give"
