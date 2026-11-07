@@ -1,0 +1,55 @@
+# Armour and held items on the HUD: a damaged diamond sword in the main hand,
+# a nearly-new diamond helmet, unworn boots, and 64 torches in the off hand.
+# The defaults show in the bottom-right corner, durability as the remaining
+# value, both hands. /armor hides the panel, and a second /armor shows it.
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 0, id = "minecraft:diamond_sword", count = 1, damage = 61, max-damage = 1561 },
+  { slot = 500, id = "minecraft:diamond_helmet", count = 1, damage = 10, max-damage = 363 },
+  { slot = 503, id = "minecraft:diamond_boots", count = 1, damage = 0, max-damage = 429 },
+  { slot = 504, id = "minecraft:torch", count = 64 },
+]
+[step.expect]
+panel = ["Diamond Helmet 353", "Diamond Boots 429", "Diamond Sword 1500", "Torch x64"]
+corner = "bottom-right"
+
+# Taking the helmet off drops its line the next tick.
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 0, id = "minecraft:diamond_sword", count = 1, damage = 61, max-damage = 1561 },
+  { slot = 503, id = "minecraft:diamond_boots", count = 1, damage = 0, max-damage = 429 },
+  { slot = 504, id = "minecraft:torch", count = 64 },
+]
+[step.expect]
+panel = ["Diamond Boots 429", "Diamond Sword 1500", "Torch x64"]
+corner = "bottom-right"
+
+[[step]]
+command = "armor"
+expect.feedback = "Armor Status panel hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "armor"
+expect.feedback = "Armor Status panel shown"
+
+# A reload reads the stored choice back: still shown, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = ["Diamond Boots 429", "Diamond Sword 1500", "Torch x64"]
+corner = "bottom-right"
