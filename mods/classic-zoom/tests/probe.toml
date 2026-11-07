@@ -1,0 +1,16 @@
+# Classic Zoom: the mod loads, owns no commands, and idles cleanly over
+# frames and ticks.
+#
+# The script harness has no key, wheel or zoom steps, so it cannot drive
+# V or check the zoom level: hold-key state and the zoom factor are
+# covered instead by the unit tests in src/lib.rs (the pure zoom state
+# machine) and by the sandbox load test in crates/horizon-mods/tests/
+# sandbox.rs, which presses V through the real runtime and reads the
+# zoom back with `Mods::zoom`.
+
+[[step]]
+frames = 5
+ticks = 1
+[step.expect]
+commands = []
+chat = []

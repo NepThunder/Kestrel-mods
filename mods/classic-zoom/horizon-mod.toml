@@ -1,0 +1,9 @@
+id = "classic_zoom"
+name = "Classic Zoom"
+version = "0.1.0"
+description = "Hold V to zoom 3x, scroll while holding V to zoom 1x-10x (x1.1 per wheel step), release to snap back instantly. While V is held the wheel zooms instead of switching hotbar slots, and turning slows in step with the zoom. The key is rebindable on the mod's page in Options > Mods. A behaviour port of Classic Zoom by SU4G3; this port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/classic-zoom"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "input"]
+experimental = ["render", "input"]

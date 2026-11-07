@@ -1,0 +1,16 @@
+[package]
+name = "classic-zoom"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Classic Zoom: hold V to zoom 3x, scroll while holding to zoom 1x-10x, release to snap back. A behaviour port of Classic Zoom by SU4G3."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true
