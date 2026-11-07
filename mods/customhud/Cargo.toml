@@ -1,0 +1,16 @@
+[package]
+name = "customhud"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Beautiful Day Counter for Kestrel: the current survival day, an in-game clock, a day/night cycle bar with four colour themes, the moon phase and a countdown to night or day — a port of SCARABOCCHIO100 / sonoFrangu's CustomHUD"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

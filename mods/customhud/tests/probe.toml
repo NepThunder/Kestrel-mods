@@ -1,0 +1,46 @@
+# Beautiful Day Counter: known clocks -> the expected panel lines.
+# The clock starts at day-time 125999; each step's tick moves it on one,
+# as the game does. Day 5 at noon: 24000*5 + 6000 = 126000 ticks.
+
+[player]
+dimension = "minecraft:overworld"
+
+[clock]
+game-time = 125999
+day-time = 125999
+
+[[step]]
+ticks = 1
+expect.panel = ["Day: 5", "12:00", "==========----------"]
+expect.corner = "top-left"
+
+# Midnight: the clock reads 00:00 and the bar, measured since midnight,
+# is empty.
+[[step]]
+clock = { game-time = 137999, day-time = 137999 }
+ticks = 1
+expect.panel = ["Day: 5", "00:00", "--------------------"]
+
+# Day 100 is a milestone: the day line names the golden apple, and the
+# bar is a quarter full at 06:00.
+[[step]]
+clock = { game-time = 2399999, day-time = 2399999 }
+ticks = 1
+expect.panel = ["Day: 100 (Milestone: golden apple)", "06:00", "=====---------------"]
+
+# /daycounter prints the same facts in chat.
+[[step]]
+command = "daycounter"
+expect.feedback = "Day: 100, 06:00, Moon: New Moon, Night in 10:27, Milestone: golden apple"
+
+# In the Nether the Overworld time still shows (the default setting).
+[[step]]
+player = { dimension = "minecraft:the_nether" }
+ticks = 1
+expect.panel = ["Day: 100 (Milestone: golden apple)", "06:00", "=====---------------"]
+
+# Leaving the world clears the panel.
+[[step]]
+title-screen = true
+ticks = 1
+expect.panel = []
