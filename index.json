@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-08T10:36:15Z",
+  "generated": "2026-11-08T12:57:40Z",
   "projects": [
     {
       "id": "appleskin",
@@ -113,6 +113,47 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/armor-hud-0.1.0/armorhud.kmod",
             "size": 20925,
             "sha256": "a7dfdafdf271a7b0835f5ab3a74190a1aa360473e85e4e3a5e850fc47e49fe18"
+          }
+        }
+      ]
+    },
+    {
+      "id": "basic_hud",
+      "kind": "mod",
+      "name": "The Basic HUD",
+      "summary": "A port of The Basic HUD by repositorykreml1n.",
+      "description": "A port of The Basic HUD by repositorykreml1n. Ported for Kestrel by NepThunder. A corner HUD panel: coordinates, FPS, clock, speed, CPS, player health, held-item and armour durability, and recent pickups. /basichud hides or shows the panel; Options > Mods has a switch per widget, the corner, and the pickup display time. Effect timers, item cooldowns, ping, the Tab list, the drag-and-drop editor, totem-use counting and the ten interface languages are not in this port: the SDK does not expose what they need. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/basic-hud",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/basic-hud",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-08",
+          "changelog": "Basic HUD 0.1.0 (partial) — a corner HUD panel: coordinates, FPS, clock, speed, CPS, player health, held-item and armour durability, and recent pickups. /basichud hides or shows the panel; Options > Mods has a switch per widget, the corner, and the pickup display time.\n\nA port of The Basic HUD by repositorykreml1n. Ported for Kestrel by NepThunder.\n\nNot in this port: effect timers, item cooldowns, ping, the Tab list, the drag-and-drop HUD editor, totem-use counting and the ten interface languages — none of that is exposed by the SDK. Per-widget position, scale, colours, opacity, padding and shadows are not in this port either; the SDK HUD is plain text lines in one corner.\n\nRuns on Kestrel build 9+ (API level 9).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "hud",
+            "render",
+            "input",
+            "inventory",
+            "storage",
+            "ui",
+            "recipes"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "basic_hud.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/basic-hud-0.1.0/basic_hud.kmod",
+            "size": 49253,
+            "sha256": "b6ea165249c49f86716f0a59c39629d557c9bb02f17c10c5d3777801dd22b0bb"
           }
         }
       ]
