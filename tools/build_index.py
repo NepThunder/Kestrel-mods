@@ -57,6 +57,7 @@ ALLOW_IDS = {
     "appleskin",
     "blockscope",
     "jade",
+    "crosshair_indicator",
 }
 
 
