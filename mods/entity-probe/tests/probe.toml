@@ -154,3 +154,188 @@ height = 1.95
 [step.expect]
 chat = []
 panel = ["Target: none", "no mobs"]
+
+# Fifteen mobs around the player: the panel shows the target first, then
+# at most the five nearest mobs, and counts the other ten in one line —
+# the full list used to cover most of the screen.
+[[step]]
+ticks = 1
+[step.player]
+yaw = 0.0
+pitch = 0.0
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 3.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 2
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 4.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 3
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 4
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 6.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 5
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 7.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 6
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 8.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 7
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 9.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 8
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 10.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 9
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 11.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 10
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 12.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 11
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 13.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 12
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 14.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 13
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 15.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 14
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 16.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[[step.entities]]
+id = 15
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 17.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+chat = []
+panel = [
+  "Target: Zombie (minecraft:zombie) 2.7 blocks 20.0/20.0",
+  "Zombie (minecraft:zombie) 3.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
+  "Zombie (minecraft:zombie) 4.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
+  "Zombie (minecraft:zombie) 5.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
+  "Zombie (minecraft:zombie) 6.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
+  "Zombie (minecraft:zombie) 7.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
+  "+10 more nearby",
+]
