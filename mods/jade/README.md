@@ -9,7 +9,7 @@ CC BY-NC-SA 4.0, noncommercial use only, the same licence as Jade.
 
 ## What was ported (block identification only)
 
-Look at a block within reach (6 blocks) and a panel at the top-left
+Look at a block and a panel at the top-left
 shows three lines:
 
 1. The block's name, in your language (from the recipes table; a block
@@ -18,7 +18,8 @@ shows three lines:
 3. Its position and how far away it is, e.g. `12 63 -44 · 3.2m`.
 
 `/jade` hides or shows the tooltip, and Options > Mods > Jade has the
-same switch; the game keeps your choice.
+same switch plus a reach switch (6, 20 or 64 blocks; 6 by default, the
+player's reach); the game keeps your choices.
 
 ## What is missing
 
@@ -27,8 +28,8 @@ same switch; the game keeps your choice.
   gives the block id only, no state.
 - **Provider plugins** — other mods cannot register Jade providers with
   this port.
-- **Themes, config screens, drag-to-place, profiles** — beyond the one
-  on/off switch above.
+- **Themes, config screens, drag-to-place, profiles** — beyond the on/off
+  and reach switches above.
 - **`/jade` and `/jadec` commands from the original** — only the `/jade`
   on/off toggle is ported; there is no `/jadec`.
 - **Overlay position** — Jade's own overlay is centred at the top of the

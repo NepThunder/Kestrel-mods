@@ -13,11 +13,12 @@
 //! the same licence as Jade.
 //!
 //! What the SDK exposes, and what this port therefore shows, is the block
-//! the player's view hits (`game.raycast`, at most 6 blocks — the player's
-//! reach) and its translated name (`recipes.items`). What Jade also shows
+//! the player's view hits (`game.raycast`, out to the reach switch: 6, 20
+//! or 64 blocks, 6 by default) and its translated name (`recipes.items`).
+//! What Jade also shows
 //! that this port cannot: entities and their health, block states and
 //! progress (crops, furnaces, machines), provider plugins, themes, config
-//! screens beyond the one on/off switch, and the `/jadec` command. The
+//! screens beyond the on/off and reach switches, and the `/jadec` command. The
 //! panel sits at the top-left because the SDK's HUD only offers corners;
 //! Jade's own overlay is centred at the top.
 use std::collections::HashMap;
@@ -30,16 +31,20 @@ use horizon_mod_sdk::{
     ui::{self, ButtonWidget, Widget},
 };
 
-/// How far the tooltip looks, in blocks: the player's reach (survival
-/// 4.5, creative 5), with a little slack.
-const REACH: f32 = 6.0;
+/// The reaches the switch cycles through, in blocks; 6 is the player's
+/// reach (survival 4.5, creative 5), with a little slack.
+const REACHES: [f32; 3] = [6.0, 20.0, 64.0];
+/// The storage key for the reach choice.
+const REACH_KEY: &str = "reach";
 /// The storage key for whether the panel shows.
 const SHOWN_KEY: &str = "shown";
-/// The settings page's button: show or hide the panel.
+/// The settings page's buttons: show or hide the panel, reach.
 const SHOWN_BUTTON: u32 = 0;
+const REACH_BUTTON: u32 = 1;
 
 struct Jade {
     shown: bool,
+    reach: f32,
     /// The panel last sent, so an unchanged one costs no call.
     last: Vec<String>,
     /// Block id -> translated name, loaded once from `recipes.items` on
@@ -134,6 +139,29 @@ fn shown_label(shown: bool) -> String {
     format!("Shown: {}", if shown { "ON" } else { "OFF" })
 }
 
+/// The stored reach: one of the switch's values, else the default.
+fn read_reach(stored: Option<Vec<u8>>) -> f32 {
+    let wanted = stored
+        .and_then(|v| String::from_utf8(v).ok())
+        .and_then(|s| s.parse::<f32>().ok())
+        .unwrap_or(REACHES[0]);
+    if REACHES.contains(&wanted) {
+        wanted
+    } else {
+        REACHES[0]
+    }
+}
+
+/// The next reach in the switch's cycle, wrapping back to the first.
+fn next_reach(reach: f32) -> f32 {
+    let i = REACHES.iter().position(|r| *r == reach).unwrap_or(0);
+    REACHES[(i + 1) % REACHES.len()]
+}
+
+fn reach_label(reach: f32) -> String {
+    format!("Reach: {} blocks", reach as u32)
+}
+
 impl Jade {
     /// Hides or shows the panel, keeps the choice in storage, and refreshes
     /// the settings page when it is open.
@@ -143,12 +171,26 @@ impl Jade {
         self.refresh_settings();
     }
 
-    /// The settings page: one button, the panel shown or hidden.
+    /// Steps the reach to the next value, keeps the choice in storage, and
+    /// refreshes the settings page when it is open.
+    fn cycle_reach(&mut self) {
+        self.reach = next_reach(self.reach);
+        let _ = storage::set(REACH_KEY, self.reach.to_string().as_bytes());
+        self.refresh_settings();
+    }
+
+    /// The settings page: the panel shown or hidden, and the reach.
     fn refresh_settings(&self) {
-        ui::set_settings(&[Widget::Button(ButtonWidget {
-            id: SHOWN_BUTTON,
-            label: shown_label(self.shown),
-        })]);
+        ui::set_settings(&[
+            Widget::Button(ButtonWidget {
+                id: SHOWN_BUTTON,
+                label: shown_label(self.shown),
+            }),
+            Widget::Button(ButtonWidget {
+                id: REACH_BUTTON,
+                label: reach_label(self.reach),
+            }),
+        ]);
     }
 
     /// The block name for this tick's hit, loading the translated names
@@ -170,6 +212,7 @@ impl Mod for Jade {
         let hooks = Registration::new().command("jade").on_tick();
         let state = Jade {
             shown: read_shown(storage::get(SHOWN_KEY)),
+            reach: read_reach(storage::get(REACH_KEY)),
             last: Vec::new(),
             names: None,
         };
@@ -178,7 +221,7 @@ impl Mod for Jade {
 
     fn tick(&mut self, _tick: u64) {
         let now = match game::get_player().filter(|_| self.shown) {
-            Some(p) => match game::raycast(REACH) {
+            Some(p) => match game::raycast(self.reach) {
                 Some(hit) => {
                     let names = self.names();
                     tooltip_lines(&p, &hit, names)
@@ -218,8 +261,10 @@ impl Mod for Jade {
     }
 
     fn ui_select(&mut self, id: u32, _row: u32) {
-        if id == SHOWN_BUTTON {
-            self.set_shown(!self.shown);
+        match id {
+            SHOWN_BUTTON => self.set_shown(!self.shown),
+            REACH_BUTTON => self.cycle_reach(),
+            _ => {}
         }
     }
 }
@@ -351,5 +396,18 @@ mod tests {
         assert!(read_shown(Some(b"true".to_vec())));
         assert!(!read_shown(Some(b"false".to_vec())));
         assert_eq!(shown_label(false), "Shown: OFF");
+    }
+
+    #[test]
+    fn reach_defaults_to_six_and_cycles_back() {
+        assert_eq!(read_reach(None), 6.0);
+        assert_eq!(read_reach(Some(b"20".to_vec())), 20.0);
+        assert_eq!(read_reach(Some(b"64".to_vec())), 64.0);
+        // A stored reach the switch never offers falls back to 6.
+        assert_eq!(read_reach(Some(b"128".to_vec())), 6.0);
+        assert_eq!(reach_label(6.0), "Reach: 6 blocks");
+        assert_eq!(next_reach(6.0), 20.0);
+        assert_eq!(next_reach(20.0), 64.0);
+        assert_eq!(next_reach(64.0), 6.0);
     }
 }
