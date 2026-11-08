@@ -1,0 +1,95 @@
+# Crosshair Indicator: the indicator hides and shows with /crosshair, and
+# the game keeps the choice across a reload.
+#
+# The script harness has no shape step and its snapshot never draws one,
+# so it cannot read the brackets back: the shapes (bracket, dot, diamond
+# and chevron geometry, style and theme colours) are covered instead by
+# the unit tests in src/lib.rs (the pure shape builders) and by a direct
+# sandbox run, which sets the crosshair target on the snapshot and reads
+# the HUD shapes back. The steps here cover what the harness can drive:
+# the command, the toggle, and the stored choice surviving a reload — and
+# they run the target path (a zombie in reach, then one past reach, then
+# the multiplayer target) so a bad read would stop the mod.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["crosshair"]
+chat = []
+panel = []
+
+[[step]]
+command = "crosshair"
+expect.feedback = "Crosshair Indicator hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+# A reload reads the stored choice back: still hidden, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "crosshair"
+expect.feedback = "Crosshair Indicator shown"
+
+# A zombie 2 blocks ahead, inside attack reach: the indicator path runs.
+[[step]]
+ticks = 1
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 2.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+chat = []
+panel = []
+
+# The same zombie 5 blocks ahead, past attack reach: the path runs dry.
+[[step]]
+ticks = 1
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+chat = []
+panel = []
+
+# Multiplayer: the list reads empty, but the crosshair target still
+# answers — the indicator path runs there too.
+[[step]]
+multiplayer = true
+ticks = 1
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 2.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+chat = []
+panel = []
