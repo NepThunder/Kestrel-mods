@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-08T07:23:02Z",
+  "generated": "2026-11-08T09:58:23Z",
   "projects": [
     {
       "id": "appleskin",
@@ -225,6 +225,44 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/coordinates-hud-0.1.0/coords_hud.kmod",
             "size": 27033,
             "sha256": "d097863daf7a544aa6622841756b4c63e264da2dcaa962fb3bdddf5ed8ec35d1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "crosshair_indicator",
+      "kind": "mod",
+      "name": "Crosshair Indicator",
+      "summary": "Your crosshair tells you when the mob or player you aim at is within attack reach (3 blocks).",
+      "description": "Your crosshair tells you when the mob or player you aim at is within attack reach (3 blocks). Corner brackets, a centre dot, diamond pips or a chevron above the crosshair, in white, red, pink, cyan or gold. A port of Crosshair Indicator by CayMac (Java original by AmerDz01); this port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/crosshair-indicator Ported for Kestrel by NepThunder.",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/crosshair-indicator",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-08",
+          "changelog": "Crosshair Indicator 0.1.0 — your crosshair tells you when the mob or player you aim at is within attack reach (3 blocks). Four styles (corner brackets, centre dot, diamond pips, chevron) in five static colours. Settings in Options > Mods; /crosshair toggles it.\n\nA port of Crosshair Indicator by CayMac (Java original by AmerDz01). Ported for Kestrel by NepThunder.\n\nNot in this port: the weapon-cooldown bar and the dynamic charge colours — weapon attack strength is not exposed by the SDK.\n\nRuns on Kestrel build 9+ (API level 10).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "entity",
+            "render",
+            "input",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "crosshair_indicator.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/crosshair-indicator-0.1.0/crosshair_indicator.kmod",
+            "size": 17322,
+            "sha256": "5cd6df615bef0e91874dfe84ea8252035112dde4aca1c9d759db137ccea3dce0"
           }
         }
       ]
