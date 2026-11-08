@@ -58,6 +58,7 @@ ALLOW_IDS = {
     "blockscope",
     "jade",
     "crosshair_indicator",
+    "lookat",
 }
 
 
