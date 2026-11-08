@@ -1,0 +1,9 @@
+id = "smartf3"
+name = "SmartF3"
+version = "0.1.0"
+description = "A port of SmartF3 by d3grando. Ported for Kestrel by NepThunder. A tidier, configurable F3 debug screen: FPS, coordinates, facing, world (dimension and clock), player (health and food) and the targeted block and entity in one panel in the top-left corner. /smartf3 hides or shows the panel; Options > Mods has a switch per module. Biome, light level, chunk, system, rendering, server, fluid and chart-keys modules are not exposed by the SDK and are not in this port. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/smartf3"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["entity", "game-read", "hud", "render", "storage", "ui", "recipes"]
+experimental = ["entity", "render", "ui", "recipes"]
