@@ -1,9 +1,9 @@
 id = "entity_probe"
 name = "Entity Probe"
-version = "0.1.2"
-description = "Prototype for client entity reads: shows the living mobs around you, nearest first, and the mob under your crosshair."
+version = "0.1.3"
+description = "Prototype for client entity reads: shows the living mobs around you, nearest first, and the mob under your crosshair. Options > Mods has the settings: how many mobs to list (5, 10, 15 or All) and how much detail each line carries (Short or Long)."
 authors = ["NepThunder"]
 api = "0.1"
 side = "client"
-capabilities = ["entity", "game-read", "hud"]
-experimental = ["entity"]
+capabilities = ["entity", "game-read", "hud", "storage", "ui"]
+experimental = ["entity", "ui"]
