@@ -1,0 +1,222 @@
+# The Basic HUD: the full panel on the first tick, durability from the
+# inventory snapshot, recent pickups aggregated and expiring, speed as a
+# one-second average, crafting suppressed as a pickup, then the panel
+# hides with /basichud and stays hidden across a reload.
+#
+# The player stands at 0.5 64 0.5 facing south (+z), full health and food,
+# at the first tick of a new world's first morning, already holding a
+# damaged sword and wearing a helmet and boots. The script harness
+# has no frame-stats step and no clicks step, so FPS reads 0 and CPS reads
+# 0 | 0 here; the FPS and CPS lines' real values are covered by the unit
+# tests in src/lib.rs and by a direct sandbox run.
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+slots = [
+  { slot = 0, id = "minecraft:diamond_sword", count = 1, damage = 100, max-damage = 1561 },
+  { slot = 500, id = "minecraft:diamond_helmet", count = 1, damage = 10, max-damage = 363 },
+  { slot = 503, id = "minecraft:diamond_boots", count = 1, damage = 0, max-damage = 429 },
+]
+[step.expect]
+commands = ["basichud"]
+chat = []
+corner = "top-left"
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 0.5 / 64.0 / 0.5",
+  "Day 1, 06:00",
+  "Speed 0.0 b/s",
+  "CPS 0 | 0",
+  "Health 20.0/20.0",
+  "Diamond Sword 1461/1561",
+  "Diamond Helmet 353/363",
+  "Diamond Boots 429/429",
+]
+
+# Four torches and six planks arrive: two pickup entries, torches first
+# (newest first). The starting inventory was the baseline, so the sword,
+# helmet and boots log nothing.
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+slots = [
+  { slot = 0, id = "minecraft:diamond_sword", count = 1, damage = 100, max-damage = 1561 },
+  { slot = 1, id = "minecraft:torch", count = 4 },
+  { slot = 9, id = "minecraft:oak_planks", count = 6 },
+  { slot = 500, id = "minecraft:diamond_helmet", count = 1, damage = 10, max-damage = 363 },
+  { slot = 503, id = "minecraft:diamond_boots", count = 1, damage = 0, max-damage = 429 },
+]
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 0.5 / 64.0 / 0.5",
+  "Day 1, 06:00",
+  "Speed 0.0 b/s",
+  "CPS 0 | 0",
+  "Health 20.0/20.0",
+  "Diamond Sword 1461/1561",
+  "Diamond Helmet 353/363",
+  "Diamond Boots 429/429",
+  "+4 Torch",
+  "+6 Oak Planks",
+]
+
+# Two more torches before expiry: the entry aggregates to x6 and its
+# timer refreshes.
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+slots = [
+  { slot = 0, id = "minecraft:diamond_sword", count = 1, damage = 100, max-damage = 1561 },
+  { slot = 1, id = "minecraft:torch", count = 6 },
+  { slot = 9, id = "minecraft:oak_planks", count = 6 },
+  { slot = 500, id = "minecraft:diamond_helmet", count = 1, damage = 10, max-damage = 363 },
+  { slot = 503, id = "minecraft:diamond_boots", count = 1, damage = 0, max-damage = 429 },
+]
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 0.5 / 64.0 / 0.5",
+  "Day 1, 06:00",
+  "Speed 0.0 b/s",
+  "CPS 0 | 0",
+  "Health 20.0/20.0",
+  "Diamond Sword 1461/1561",
+  "Diamond Helmet 353/363",
+  "Diamond Boots 429/429",
+  "+6 Torch",
+  "+6 Oak Planks",
+]
+
+# One block east in one tick: the one-second average over the three
+# sampled ticks so far is 1 block / 3 ticks * 20 = 6.7 blocks a second.
+[[step]]
+ticks = 1
+[step.player]
+x = 1.5
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 1.5 / 64.0 / 0.5",
+  "Day 1, 06:00",
+  "Speed 6.7 b/s",
+  "CPS 0 | 0",
+  "Health 20.0/20.0",
+  "Diamond Sword 1461/1561",
+  "Diamond Helmet 353/363",
+  "Diamond Boots 429/429",
+  "+6 Torch",
+  "+6 Oak Planks",
+]
+
+# Two planks become four sticks: the planks fell in the same tick, so the
+# sticks are crafting, not a pickup, and no entry appears. The speed
+# average is now 1 block / 4 ticks * 20 = 5.0 blocks a second.
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+slots = [
+  { slot = 0, id = "minecraft:diamond_sword", count = 1, damage = 100, max-damage = 1561 },
+  { slot = 1, id = "minecraft:torch", count = 6 },
+  { slot = 9, id = "minecraft:oak_planks", count = 4 },
+  { slot = 10, id = "minecraft:stick", count = 4 },
+  { slot = 500, id = "minecraft:diamond_helmet", count = 1, damage = 10, max-damage = 363 },
+  { slot = 503, id = "minecraft:diamond_boots", count = 1, damage = 0, max-damage = 429 },
+]
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 1.5 / 64.0 / 0.5",
+  "Day 1, 06:00",
+  "Speed 5.0 b/s",
+  "CPS 0 | 0",
+  "Health 20.0/20.0",
+  "Diamond Sword 1461/1561",
+  "Diamond Helmet 353/363",
+  "Diamond Boots 429/429",
+  "+6 Torch",
+  "+6 Oak Planks",
+]
+
+# 97 still ticks later (tick 102): the planks entry has expired (seen at
+# tick 2, 5 seconds = 100 ticks), the torch entry has not (refreshed at
+# tick 3, expires at tick 103), the movement has left the one-second
+# window, and the clock has advanced to 06:06.
+[[step]]
+ticks = 97
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 1.5 / 64.0 / 0.5",
+  "Day 1, 06:06",
+  "Speed 0.0 b/s",
+  "CPS 0 | 0",
+  "Health 20.0/20.0",
+  "Diamond Sword 1461/1561",
+  "Diamond Helmet 353/363",
+  "Diamond Boots 429/429",
+  "+6 Torch",
+]
+
+# One more tick (tick 103): the torch entry expires too.
+[[step]]
+ticks = 1
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 1.5 / 64.0 / 0.5",
+  "Day 1, 06:06",
+  "Speed 0.0 b/s",
+  "CPS 0 | 0",
+  "Health 20.0/20.0",
+  "Diamond Sword 1461/1561",
+  "Diamond Helmet 353/363",
+  "Diamond Boots 429/429",
+]
+
+[[step]]
+command = "basichud"
+expect.feedback = "Basic HUD panel hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+# A reload reads the stored choice back: still hidden, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "basichud"
+expect.feedback = "Basic HUD panel shown"
+
+[[step]]
+ticks = 1
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 1.5 / 64.0 / 0.5",
+  "Day 1, 06:06",
+  "Speed 0.0 b/s",
+  "CPS 0 | 0",
+  "Health 20.0/20.0",
+  "Diamond Sword 1461/1561",
+  "Diamond Helmet 353/363",
+  "Diamond Boots 429/429",
+]

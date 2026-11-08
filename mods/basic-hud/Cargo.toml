@@ -1,0 +1,16 @@
+[package]
+name = "basic-hud"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "The Basic HUD for Kestrel: coordinates, FPS, clock, speed, CPS, health, held-item and armour durability, and recent pickups in one corner panel. A behaviour port of The Basic HUD by repositorykreml1n."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true
