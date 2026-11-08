@@ -1,5 +1,6 @@
-# Client entity reads: the mobs around the player, nearest first, with
-# their fields — and the mob under the crosshair. The player stands at
+# Client entity reads: the mobs around the player, nearest first, in
+# the default Short detail (name, kind, distance, health) — and the mob
+# under the crosshair. The settings page also offers the Long detail. The player stands at
 # 0.5 64 0.5 facing south (+z). A baby zombie, a hurt zombie, a named
 # sheep and a cow are near; another player stands off to the side and
 # must never be listed.
@@ -67,10 +68,10 @@ height = 1.8
 chat = []
 panel = [
   "Target: Zombie (minecraft:zombie) 4.7 blocks 14.0/20.0",
-  "Zombie (minecraft:zombie) 3.2 20.0/20.0 0.30x1.00 v=0.0,0.0,0.0 yaw=0.0 baby ground",
-  "Zombie (minecraft:zombie) 5.0 14.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
-  "Dolly (minecraft:sheep) 5.0 8.0/8.0 0.90x1.30 v=0.0,0.0,0.0 yaw=0.0 ground",
-  "Cow (minecraft:cow) 8.5 10.0/10.0 0.90x1.40 v=0.0,0.0,0.0 yaw=0.0 ground",
+  "Zombie (minecraft:zombie) 3.2 20.0/20.0 baby",
+  "Zombie (minecraft:zombie) 5.0 14.0/20.0",
+  "Dolly (minecraft:sheep) 5.0 8.0/8.0",
+  "Cow (minecraft:cow) 8.5 10.0/10.0",
 ]
 
 # The crosshair may name a player under it — with no health — while the
@@ -101,7 +102,7 @@ width = 0.6
 height = 1.95
 [step.expect]
 chat = []
-panel = ["Target: Steve (minecraft:player) 2.7 blocks ?/20.0", "Zombie (minecraft:zombie) 5.0 14.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground"]
+panel = ["Target: Steve (minecraft:player) 2.7 blocks ?/20.0", "Zombie (minecraft:zombie) 5.0 14.0/20.0"]
 
 # A wall between the player and the mobs hides them from the crosshair,
 # but they stay in the list.
@@ -110,7 +111,7 @@ ticks = 1
 blocks = [{ x = 0, y = 65, z = 3, state = "minecraft:stone" }]
 [step.expect]
 chat = []
-panel = ["Target: none", "Zombie (minecraft:zombie) 5.0 14.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground"]
+panel = ["Target: none", "Zombie (minecraft:zombie) 5.0 14.0/20.0"]
 
 # Turning around and looking slightly down: the cow behind the player
 # is the target now. (A level look passes over a 1.4-high cow: the eye
@@ -133,7 +134,7 @@ width = 0.9
 height = 1.4
 [step.expect]
 chat = []
-panel = ["Target: Cow (minecraft:cow) 5.6 blocks 10.0/10.0", "Cow (minecraft:cow) 6.0 10.0/10.0 0.90x1.40 v=0.0,0.0,0.0 yaw=0.0 ground"]
+panel = ["Target: Cow (minecraft:cow) 5.6 blocks 10.0/10.0", "Cow (minecraft:cow) 6.0 10.0/10.0"]
 
 # Past 128 blocks there is nothing to list and nothing to target.
 [[step]]
@@ -156,8 +157,8 @@ chat = []
 panel = ["Target: none", "no mobs"]
 
 # Fifteen mobs around the player: the panel shows the target first, then
-# at most the five nearest mobs, and counts the other ten in one line —
-# the full list used to cover most of the screen. The line runs west
+# at most the five nearest mobs in Short lines, and counts the other ten
+# in one line — the full list used to cover most of the screen. The line runs west
 # (-x): the stone block step 3 left at (0, 65, 3) still stands in the
 # southward ray, so a south-facing line would have no target.
 [[step]]
@@ -334,10 +335,10 @@ height = 1.95
 chat = []
 panel = [
   "Target: Zombie (minecraft:zombie) 2.7 blocks 20.0/20.0",
-  "Zombie (minecraft:zombie) 3.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
-  "Zombie (minecraft:zombie) 4.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
-  "Zombie (minecraft:zombie) 5.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
-  "Zombie (minecraft:zombie) 6.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
-  "Zombie (minecraft:zombie) 7.0 20.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
+  "Zombie (minecraft:zombie) 3.0 20.0/20.0",
+  "Zombie (minecraft:zombie) 4.0 20.0/20.0",
+  "Zombie (minecraft:zombie) 5.0 20.0/20.0",
+  "Zombie (minecraft:zombie) 6.0 20.0/20.0",
+  "Zombie (minecraft:zombie) 7.0 20.0/20.0",
   "+10 more nearby",
 ]
