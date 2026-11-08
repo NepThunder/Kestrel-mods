@@ -1,0 +1,386 @@
+{
+  "schema": 1,
+  "generated": "2026-11-08T07:11:56Z",
+  "projects": [
+    {
+      "id": "appleskin",
+      "kind": "mod",
+      "name": "AppleSkin",
+      "summary": "A port of AppleSkin by soufi (a port of AppleSkin by squeek502).",
+      "description": "A port of AppleSkin by soufi (a port of AppleSkin by squeek502). Ported for Kestrel by NepThunder. Shows your saturation over the food bar as a text bar, and what the food in your hand would restore: +hunger and +saturation, and the totals after eating. The exhaustion strip is not shown: the client has no exhaustion value to read. /appleskin hides or shows the panel; Options > Mods has the saturation line, the held-food preview and the position.",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/appleskin",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-08",
+          "changelog": "AppleSkin 0.1.0 — live saturation display and held-food hunger/saturation preview. A port of AppleSkin by soufi (a port of AppleSkin by squeek502). Ported for Kestrel by NepThunder. The exhaustion strip is not included: the client has no exhaustion value to read.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "inventory",
+            "hud",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "appleskin.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/appleskin-0.1.0/appleskin.kmod",
+            "size": 41223,
+            "sha256": "76111a2a3bfa5e23b530583bcea39951f99dce029d6f80af7d2f305b6013cb50"
+          }
+        }
+      ]
+    },
+    {
+      "id": "armor_status",
+      "kind": "mod",
+      "name": "Armor Status",
+      "summary": "Equipped armour and held items with Java durability colours on the HUD.",
+      "description": "Equipped armour and held items with Java durability colours on the HUD: all four armour slots plus the main hand and the off hand, green above 50%, yellow from 25%, orange from 10%, red below 10%. /armor hides or shows the panel; Options > Mods has position, durability format, hand items and stack counts. Ported for Kestrel by NepThunder.",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/armor-status",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-07",
+          "changelog": "Armor Status as a .kmod for Kestrel.\n\nEquipped armour and held items with Java durability colours on the HUD: all four armour slots plus the main hand and the off hand, green above 50%, yellow from 25%, orange from 10%, red below 10%. Stack counts for held items that don't wear out. /armor hides or shows the panel; Options > Mods has position, durability format, hand items and stack counts.\n\nPort of CayMac97's Armor Status (MIT). Known gaps (SDK limits): text lines only, no item icons; corners only, no hotbar-adjacent positions; no translucent background box. Source: mods/armor-status/ in this repo.\n\nNeeds a Kestrel build with the inventory SDK (API level 9) as in kestrel-build-4. Import the .kmod, enable it in the Mods list, enter a world.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "inventory",
+            "hud",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "armor_status.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/armor-status-0.1.0/armor_status.kmod",
+            "size": 30159,
+            "sha256": "48227b196f418806c79d1ab3f011f5ba15ca92b8178ef848eafa2b1bbcd79492"
+          }
+        }
+      ]
+    },
+    {
+      "id": "armorhud",
+      "kind": "mod",
+      "name": "Armor HUD",
+      "summary": "Your worn armor and its durability in a column at the bottom-left of the screen.",
+      "description": "Your worn armor and its durability in a column at the bottom-left of the screen. K shows or hides the durability numbers; a piece about to break flashes. Both switches are also in Options > Mods > Armor HUD. A behaviour port of Armor HUD by Thomas9950; this port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/armor-hud Ported for Kestrel by NepThunder.",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/armor-hud",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-07",
+          "changelog": "Armor HUD as a .kmod for Kestrel.\n\nYour worn armor and its durability in a column at the bottom-left of the screen. K shows or hides the durability numbers (off by default, chat confirms ON/OFF); a piece about to break flashes. Both switches are also in Options > Mods > Armor HUD.\n\nPort of Armor HUD by Thomas9950 (MIT). Known gaps (SDK limits): text-line panel only, no item icons and no pixel position left of the off-hand slot — the column is anchored bottom-left; the toggle notice goes to chat instead of a fading notice above the hotbar. Source: mods/armor-hud/ in this repo.\n\nNeeds a Kestrel build with the inventory SDK (API level 9) as in kestrel-build-4. Import the .kmod, enable it in the Mods list, enter a world.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "inventory",
+            "hud",
+            "chat",
+            "input",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "armorhud.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/armor-hud-0.1.0/armorhud.kmod",
+            "size": 20925,
+            "sha256": "a7dfdafdf271a7b0835f5ab3a74190a1aa360473e85e4e3a5e850fc47e49fe18"
+          }
+        }
+      ]
+    },
+    {
+      "id": "blockscope",
+      "kind": "mod",
+      "name": "Blockscope",
+      "summary": "A port of Blockscope by Domanffe.",
+      "description": "A port of Blockscope by Domanffe. Ported for Kestrel by NepThunder. The block under your crosshair — its name in your language, its id, its distance and its coordinates — in a small box in the top-right corner. /blockscope hides or shows the box; Options > Mods has the same switch, a coordinates switch and a reach switch (5, 20, 64 or 128 blocks). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/blockscope",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/blockscope",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "published": "2026-11-08",
+          "changelog": "Blockscope 0.1.1: the reach switch gains a 128-block step — 5, 20, 64 or 128 blocks — in Options > Mods > Blockscope. Import blockscope.kmod in Kestrel; it runs on any current build (SDK API level 5).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "hud",
+            "chat",
+            "storage",
+            "ui",
+            "recipes"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "blockscope.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/blockscope-0.1.1/blockscope.kmod",
+            "size": 53780,
+            "sha256": "565faa54f824a9c00435ae2c387e17eb2fb57e4b5452cb39c274a19ef9908551"
+          }
+        }
+      ]
+    },
+    {
+      "id": "classic_zoom",
+      "kind": "mod",
+      "name": "Classic Zoom",
+      "summary": "Hold V to zoom 3x, scroll while holding V to zoom 1x-10x (x1.1 per wheel step), release to snap back instantly.",
+      "description": "Hold V to zoom 3x, scroll while holding V to zoom 1x-10x (x1.1 per wheel step), release to snap back instantly. While V is held the wheel zooms instead of switching hotbar slots, and turning slows in step with the zoom. The key is rebindable on the mod's page in Options > Mods. A behaviour port of Classic Zoom by SU4G3; this port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/classic-zoom Ported for Kestrel by NepThunder.",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/classic-zoom",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-07",
+          "changelog": "Classic Zoom as a .kmod for Kestrel.\n\nHold V to zoom 3x, scroll while holding to zoom 1x-10x (x1.1 per wheel step), release to snap back instantly. While V is held the wheel zooms instead of switching hotbar slots, and turning slows in step with the zoom. Rebindable on the mod's page in Options > Mods.\n\nBehaviour port of Classic Zoom by SU4G3 (original GPL-3.0; no original code copied). Source: mods/classic-zoom/ in this repo.\n\nNeeds a Kestrel build with the SDK as in kestrel-build-4. Import the .kmod, enable it in the Mods list, enter a world.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "input"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "classic_zoom.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/classic-zoom-0.1.0/classic_zoom.kmod",
+            "size": 12665,
+            "sha256": "b76610d05f3be31866f3e3c521c70a23f6316d550bc5f200f01431d1c3c07f05"
+          }
+        }
+      ]
+    },
+    {
+      "id": "coords_hud",
+      "kind": "mod",
+      "name": "Coordinates HUD",
+      "summary": "Your coordinates, facing and the time of day in a corner of the screen.",
+      "description": "Your coordinates, facing and the time of day in a corner of the screen. /where puts them in chat, /coords hides or shows the panel — and the game keeps your choice. Options > Mods has the same switch. Ported for Kestrel by NepThunder.",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/coords-hud",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-07",
+          "changelog": "Coordinates HUD as a .kmod for Kestrel.\n\nTop-left HUD panel: block position, facing direction, and time of day (Day N, HH:MM — restored; the native 2.0.0 dropped it, the Kestrel SDK clock allows it). /where puts coords + dimension in chat. /coords hides/shows the panel and the choice persists. Options > Mods has the same Shown ON/OFF switch.\n\nPort of Horizon's native Coordinates HUD 2.0.0 (MIT). Source: mods/coords-hud/ in this repo.\n\nNeeds a Kestrel build with the SDK as in kestrel-build-4. Import the .kmod, enable it in the Mods list, enter a world.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "hud",
+            "chat",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "coords_hud.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/coordinates-hud-0.1.0/coords_hud.kmod",
+            "size": 27033,
+            "sha256": "d097863daf7a544aa6622841756b4c63e264da2dcaa962fb3bdddf5ed8ec35d1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "customhud",
+      "kind": "mod",
+      "name": "Beautiful Day Counter",
+      "summary": "The current survival day, an in-game clock and a day/night cycle bar with four colour themes, the moon phase and a countdown to night or day.",
+      "description": "The current survival day, an in-game clock and a day/night cycle bar with four colour themes, the moon phase and a countdown to night or day. Settings on its page in Options > Mods. A port of SCARABOCCHIO100 / sonoFrangu's CustomHUD; milestone days show a rainbow badge (the SDK has no audio, so no milestone sound plays). Ported for Kestrel by NepThunder.",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/customhud",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-07",
+          "changelog": "Beautiful Day Counter as a .kmod for Kestrel.\n\nCurrent survival day, in-game clock (12h/24h), day/night cycle bar in four colour themes, moon phase, and countdown to night/day. Settings page in Options > Mods (theme, clock format, corner, element toggles). /daycounter prints a chat summary.\n\nPort of SCARABOCCHIO100 / sonoFrangu's CustomHUD (MIT). Known gap: milestone days show a rainbow badge but play no sound — the SDK has no audio capability. Source: mods/customhud/ in this repo.\n\nNeeds a Kestrel build with the SDK as in kestrel-build-4. Import the .kmod, enable it in the Mods list, enter a world.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "hud",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "customhud.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/beautiful-day-counter-0.1.0/customhud.kmod",
+            "size": 24891,
+            "sha256": "fa175f1eeb31bfbacba718154d32a66d16ac8ec9f7121ee320e5a9d8f3b6352d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "held_item_info",
+      "kind": "mod",
+      "name": "Held Item Info",
+      "summary": "The selected item's remaining/maximum durability, stack count and up to six enchantment names on the HUD.",
+      "description": "The selected item's remaining/maximum durability, stack count and up to six enchantment names on the HUD: one line for the held item, nothing when it has nothing to say. /helditem hides or shows the line, and Options > Mods has the same switch. A port of Held Item Info by AltMugen. Ported for Kestrel by NepThunder. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/held-item-info",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/held-item-info",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-08",
+          "changelog": "Held Item Info 0.1.0 — selected-item durability, stack count and enchantment names on the HUD. A port of Held Item Info by AltMugen. Ported for Kestrel by NepThunder.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "inventory",
+            "hud",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "held_item_info.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/held-item-info-0.1.0/held_item_info.kmod",
+            "size": 35460,
+            "sha256": "5b2ae844b2b894679106fab401f51e95a431ea9cf4c1d5eed16069447c69fe2e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "jade",
+      "kind": "mod",
+      "name": "Jade",
+      "summary": "A port of Jade by Snownee and Joeypc6 (block identification only).",
+      "description": "A port of Jade by Snownee and Joeypc6 (block identification only). Ported for Kestrel by NepThunder. Look at a block to see its name, its mod, its position and how far away it is, in a panel at the top-left; /jade hides or shows it, and Options > Mods has the same switch. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/jade",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "CC-BY-NC-SA-4.0",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/jade",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "published": "2026-11-08",
+          "changelog": "Jade 0.1.1: the tooltip gains a reach switch — 6, 20 or 64 blocks (6 by default, the player's reach) — in Options > Mods > Jade. Import jade.kmod in Kestrel; it runs on any current build (SDK API level 5).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "hud",
+            "recipes",
+            "chat",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "jade.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/jade-0.1.1/jade.kmod",
+            "size": 48475,
+            "sha256": "467cb59b3d6e5b4e85f2909951c67ea3db140d009d86833b9114fab6dcc45453"
+          }
+        }
+      ]
+    },
+    {
+      "id": "jei",
+      "kind": "mod",
+      "name": "JEI for Horizon",
+      "summary": "An item and recipe viewer: every item beside container screens, with search (words, \"quoted phrases\", -exclusions, | alternatives, @namespace, #tag).",
+      "description": "An item and recipe viewer: every item beside container screens, with search (words, \"quoted phrases\", -exclusions, | alternatives, @namespace, #tag). R over an item shows its recipes, U its uses, with a tab per station and cooking time and XP; Back walks the history, and + fills the crafting grid with a recipe you know. In creative mode a click can give you the item (Mod settings or /jei give). /jei reports the recipe table sizes. A port of JEI for Horizon 0.1.0 by enderliker (MIT), inspired by JustEnoughItems. Ported for Kestrel by NepThunder.",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/jei",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "published": "2026-11-08",
+          "changelog": "JEI for Horizon as a .kmod for Kestrel — the original's 0.1.0 Core Viewer.\r\n\r\n0.1.1 fixes the world-load \"took too long\" stop: the recipe/item tables now load a slice per tick (~0.5s) instead of all at once in a single frame.\r\n\r\nItem browser beside container screens with JEI search grammar (words, quoted phrases, -exclusions, | alternatives, #tag). R shows an item's recipes, U its uses, with a tab per station, cooking time and XP. Back walks history, clicking a recipe slot opens that item, + fills the crafting grid with a known recipe. /jei reports table sizes; /jei give (or the settings toggle) lets clicks give items in creative.\r\n\r\nPort of JEI for Horizon 0.1.0 by enderliker (MIT). Out of scope: bookmarks, tooltips, creative inventory integration, non-recipe categories, shift-click placement. Source: mods/jei/ in this repo.\r\n\r\nNeeds a Kestrel build with the SDK as in kestrel-build-4 or later. Import the .kmod, enable it in the Mods list, enter a world.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "recipes",
+            "ui",
+            "input",
+            "game-read",
+            "chat",
+            "storage"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "jei.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/jei-0.1.1/jei.kmod",
+            "size": 65345,
+            "sha256": "8e2df4652abd746dda5805b6574028af08308776ef6fdda82adf9d0509420970"
+          }
+        }
+      ]
+    }
+  ],
+  "revoked": []
+}
