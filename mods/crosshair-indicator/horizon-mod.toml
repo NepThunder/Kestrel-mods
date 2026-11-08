@@ -1,0 +1,9 @@
+id = "crosshair_indicator"
+name = "Crosshair Indicator"
+version = "0.1.0"
+description = "Your crosshair tells you when the mob or player you aim at is within attack reach (3 blocks). Corner brackets, a centre dot, diamond pips or a chevron above the crosshair, in white, red, pink, cyan or gold. A port of Crosshair Indicator by CayMac (Java original by AmerDz01); this port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/crosshair-indicator Ported for Kestrel by NepThunder."
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["entity", "render", "input", "storage", "ui"]
+experimental = ["entity", "render", "input", "ui"]
