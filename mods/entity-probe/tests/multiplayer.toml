@@ -26,8 +26,8 @@ max-health = 10.0
 width = 0.9
 height = 1.4
 [step.expect]
-chat = ["target: Zombie (minecraft:zombie) 4.7 blocks ?/20.0"]
-panel = ["no mobs"]
+chat = []
+panel = ["Target: Zombie (minecraft:zombie) 4.7 blocks ?/20.0", "no mobs"]
 
 # A player under the crosshair is named in multiplayer too, with no health.
 [[step]]
@@ -44,5 +44,5 @@ max-health = 20.0
 width = 0.6
 height = 1.8
 [step.expect]
-chat = ["target: Steve (minecraft:player) 2.7 blocks ?/20.0"]
-panel = ["no mobs"]
+chat = []
+panel = ["Target: Steve (minecraft:player) 2.7 blocks ?/20.0", "no mobs"]

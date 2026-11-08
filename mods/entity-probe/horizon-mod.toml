@@ -5,5 +5,5 @@ description = "Prototype for client entity reads: shows the living mobs around y
 authors = ["NepThunder"]
 api = "0.1"
 side = "client"
-capabilities = ["entity", "game-read", "hud", "chat"]
+capabilities = ["entity", "game-read", "hud"]
 experimental = ["entity"]

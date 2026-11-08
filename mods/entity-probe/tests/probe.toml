@@ -64,8 +64,9 @@ max-health = 20.0
 width = 0.6
 height = 1.8
 [step.expect]
-chat = ["target: Zombie (minecraft:zombie) 4.7 blocks 14.0/20.0"]
+chat = []
 panel = [
+  "Target: Zombie (minecraft:zombie) 4.7 blocks 14.0/20.0",
   "Zombie (minecraft:zombie) 3.2 20.0/20.0 0.30x1.00 v=0.0,0.0,0.0 yaw=0.0 baby ground",
   "Zombie (minecraft:zombie) 5.0 14.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground",
   "Dolly (minecraft:sheep) 5.0 8.0/8.0 0.90x1.30 v=0.0,0.0,0.0 yaw=0.0 ground",
@@ -99,8 +100,8 @@ max-health = 20.0
 width = 0.6
 height = 1.95
 [step.expect]
-chat = ["target: Steve (minecraft:player) 2.7 blocks ?/20.0"]
-panel = ["Zombie (minecraft:zombie) 5.0 14.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground"]
+chat = []
+panel = ["Target: Steve (minecraft:player) 2.7 blocks ?/20.0", "Zombie (minecraft:zombie) 5.0 14.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground"]
 
 # A wall between the player and the mobs hides them from the crosshair,
 # but they stay in the list.
@@ -108,8 +109,8 @@ panel = ["Zombie (minecraft:zombie) 5.0 14.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.
 ticks = 1
 blocks = [{ x = 0, y = 65, z = 3, state = "minecraft:stone" }]
 [step.expect]
-chat = ["target: none"]
-panel = ["Zombie (minecraft:zombie) 5.0 14.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground"]
+chat = []
+panel = ["Target: none", "Zombie (minecraft:zombie) 5.0 14.0/20.0 0.60x1.95 v=0.0,0.0,0.0 yaw=0.0 ground"]
 
 # Turning around and looking slightly down: the cow behind the player
 # is the target now. (A level look passes over a 1.4-high cow: the eye
@@ -131,8 +132,8 @@ max-health = 10.0
 width = 0.9
 height = 1.4
 [step.expect]
-chat = ["target: Cow (minecraft:cow) 5.6 blocks 10.0/10.0"]
-panel = ["Cow (minecraft:cow) 6.0 10.0/10.0 0.90x1.40 v=0.0,0.0,0.0 yaw=0.0 ground"]
+chat = []
+panel = ["Target: Cow (minecraft:cow) 5.6 blocks 10.0/10.0", "Cow (minecraft:cow) 6.0 10.0/10.0 0.90x1.40 v=0.0,0.0,0.0 yaw=0.0 ground"]
 
 # Past 128 blocks there is nothing to list and nothing to target.
 [[step]]
@@ -151,5 +152,5 @@ max-health = 20.0
 width = 0.6
 height = 1.95
 [step.expect]
-chat = ["target: none"]
-panel = ["no mobs"]
+chat = []
+panel = ["Target: none", "no mobs"]

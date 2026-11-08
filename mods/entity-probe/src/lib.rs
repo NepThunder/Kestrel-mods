@@ -1,11 +1,10 @@
 //! Prototype probe for client entity reads (`docs/mods.md`, "Client
 //! entities"): each tick it reads the living mobs around the player and
-//! the mob under the crosshair, shows every mob — nearest first, with
-//! kind, distance, health, hitbox, velocity, yaw and the baby flag —
-//! in a HUD panel, and shows the crosshair target's kind, distance and
-//! health in chat when it changes.
+//! the mob under the crosshair, and shows them in a HUD panel — the
+//! crosshair target first, then every mob nearest first, with kind,
+//! distance, health, hitbox, velocity, yaw and the baby flag.
 use horizon_mod_sdk::{
-    Mod, Registration, chat,
+    Mod, Registration,
     entity::{self, Entity},
     game,
     hud::{self, Corner, Line},
@@ -13,7 +12,6 @@ use horizon_mod_sdk::{
 
 struct EntityProbe {
     last_panel: Vec<String>,
-    last_target: Option<String>,
 }
 
 impl EntityProbe {
@@ -41,7 +39,6 @@ impl Mod for EntityProbe {
         Ok((
             EntityProbe {
                 last_panel: Vec::new(),
-                last_target: None,
             },
             Registration::new().on_tick(),
         ))
@@ -50,15 +47,24 @@ impl Mod for EntityProbe {
     fn tick(&mut self, _tick: u64) {
         let player = game::get_player();
         let entities = entity::entities();
-        let panel: Vec<String> = match &player {
+        let mut panel: Vec<String> = match &player {
             Some(p) => entities.iter().map(|m| Self::line(m, p)).collect(),
             None => Vec::new(),
         };
-        let panel = if panel.is_empty() {
-            vec!["no mobs".to_string()]
-        } else {
-            panel
-        };
+        if panel.is_empty() {
+            panel.push("no mobs".to_string());
+        }
+        // The crosshair target is the panel's first line, not a chat
+        // message: chat draws over the same corner as the panel, so the
+        // target lines landed on top of the list and neither was readable.
+        let target = entity::targeted(128.0).map(|t| {
+            let health = t.entity.health.map_or("?".into(), |h| format!("{h:.1}"));
+            format!(
+                "Target: {} ({}) {:.1} blocks {health}/{:.1}",
+                t.entity.name, t.entity.kind, t.distance, t.entity.max_health
+            )
+        });
+        panel.insert(0, target.unwrap_or_else(|| "Target: none".to_string()));
         if panel != self.last_panel {
             let lines: Vec<Line> = panel
                 .iter()
@@ -69,20 +75,6 @@ impl Mod for EntityProbe {
                 .collect();
             hud::set_panel(Corner::TopLeft, &lines);
             self.last_panel = panel;
-        }
-        let target = entity::targeted(128.0).map(|t| {
-            let health = t.entity.health.map_or("?".into(), |h| format!("{h:.1}"));
-            format!(
-                "target: {} ({}) {:.1} blocks {health}/{:.1}",
-                t.entity.name, t.entity.kind, t.distance, t.entity.max_health
-            )
-        });
-        if target != self.last_target {
-            match &target {
-                Some(line) => chat::show(line),
-                None => chat::show("target: none"),
-            }
-            self.last_target = target;
         }
     }
 }
