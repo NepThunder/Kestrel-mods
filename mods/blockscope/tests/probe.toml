@@ -1,0 +1,41 @@
+# Blockscope: the box hides and shows with /blockscope, and the game keeps
+# the choice across a reload.
+#
+# The script harness has no view-hit step and its snapshot never sets one,
+# so it cannot put a block under the crosshair: the panel stays empty here.
+# The box's lines (name, id, distance, coordinates) are covered instead by
+# the unit tests in src/lib.rs (the pure name, distance and line builders)
+# and by a direct sandbox run, which sets the view hit and the recipe
+# tables on the snapshot and reads the panel back.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["blockscope"]
+chat = []
+panel = []
+
+[[step]]
+command = "blockscope"
+expect.feedback = "Blockscope panel hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+# A reload reads the stored choice back: still hidden, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "blockscope"
+expect.feedback = "Blockscope panel shown"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
