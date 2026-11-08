@@ -1,6 +1,6 @@
 id = "entity_probe"
 name = "Entity Probe"
-version = "0.1.1"
+version = "0.1.2"
 description = "Prototype for client entity reads: shows the living mobs around you, nearest first, and the mob under your crosshair."
 authors = ["NepThunder"]
 api = "0.1"
