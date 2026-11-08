@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-08T15:46:58Z",
+  "generated": "2026-11-08T15:58:47Z",
   "projects": [
     {
       "id": "appleskin",
@@ -498,6 +498,47 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/jei-0.1.1/jei.kmod",
             "size": 65345,
             "sha256": "8e2df4652abd746dda5805b6574028af08308776ef6fdda82adf9d0509420970"
+          }
+        }
+      ]
+    },
+    {
+      "id": "light_overlay",
+      "kind": "mod",
+      "name": "Light Overlay",
+      "summary": "A port of Light Overlay by CayMac.",
+      "description": "A port of Light Overlay by CayMac. Ported for Kestrel by NepThunder. Press F7 (or /lightoverlay) to scan the block tops around you and mark where hostile mobs can spawn: a red cross where they can spawn any time, a yellow cross where they can spawn at night. Options > Mods > Light Overlay has the same switch, a scan-radius switch (8, 12, 16 or 20 blocks), a safe-blocks switch and the spawn-rule switch (Modern or Legacy). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/light-overlay",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/light-overlay",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-08",
+          "changelog": "Light Overlay 0.1.0 — red crosses where hostile mobs can spawn at any time, yellow crosses where they can spawn at night, over the block tops around you. F7 or /lightoverlay toggles it; settings in Options > Mods (radius 8/12/16/20, safe blocks, Modern/Legacy spawn rule).\n\nA port of Light Overlay by CayMac. Ported for Kestrel by NepThunder.\n\nNot in this port: the light level as a number on the block top — no world-text capability yet, so crosses only, with the counts in the corner panel; surfaces under leaves, torches or tall grass get no cross (a mob needs head room); multiplayer shows nothing (world reads are singleplayer-only in v1).\n\nRuns on Kestrel build 18+ (API level 12).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "world",
+            "game-read",
+            "render",
+            "input",
+            "chat",
+            "hud",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "light_overlay.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/light-overlay-0.1.0/light_overlay.kmod",
+            "size": 45238,
+            "sha256": "ab3dcc8517bb587f027082d5a5fc30879ccfacf7907e8692a98684fa3d197c2e"
           }
         }
       ]
