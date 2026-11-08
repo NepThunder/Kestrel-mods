@@ -1,7 +1,7 @@
 id = "waypoints"
 name = "Waypoints"
-version = "0.1.0"
-description = "Place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world. N creates a waypoint where you stand (auto-named, coloured from the palette); M lists them with All / Overworld / Nether / End filters, Hide/Show, colour cycling, Move here and Delete; /waypoint renames, moves, recolours and deletes. Dying can leave a red Death waypoint where it happened. A port of Waypoints by Nirokx. Ported for Kestrel by NepThunder. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints"
+version = "0.1.1"
+description = "Place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world. N creates a waypoint where you stand (auto-named, coloured from the palette); M lists them with All / Overworld / Nether / End filters, Hide/Show, colour cycling, Move here and Delete; /wp renames, moves, recolours and deletes. Dying can leave a red Death waypoint where it happened. A port of Waypoints by Nirokx. Ported for Kestrel by NepThunder. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints"
 authors = ["NepThunder"]
 api = "0.1"
 side = "client"

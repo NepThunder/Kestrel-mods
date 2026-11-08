@@ -29,7 +29,7 @@ project, not to them. Licence: MIT, the same licence as Waypoints.
 - **Dying leaves a waypoint**: a red `Death 1`, `Death 2`, … waypoint
   marks the block you died on. The newest 5 stay, and the oldest goes
   when you die again; rename one to keep it for good.
-- **`/waypoint` commands**: `add [name]`, `list`, `rename <n> <name>`,
+- **`/wp` commands**: `add [name]`, `list`, `rename <n> <name>`,
   `delete <n>`, `hide <n>`, `show <n>`, `color <n> <colour>`,
   `move <n>`, `dim <n> <overworld|nether|end>`, `help`. Colours take a
   palette name (`red`, `dark-blue`, …) or a hex (`#FF55FF`).
@@ -46,7 +46,7 @@ project, not to them. Licence: MIT, the same licence as Waypoints.
 - **The editor with text fields** — the original's create/edit form
   (name, X/Y/Z, colour swatches, dimension, visible) needs text input,
   which the SDK's widgets do not offer. N creates a waypoint at once
-  with a suggested name; `/waypoint rename`, `move`, `color` and `dim`
+  with a suggested name; `/wp rename`, `move`, `color` and `dim`
   and the list's Colour and Move here buttons do the editing instead.
 - **Per-world storage** — the original keeps a file per single-player
   world folder and per server address. The SDK exposes no world folder

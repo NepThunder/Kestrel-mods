@@ -1,4 +1,4 @@
-# Waypoints: N creates one where you stand (here, `/waypoint add`), M lists
+# Waypoints: N creates one where you stand (here, `/wp add`), M lists
 # them, and a visible waypoint of your dimension shows a box and a beam in
 # the world plus its name and distance on the HUD. The player stands at
 # 0.5 64 0.5 facing south (+z) in the Overworld.
@@ -16,14 +16,14 @@
 [[step]]
 ticks = 1
 [step.expect]
-commands = ["waypoint"]
+commands = ["wp"]
 chat = []
 panel = []
 world-lines = []
 
 # Creating a waypoint answers, and the next tick shows it.
 [[step]]
-command = "waypoint add Home"
+command = "wp add Home"
 expect.feedback = "Waypoint \"Home\" created at 0 64 0 (Overworld)"
 
 [[step]]
@@ -64,7 +64,7 @@ panel = ["Home · 1 m"]
 
 # Hiding it clears both the panel and the markers.
 [[step]]
-command = "waypoint hide 1"
+command = "wp hide 1"
 expect.feedback = "Waypoint 1 hidden"
 
 [[step]]
@@ -74,12 +74,12 @@ panel = []
 world-lines = []
 
 [[step]]
-command = "waypoint show 1"
+command = "wp show 1"
 expect.feedback = "Waypoint 1 shown"
 
 # Renaming it renames the panel line.
 [[step]]
-command = "waypoint rename 1 Base Camp"
+command = "wp rename 1 Base Camp"
 expect.feedback = "Waypoint 1 renamed to \"Base Camp\""
 
 [[step]]
@@ -139,7 +139,7 @@ ticks = 1
 panel = ["Base Camp · 1 m", "Death 1 · 1 m"]
 
 [[step]]
-command = "waypoint delete 2"
+command = "wp delete 2"
 expect.feedback = "Waypoint \"Death 1\" deleted"
 
 [[step]]
@@ -149,11 +149,11 @@ panel = ["Base Camp · 1 m"]
 
 # Bad numbers and unknown verbs are errors, not crashes.
 [[step]]
-command = "waypoint rename 9 Nope"
+command = "wp rename 9 Nope"
 expect.error = "No waypoint 9"
 
 [[step]]
-command = "waypoint frobnicate"
+command = "wp frobnicate"
 expect.error = "Unknown waypoint command frobnicate: add, list, rename, delete, hide, show, color, move, dim"
 
 # Leaving the world clears the panel and the markers.

@@ -14,7 +14,7 @@
 //!
 //! What the SDK cannot do, the original's native build can: the editor
 //! with its text fields (the SDK has no text input widget, so N creates
-//! a waypoint at once with a suggested name and `/waypoint` renames,
+//! a waypoint at once with a suggested name and `/wp` renames,
 //! moves and recolours), per-world storage (the SDK exposes no world
 //! folder or server address, so every world shares one list, filtered by
 //! dimension), and in-world name/distance labels (no world-text
@@ -55,7 +55,7 @@ const PALETTE: [u32; 16] = [
     0xAA00AA, 0xFF55FF, 0xFFFFFF, 0xAAAAAA, 0x555555, 0xAA5500, 0x000000,
 ];
 
-/// The palette's names, in the same order, for `/waypoint color`.
+/// The palette's names, in the same order, for `/wp color`.
 const PALETTE_NAMES: [&str; 16] = [
     "red",
     "orange",
@@ -162,7 +162,7 @@ impl Filter {
     }
 }
 
-/// What `/waypoint ...` asks for, parsed from the line after the name.
+/// What `/wp ...` asks for, parsed from the line after the name.
 #[derive(Clone, Debug, PartialEq)]
 enum Command {
     Add(Option<String>),
@@ -710,7 +710,7 @@ impl Waypoints {
             }));
             widgets.push(Widget::Text(TextWidget {
                 id: 3,
-                text: format!("Rename: /waypoint rename {} <name>", i + 1),
+                text: format!("Rename: /wp rename {} <name>", i + 1),
                 color: 0xAAAAAA,
             }));
         }
@@ -772,7 +772,7 @@ impl Waypoints {
         }
     }
 
-    /// Parses the line after `/waypoint`.
+    /// Parses the line after `/wp`.
     fn parse_command(args: &str) -> Result<Command, String> {
         let mut parts = args.split_whitespace();
         let verb = parts.next().unwrap_or("help");
@@ -1060,7 +1060,7 @@ impl Mod for Waypoints {
             death_recorded: false,
             last_panel: Vec::new(),
         };
-        let hooks = Registration::new().command("waypoint").on_tick().on_frame();
+        let hooks = Registration::new().command("wp").on_tick().on_frame();
         Ok((state, hooks))
     }
 
@@ -1122,7 +1122,7 @@ impl Mod for Waypoints {
     }
 
     fn command(&mut self, name: &str, args: &str) -> Result<Option<String>, String> {
-        if name != "waypoint" {
+        if name != "wp" {
             return Err("This command does nothing".into());
         }
         let command = Waypoints::parse_command(args)?;
