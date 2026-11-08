@@ -1,0 +1,49 @@
+# Jade: /jade hides and shows the tooltip, and the game keeps the choice
+# across a reload (the mod's storage).
+#
+# The sandbox cannot set a raycast hit or a recipes table, so every tick
+# here looks at nothing and the panel stays empty — the tooltip's lines
+# themselves (name, mod, position, distance) are covered by the unit tests
+# in src/lib.rs, which run against a known hit. What this script does
+# prove: the mod starts, the toggle answers, the choice survives a reload,
+# and leaving the world clears the panel.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["jade"]
+panel = []
+
+[[step]]
+command = "jade"
+[step.expect]
+feedback = "Jade tooltip hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+# A reload reads the stored choice back: still hidden, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "jade"
+[step.expect]
+feedback = "Jade tooltip shown"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+# Leaving the world clears the panel.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []

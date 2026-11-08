@@ -1,0 +1,16 @@
+[package]
+name = "jade"
+version = "0.1.0"
+edition.workspace = true
+license = "CC-BY-NC-SA-4.0"
+publish = false
+description = "Jade for Kestrel: the look-at tooltip — the block's name, its mod, its position and distance. A behaviour port of Jade by Snownee and Joeypc6 (block identification only)."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true
