@@ -2,11 +2,15 @@
 # across a reload (the mod's storage).
 #
 # The sandbox cannot set a raycast hit or a recipes table, so every tick
-# here looks at nothing and the panel stays empty — the tooltip's lines
-# themselves (name, mod, position, distance) are covered by the unit tests
-# in src/lib.rs, which run against a known hit. What this script does
-# prove: the mod starts, the toggle answers, the choice survives a reload,
-# and leaving the world clears the panel.
+# here looks at no block and the panel stays empty for the block half —
+# the tooltip's block lines themselves (name, mod, position, distance)
+# are covered by the unit tests in src/lib.rs, which run against a known
+# hit. The entity half IS driven here: the sandbox models the mobs
+# around the player and the mob under the crosshair. What this script
+# does prove: the mod starts, the toggle answers, the choice survives a
+# reload, the entity tooltip shows name, kind, health and distance, the
+# reach switch gates it, a wall hides the mob, multiplayer drops the
+# health line, and leaving the world clears the panel.
 
 [[step]]
 ticks = 1
@@ -38,6 +42,72 @@ feedback = "Jade tooltip shown"
 
 [[step]]
 ticks = 1
+[step.expect]
+panel = []
+
+# The entity half: the player stands at 0.5 64 0.5 facing south (+z)
+# and the eye is 1.62 above the feet. A zombie at z 5.5 fills y 64-65.95,
+# so the level look meets its near face at z 5.2: 4.7 blocks from the eye.
+[[step]]
+ticks = 1
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 14.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+panel = ["Zombie", "minecraft:zombie", "Health 14.0/20.0", "4.7m"]
+
+# Past the 6-block reach the mob shows nothing: its near face is 9.7
+# blocks from the eye, and the reach switch is still on 6.
+[[step]]
+ticks = 1
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 10.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+panel = []
+
+# In multiplayer the same mob shows with no health line: health reads
+# None there, and this port never prints a fake or zero health.
+# (Multiplayer sticks from this step on, so the wall step comes last.)
+[[step]]
+multiplayer = true
+ticks = 1
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 14.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+panel = ["Zombie", "minecraft:zombie", "4.7m"]
+
+# A wall between the player and the mob hides it from the crosshair.
+# The sandbox never sets a raycast hit, so no block tooltip follows
+# here; on a device the wall's own tooltip would show instead.
+[[step]]
+ticks = 1
+blocks = [{ x = 0, y = 65, z = 3, state = "minecraft:stone" }]
 [step.expect]
 panel = []
 
