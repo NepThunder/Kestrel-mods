@@ -1,0 +1,16 @@
+[package]
+name = "speedrun-timer"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Speedrun Timer for Kestrel: an RTA timer in a corner — HH:MM:SS.mmm with live milliseconds, starting on your first move, stopping at the exit portal, saving every finished run and your personal best. A behaviour port of Speedrun Timer by Demerobit."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

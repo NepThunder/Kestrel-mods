@@ -1,0 +1,9 @@
+id = "speedrun_timer"
+name = "Speedrun Timer"
+version = "0.1.0"
+description = "A port of Speedrun Timer by Demerobit. Ported for Kestrel by NepThunder. An RTA timer in a corner of the screen, HH:MM:SS.mmm with live milliseconds: starts on your first move after a world loads, stops when you take the exit portal back from the End, keeps counting when you die, resets when you leave a world, and saves every finished run and your personal best. /speedrun, /speedrun start, /speedrun stop, /speedrun reset. Options > Mods has the corner, the shown and personal-best switches, and a button to view the saved runs. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/speedrun-timer"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "chat", "hud", "storage", "ui"]
+experimental = ["ui"]
