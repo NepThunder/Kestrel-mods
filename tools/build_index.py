@@ -60,6 +60,7 @@ ALLOW_IDS = {
     "crosshair_indicator",
     "lookat",
     "smartf3",
+    "basic_hud",
 }
 
 
