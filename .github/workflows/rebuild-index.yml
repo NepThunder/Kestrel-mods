@@ -33,5 +33,8 @@ jobs:
             echo "index.json unchanged, nothing to commit"
           else
             git commit -m "Rebuild mod index"
-            git push
+            # Release events check out the tag (detached HEAD), so a bare
+            # `git push` has no upstream branch — push the commit to main
+            # explicitly. Manual dispatch checks out main and works either way.
+            git push origin HEAD:main
           fi
