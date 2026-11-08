@@ -62,6 +62,7 @@ ALLOW_IDS = {
     "smartf3",
     "basic_hud",
     "speedrun_timer",
+    "waypoints",
 }
 
 

@@ -1,0 +1,165 @@
+# Waypoints: N creates one where you stand (here, `/waypoint add`), M lists
+# them, and a visible waypoint of your dimension shows a box and a beam in
+# the world plus its name and distance on the HUD. The player stands at
+# 0.5 64 0.5 facing south (+z) in the Overworld.
+#
+# The box of a waypoint at [0, 64, 0] is (0, 64, 0) to (1, 65, 1) and its
+# beam runs (0.5, 64, 0.5) to (0.5, 96, 0.5), both 2 wide in the first
+# palette colour 0xFFFF5555 (4294923605). The box's twelve edges are in
+# `CuboidGizmo.emit`'s order. The distance from the player's feet to the
+# block's centre is 0.5 blocks, which reads as "1 m".
+#
+# What this script does not prove: the N/M keys (the sandbox sends no key
+# events) and the list screen and settings page (the sandbox checks no
+# screens) — those are covered by the unit tests in src/lib.rs.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["waypoint"]
+chat = []
+panel = []
+world-lines = []
+
+# Creating a waypoint answers, and the next tick shows it.
+[[step]]
+command = "waypoint add Home"
+expect.feedback = "Waypoint \"Home\" created at 0 64 0 (Overworld)"
+
+[[step]]
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Home · 1 m"]
+world-lines = [
+  [0.0, 64.0, 0.0, 1.0, 64.0, 0.0, 4294923605, 2.0],
+  [0.0, 64.0, 0.0, 0.0, 65.0, 0.0, 4294923605, 2.0],
+  [0.0, 64.0, 0.0, 0.0, 64.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 0.0, 1.0, 65.0, 0.0, 4294923605, 2.0],
+  [1.0, 65.0, 0.0, 0.0, 65.0, 0.0, 4294923605, 2.0],
+  [0.0, 65.0, 0.0, 0.0, 65.0, 1.0, 4294923605, 2.0],
+  [0.0, 65.0, 1.0, 0.0, 64.0, 1.0, 4294923605, 2.0],
+  [0.0, 64.0, 1.0, 1.0, 64.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 1.0, 1.0, 64.0, 0.0, 4294923605, 2.0],
+  [0.0, 65.0, 1.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 1.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [1.0, 65.0, 0.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [0.5, 64.0, 0.5, 0.5, 96.0, 0.5, 4294923605, 2.0],
+]
+
+# In the Nether the Overworld waypoint is neither listed nor drawn.
+[[step]]
+player = { dimension = "minecraft:the_nether" }
+ticks = 1
+[step.expect]
+panel = []
+world-lines = []
+
+# Back in the Overworld it shows again.
+[[step]]
+player = { dimension = "minecraft:overworld" }
+ticks = 1
+[step.expect]
+panel = ["Home · 1 m"]
+
+# Hiding it clears both the panel and the markers.
+[[step]]
+command = "waypoint hide 1"
+expect.feedback = "Waypoint 1 hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+world-lines = []
+
+[[step]]
+command = "waypoint show 1"
+expect.feedback = "Waypoint 1 shown"
+
+# Renaming it renames the panel line.
+[[step]]
+command = "waypoint rename 1 Base Camp"
+expect.feedback = "Waypoint 1 renamed to \"Base Camp\""
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = ["Base Camp · 1 m"]
+
+# Dying marks where the player last stood alive: a red Death waypoint at
+# the same block, so the panel lists it beside Base Camp and the marker
+# draws twice (same box, beam and colour).
+[[step]]
+player = { health = 0.0 }
+ticks = 1
+[step.expect]
+panel = ["Base Camp · 1 m", "Death 1 · 1 m"]
+world-lines = [
+  [0.0, 64.0, 0.0, 1.0, 64.0, 0.0, 4294923605, 2.0],
+  [0.0, 64.0, 0.0, 0.0, 65.0, 0.0, 4294923605, 2.0],
+  [0.0, 64.0, 0.0, 0.0, 64.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 0.0, 1.0, 65.0, 0.0, 4294923605, 2.0],
+  [1.0, 65.0, 0.0, 0.0, 65.0, 0.0, 4294923605, 2.0],
+  [0.0, 65.0, 0.0, 0.0, 65.0, 1.0, 4294923605, 2.0],
+  [0.0, 65.0, 1.0, 0.0, 64.0, 1.0, 4294923605, 2.0],
+  [0.0, 64.0, 1.0, 1.0, 64.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 1.0, 1.0, 64.0, 0.0, 4294923605, 2.0],
+  [0.0, 65.0, 1.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 1.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [1.0, 65.0, 0.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [0.5, 64.0, 0.5, 0.5, 96.0, 0.5, 4294923605, 2.0],
+  [0.0, 64.0, 0.0, 1.0, 64.0, 0.0, 4294923605, 2.0],
+  [0.0, 64.0, 0.0, 0.0, 65.0, 0.0, 4294923605, 2.0],
+  [0.0, 64.0, 0.0, 0.0, 64.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 0.0, 1.0, 65.0, 0.0, 4294923605, 2.0],
+  [1.0, 65.0, 0.0, 0.0, 65.0, 0.0, 4294923605, 2.0],
+  [0.0, 65.0, 0.0, 0.0, 65.0, 1.0, 4294923605, 2.0],
+  [0.0, 65.0, 1.0, 0.0, 64.0, 1.0, 4294923605, 2.0],
+  [0.0, 64.0, 1.0, 1.0, 64.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 1.0, 1.0, 64.0, 0.0, 4294923605, 2.0],
+  [0.0, 65.0, 1.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 1.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [1.0, 65.0, 0.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [0.5, 64.0, 0.5, 0.5, 96.0, 0.5, 4294923605, 2.0],
+]
+
+# Respawning marks no second death.
+[[step]]
+player = { health = 20.0 }
+ticks = 1
+[step.expect]
+panel = ["Base Camp · 1 m", "Death 1 · 1 m"]
+
+# A reload reads the stored waypoints back: both are still listed.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = ["Base Camp · 1 m", "Death 1 · 1 m"]
+
+[[step]]
+command = "waypoint delete 2"
+expect.feedback = "Waypoint \"Death 1\" deleted"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = ["Base Camp · 1 m"]
+
+# Bad numbers and unknown verbs are errors, not crashes.
+[[step]]
+command = "waypoint rename 9 Nope"
+expect.error = "No waypoint 9"
+
+[[step]]
+command = "waypoint frobnicate"
+expect.error = "Unknown waypoint command frobnicate: add, list, rename, delete, hide, show, color, move, dim"
+
+# Leaving the world clears the panel and the markers.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []
+world-lines = []
