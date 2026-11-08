@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-08T14:51:45Z",
+  "generated": "2026-11-08T15:45:30Z",
   "projects": [
     {
       "id": "appleskin",
@@ -624,7 +624,7 @@
       "kind": "mod",
       "name": "Waypoints",
       "summary": "Place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world.",
-      "description": "Place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world. N creates a waypoint where you stand (auto-named, coloured from the palette); M lists them with All / Overworld / Nether / End filters, Hide/Show, colour cycling, Move here and Delete; /waypoint renames, moves, recolours and deletes. Dying can leave a red Death waypoint where it happened. A port of Waypoints by Nirokx. Ported for Kestrel by NepThunder. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints",
+      "description": "Place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world. N creates a waypoint where you stand (auto-named, coloured from the palette); M lists them with All / Overworld / Nether / End filters, Hide/Show, colour cycling, Move here and Delete; /wp renames, moves, recolours and deletes. Dying can leave a red Death waypoint where it happened. A port of Waypoints by Nirokx. Ported for Kestrel by NepThunder. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints",
       "authors": [
         "NepThunder"
       ],
@@ -635,9 +635,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints",
       "versions": [
         {
-          "version": "0.1.0",
+          "version": "0.1.1",
           "published": "2026-11-08",
-          "changelog": "Waypoints 0.1.0 — place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world. N creates a waypoint where you stand (auto-named, coloured from the palette); M lists them with All / Overworld / Nether / End filters, Hide/Show, colour cycling, Move here and Delete; /waypoint renames, moves, recolours and deletes. Dying can leave a red Death waypoint where it happened.\n\nA port of Waypoints by Nirokx. Ported for Kestrel by NepThunder.\n\nNot in this port: in-world name/distance labels (no world-text capability in v1 — the name and distance live on the HUD panel instead), the editor's text fields (no text input widget — /waypoint does the editing), and per-world storage (no world identity is exposed, so every world shares one list, filtered by dimension).\n\nRuns on Kestrel build 17+ (API level 11).",
+          "changelog": "The command is now /wp. Vanilla owns /waypoint, so the engine refused the mod's command and /waypoint add failed; /wp add, /wp list, /wp rename and the rest now work. N creates a waypoint where you stand, M lists them. Needs Kestrel build 17+ (API level 11).",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -652,9 +652,9 @@
           "game": "26.3",
           "file": {
             "name": "waypoints.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/waypoints-0.1.0/waypoints.kmod",
-            "size": 50798,
-            "sha256": "0ab5c1a420a10de8842279ae29e6976d2abab080e5f71ab875a5c361f1dac58c"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/waypoints-0.1.1/waypoints.kmod",
+            "size": 50795,
+            "sha256": "b630f17a0ed87f854694d4e445b5435b3b339aa6d957a8a323fb9ed5877ae213"
           }
         }
       ]
