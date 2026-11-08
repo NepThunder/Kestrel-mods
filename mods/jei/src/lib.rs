@@ -40,9 +40,9 @@ use horizon_mod_sdk::{
 /// The mod's id.
 pub const ID: &str = "jei";
 pub const NAME: &str = "JEI";
-pub const VERSION: &str = "0.1.0";
+pub const VERSION: &str = "0.1.1";
 
-/// `JEI 0.1.0`, as `/jei` reports it with no world open.
+/// `JEI 0.1.1`, as `/jei` reports it with no world open.
 pub fn about() -> String {
     format!("{NAME} {VERSION}")
 }
@@ -1281,13 +1281,13 @@ horizon_mod_sdk::export_mod!(Jei);
 mod tests {
     #[test]
     fn title_has_name_and_version() {
-        assert_eq!(super::about(), "JEI 0.1.0");
+        assert_eq!(super::about(), "JEI 0.1.1");
     }
 
     #[test]
     fn about_counts_lists_the_tables() {
         let text = super::about_counts(1658, 1234);
-        assert_eq!(text, "JEI 0.1.0: 1658 items, 1234 recipes");
+        assert_eq!(text, "JEI 0.1.1: 1658 items, 1234 recipes");
     }
 
     #[test]
@@ -1959,7 +1959,7 @@ mod tests {
         assert_eq!(viewer.recipe_count(), 1600);
         assert_eq!(
             super::about_counts(viewer.item_count(), viewer.recipe_count()),
-            "JEI 0.1.0: 1500 items, 1600 recipes"
+            "JEI 0.1.1: 1500 items, 1600 recipes"
         );
     }
 }

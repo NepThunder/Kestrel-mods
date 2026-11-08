@@ -11,13 +11,13 @@
 ticks = 1
 command = "jei"
 expect.commands = ["jei"]
-expect.feedback = "JEI 0.1.0: loading..."
+expect.feedback = "JEI 0.1.1: loading..."
 
 [[step]]
 ticks = 3
 command = "jei"
 expect.commands = ["jei"]
-expect.feedback = "JEI 0.1.0: 0 items, 0 recipes"
+expect.feedback = "JEI 0.1.1: 0 items, 0 recipes"
 
 [[step]]
 command = "jei give"
