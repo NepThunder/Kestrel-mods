@@ -59,6 +59,7 @@ ALLOW_IDS = {
     "jade",
     "crosshair_indicator",
     "lookat",
+    "smartf3",
 }
 
 
