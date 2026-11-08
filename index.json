@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-08T14:49:44Z",
+  "generated": "2026-11-08T14:51:45Z",
   "projects": [
     {
       "id": "appleskin",
@@ -378,6 +378,47 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/held-item-info-0.1.0/held_item_info.kmod",
             "size": 35460,
             "sha256": "5b2ae844b2b894679106fab401f51e95a431ea9cf4c1d5eed16069447c69fe2e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hitbox_plus",
+      "kind": "mod",
+      "name": "Hitbox+",
+      "summary": "A port of Hitbox+ by taxtii and itzglecni.",
+      "description": "A port of Hitbox+ by taxtii and itzglecni. Ported for Kestrel by NepThunder. Customizable entity hitboxes: a box takes bright green while your crosshair is on a mob within attack reach (3 blocks, 4.5 for a spear), in your choice of four colours and three thicknesses, with a red eye-level band and a blue look-direction arrow per mob. H toggles the boxes (rebindable), and Options > Mods > Hitbox+ has the same switch plus colour, thickness, eye ray, sprint display and sprint position; the game keeps your choices. A sprint indicator shows in the corner you pick. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/hitbox-plus",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/hitbox-plus",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-08",
+          "changelog": "Hitbox+ 0.1.0 — customizable entity hitboxes: bright green while the mob under your crosshair is within attack reach (3 blocks, 4.5 for a spear), four colours, three thicknesses, a red eye band and a blue look arrow per mob, plus a sprint indicator. H or /hitbox toggles it; settings in Options > Mods.\n\nA port of Hitbox+ by taxtii and itzglecni. Ported for Kestrel by NepThunder.\n\nNot in this port: boxes round non-living entities (dropped items, boats, paintings and the rest) — the entity API lists living mobs only; the exact eye height per mob and the mob's true look direction (no eye height or pitch exposed); creative-mode reach and the true sprinting/swimming state (no game mode or sprint state exposed); the eleven reach colours and rainbow style from the registry blurb (the shipped 1.3.0 source has one in-reach colour and four styles).\n\nRuns on Kestrel build 17+ (API level 11).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "entity",
+            "game-read",
+            "render",
+            "input",
+            "chat",
+            "hud",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "hitbox_plus.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/hitbox-plus-0.1.0/hitbox_plus.kmod",
+            "size": 30368,
+            "sha256": "06d78d0df3272c65e60b445fdcb11b4bbfd538a7c6f2fbaafa71c2f1fb222004"
           }
         }
       ]
