@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-08T13:31:06Z",
+  "generated": "2026-11-08T14:49:44Z",
   "projects": [
     {
       "id": "appleskin",
@@ -574,6 +574,46 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/speedrun-timer-0.1.0/speedrun_timer.kmod",
             "size": 23899,
             "sha256": "0109be587ef26780cdebac98addbcf3a5c4aa9230103ff38b6c9d279a42fcbf6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "waypoints",
+      "kind": "mod",
+      "name": "Waypoints",
+      "summary": "Place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world.",
+      "description": "Place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world. N creates a waypoint where you stand (auto-named, coloured from the palette); M lists them with All / Overworld / Nether / End filters, Hide/Show, colour cycling, Move here and Delete; /waypoint renames, moves, recolours and deletes. Dying can leave a red Death waypoint where it happened. A port of Waypoints by Nirokx. Ported for Kestrel by NepThunder. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-08",
+          "changelog": "Waypoints 0.1.0 — place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world. N creates a waypoint where you stand (auto-named, coloured from the palette); M lists them with All / Overworld / Nether / End filters, Hide/Show, colour cycling, Move here and Delete; /waypoint renames, moves, recolours and deletes. Dying can leave a red Death waypoint where it happened.\n\nA port of Waypoints by Nirokx. Ported for Kestrel by NepThunder.\n\nNot in this port: in-world name/distance labels (no world-text capability in v1 — the name and distance live on the HUD panel instead), the editor's text fields (no text input widget — /waypoint does the editing), and per-world storage (no world identity is exposed, so every world shares one list, filtered by dimension).\n\nRuns on Kestrel build 17+ (API level 11).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "chat",
+            "game-read",
+            "hud",
+            "input",
+            "render",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "waypoints.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/waypoints-0.1.0/waypoints.kmod",
+            "size": 50798,
+            "sha256": "0ab5c1a420a10de8842279ae29e6976d2abab080e5f71ab875a5c361f1dac58c"
           }
         }
       ]
