@@ -1,0 +1,16 @@
+[package]
+name = "lookat"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "LookAt for Kestrel: the block or mob under the crosshair — its name in your language, where it comes from, its position and distance, and a mob's health. A behaviour port of LookAt by d3grando."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true
