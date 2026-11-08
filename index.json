@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-08T15:45:30Z",
+  "generated": "2026-11-08T15:46:58Z",
   "projects": [
     {
       "id": "appleskin",
@@ -546,7 +546,7 @@
       "kind": "mod",
       "name": "SmartF3",
       "summary": "A port of SmartF3 by d3grando.",
-      "description": "A port of SmartF3 by d3grando. Ported for Kestrel by NepThunder. A tidier, configurable F3 debug screen: FPS, coordinates, facing, world (dimension and clock), player (health and food) and the targeted block and entity in one panel in the top-left corner. /smartf3 hides or shows the panel; Options > Mods has a switch per module. Biome, light level, chunk, system, rendering, server, fluid and chart-keys modules are not exposed by the SDK and are not in this port. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/smartf3",
+      "description": "A port of SmartF3 by d3grando. Ported for Kestrel by NepThunder. A tidier, configurable F3 debug screen: FPS, coordinates, facing, world (dimension and clock), light at the player's feet (block and sky light, with the night-spawn verdict), player (health and food) and the targeted block and entity in one panel in the top-left corner. /smartf3 hides or shows the panel; Options > Mods has a switch per module. Biome, chunk, system, rendering, server, fluid and chart-keys modules are not exposed by the SDK and are not in this port. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/smartf3",
       "authors": [
         "NepThunder"
       ],
@@ -557,9 +557,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/smartf3",
       "versions": [
         {
-          "version": "0.1.0",
+          "version": "0.2.0",
           "published": "2026-11-08",
-          "changelog": "SmartF3 0.1.0 (partial) — a tidier, configurable F3 debug screen: FPS, coordinates, facing, world (dimension and clock), player (health and food) and the targeted block and entity in one panel in the top-left corner. /smartf3 hides or shows the panel; Options > Mods has a switch per module.\n\nA port of SmartF3 by d3grando. Ported for Kestrel by NepThunder.\n\nNot in this port: biome, light level, chunk, system, rendering, server, fluid and chart-keys modules — none of that is exposed by the SDK. Per-module colours, columns, reordering and background styles are not in this port either; the SDK HUD is plain text lines in one corner.\n\nRuns on Kestrel build 9+ (API level 10).",
+          "changelog": "SmartF3 0.2.0 — the Light module joins the panel: the block and sky light at the player's feet, one one-position `world.get-lights` call per tick, with the night-spawn verdict in the Overworld (`can spawn at night` where `max(block, sky - 11) <= 7`, `safe at night` elsewhere). Where no light is read — an unloaded or unlit chunk, or multiplayer — the line reads `Light: unknown`, never a guessed number. It is a per-module switch like the others, in Options > Mods > SmartF3.\n\nA port of SmartF3 by d3grando. Ported for Kestrel by NepThunder.\n\nEverything else is unchanged: FPS, coordinates, facing, world (dimension and clock), player (health and food) and the targeted block and entity, with a switch per module.\n\nRuns on Kestrel build 18+ (API level 12). The Light module is singleplayer-only; in multiplayer it reads `Light: unknown`.\n\nStill not in this port: biome, chunk, system, rendering, server, fluid and chart-keys modules.",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -569,14 +569,15 @@
             "render",
             "storage",
             "ui",
-            "recipes"
+            "recipes",
+            "world"
           ],
           "game": "26.3",
           "file": {
             "name": "smartf3.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/smartf3-0.1.0/smartf3.kmod",
-            "size": 40819,
-            "sha256": "57cbe38b6dd98663c55ee05a85f1a4af8607b693605e6427c092c4880dfcebda"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/smartf3-0.2.0/smartf3.kmod",
+            "size": 42107,
+            "sha256": "921327bf114660720b61ee1f85d7fc1086fac8b093aa3454e410532b6cb6bef9"
           }
         }
       ]
