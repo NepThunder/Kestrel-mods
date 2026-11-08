@@ -1,0 +1,9 @@
+id = "hitbox_plus"
+name = "Hitbox+"
+version = "0.1.0"
+description = "A port of Hitbox+ by taxtii and itzglecni. Ported for Kestrel by NepThunder. Customizable entity hitboxes: a box takes bright green while your crosshair is on a mob within attack reach (3 blocks, 4.5 for a spear), in your choice of four colours and three thicknesses, with a red eye-level band and a blue look-direction arrow per mob. H toggles the boxes (rebindable), and Options > Mods > Hitbox+ has the same switch plus colour, thickness, eye ray, sprint display and sprint position; the game keeps your choices. A sprint indicator shows in the corner you pick. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/hitbox-plus"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["entity", "game-read", "render", "input", "chat", "hud", "storage", "ui"]
+experimental = ["entity", "render", "input", "ui"]

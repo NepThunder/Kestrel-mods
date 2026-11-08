@@ -1,0 +1,16 @@
+[package]
+name = "hitbox-plus"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Hitbox+ for Kestrel: customizable entity hitboxes with in-reach colours, thickness, eye rays, and a sprint HUD. A behaviour port of Hitbox+ by taxtii and itzglecni."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

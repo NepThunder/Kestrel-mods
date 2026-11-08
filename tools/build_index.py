@@ -63,6 +63,7 @@ ALLOW_IDS = {
     "basic_hud",
     "speedrun_timer",
     "waypoints",
+    "hitbox_plus",
 }
 
 
