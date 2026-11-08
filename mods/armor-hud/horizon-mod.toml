@@ -1,7 +1,7 @@
 id = "armorhud"
 name = "Armor HUD"
 version = "0.1.0"
-description = "Your worn armor and its durability in a column at the bottom-left of the screen. K shows or hides the durability numbers; a piece about to break flashes. Both switches are also in Options > Mods > Armor HUD. A behaviour port of Armor HUD by Thomas9950; this port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/armor-hud"
+description = "Your worn armor and its durability in a column at the bottom-left of the screen. K shows or hides the durability numbers; a piece about to break flashes. Both switches are also in Options > Mods > Armor HUD. A behaviour port of Armor HUD by Thomas9950; this port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/armor-hud Ported for Kestrel by NepThunder."
 authors = ["NepThunder"]
 api = "0.1"
 side = "client"

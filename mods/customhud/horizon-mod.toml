@@ -1,8 +1,8 @@
 id = "customhud"
 name = "Beautiful Day Counter"
 version = "0.1.0"
-description = "The current survival day, an in-game clock and a day/night cycle bar with four colour themes, the moon phase and a countdown to night or day. Settings on its page in Options > Mods. A port of SCARABOCCHIO100 / sonoFrangu's CustomHUD; milestone days show a rainbow badge (the SDK has no audio, so no milestone sound plays)."
-authors = ["SCARABOCCHIO100 (sonoFrangu), ported for Kestrel"]
+description = "The current survival day, an in-game clock and a day/night cycle bar with four colour themes, the moon phase and a countdown to night or day. Settings on its page in Options > Mods. A port of SCARABOCCHIO100 / sonoFrangu's CustomHUD; milestone days show a rainbow badge (the SDK has no audio, so no milestone sound plays). Ported for Kestrel by NepThunder."
+authors = ["NepThunder"]
 api = "0.1"
 side = "client"
 capabilities = ["game-read", "hud", "storage", "ui"]

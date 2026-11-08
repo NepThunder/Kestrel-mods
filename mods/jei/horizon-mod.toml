@@ -1,8 +1,8 @@
 id = "jei"
 name = "JEI for Horizon"
 version = "0.1.1"
-description = "An item and recipe viewer: every item beside container screens, with search (words, \"quoted phrases\", -exclusions, | alternatives, @namespace, #tag). R over an item shows its recipes, U its uses, with a tab per station and cooking time and XP; Back walks the history, and + fills the crafting grid with a recipe you know. In creative mode a click can give you the item (Mod settings or /jei give). /jei reports the recipe table sizes. A port of JEI for Horizon 0.1.0 by enderliker (MIT), inspired by JustEnoughItems."
-authors = ["enderliker", "NepThunder"]
+description = "An item and recipe viewer: every item beside container screens, with search (words, \"quoted phrases\", -exclusions, | alternatives, @namespace, #tag). R over an item shows its recipes, U its uses, with a tab per station and cooking time and XP; Back walks the history, and + fills the crafting grid with a recipe you know. In creative mode a click can give you the item (Mod settings or /jei give). /jei reports the recipe table sizes. A port of JEI for Horizon 0.1.0 by enderliker (MIT), inspired by JustEnoughItems. Ported for Kestrel by NepThunder."
+authors = ["NepThunder"]
 api = "0.1"
 side = "client"
 capabilities = ["recipes", "ui", "input", "game-read", "chat", "storage"]

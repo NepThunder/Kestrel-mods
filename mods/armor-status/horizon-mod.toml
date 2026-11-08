@@ -1,7 +1,7 @@
 id = "armor_status"
 name = "Armor Status"
 version = "0.1.0"
-description = "Equipped armour and held items with Java durability colours on the HUD: all four armour slots plus the main hand and the off hand, green above 50%, yellow from 25%, orange from 10%, red below 10%. /armor hides or shows the panel; Options > Mods has position, durability format, hand items and stack counts."
+description = "Equipped armour and held items with Java durability colours on the HUD: all four armour slots plus the main hand and the off hand, green above 50%, yellow from 25%, orange from 10%, red below 10%. /armor hides or shows the panel; Options > Mods has position, durability format, hand items and stack counts. Ported for Kestrel by NepThunder."
 authors = ["NepThunder"]
 api = "0.1"
 side = "client"
