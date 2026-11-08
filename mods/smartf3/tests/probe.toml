@@ -1,0 +1,120 @@
+# SmartF3: the full panel, then the crosshair target, then multiplayer,
+# then the panel hides with /smartf3 and stays hidden across a reload.
+#
+# The player stands at 0.5 64 0.5 facing south (+z), full health and food,
+# at the first tick of a new world's first morning. The script harness
+# has no frame-stats step, so FPS reads 0 here; the FPS line's real values
+# are covered by the unit tests in src/lib.rs and by a direct sandbox run.
+# It likewise has no view-hit step and its snapshot never sets one, so it
+# cannot put a block under the crosshair: the targeted-block lines are
+# covered the same way.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["smartf3"]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 0.5 / 64.0 / 0.5",
+  "Facing South (+Z)  yaw 0.0  pitch 0.0",
+  "Dimension minecraft:overworld",
+  "Day 1, 06:00",
+  "Health 20.0/20.0",
+  "Food 20",
+  "Target block: none",
+  "Target: none",
+]
+
+# A hurt zombie under the crosshair: the target line carries its health.
+[[step]]
+ticks = 1
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 14.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 0.5 / 64.0 / 0.5",
+  "Facing South (+Z)  yaw 0.0  pitch 0.0",
+  "Dimension minecraft:overworld",
+  "Day 1, 06:00",
+  "Health 20.0/20.0",
+  "Food 20",
+  "Target block: none",
+  "Target: Zombie (minecraft:zombie) 4.7 blocks 14.0/20.0",
+]
+
+# Multiplayer: the same zombie is still the target, but its health reads
+# as none, so the line carries no health at all.
+[[step]]
+ticks = 1
+multiplayer = true
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 14.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 0.5 / 64.0 / 0.5",
+  "Facing South (+Z)  yaw 0.0  pitch 0.0",
+  "Dimension minecraft:overworld",
+  "Day 1, 06:00",
+  "Health 20.0/20.0",
+  "Food 20",
+  "Target block: none",
+  "Target: Zombie (minecraft:zombie) 4.7 blocks",
+]
+
+[[step]]
+command = "smartf3"
+expect.feedback = "SmartF3 panel hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+# A reload reads the stored choice back: still hidden, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "smartf3"
+expect.feedback = "SmartF3 panel shown"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 0.5 / 64.0 / 0.5",
+  "Facing South (+Z)  yaw 0.0  pitch 0.0",
+  "Dimension minecraft:overworld",
+  "Day 1, 06:00",
+  "Health 20.0/20.0",
+  "Food 20",
+  "Target block: none",
+  "Target: Zombie (minecraft:zombie) 4.7 blocks",
+]
