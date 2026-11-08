@@ -1,0 +1,16 @@
+[package]
+name = "held-item-info"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Held Item Info for Kestrel: the selected item's remaining/maximum durability, stack count and up to six enchantment names on the HUD. A behaviour port of Held Item Info by AltMugen."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

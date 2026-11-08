@@ -1,0 +1,72 @@
+# Held Item Info: a damaged, enchanted diamond sword in the selected slot
+# shows its name, remaining/maximum durability and enchantments on one line
+# in the bottom-left corner; a stack of torches shows its count; an empty
+# hand shows nothing. /helditem hides the line, and a second /helditem
+# shows it again; a reload reads the stored choice back.
+#
+# The enchantment names are not in this script's vocabulary to translate:
+# the mod maps the ids in the components string to English names itself,
+# covered by the unit tests in src/lib.rs (including the six-enchantment
+# cap and unknown ids).
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 0, id = "minecraft:diamond_sword", count = 1, damage = 61, max-damage = 1561, components = '[enchantments={levels:{"minecraft:sharpness":5,"minecraft:unbreaking":3}}]' },
+]
+[step.expect]
+panel = ["Diamond Sword · 1500 / 1561 · Sharpness 5 · Unbreaking 3"]
+corner = "bottom-left"
+
+# A stack of torches in the selected slot shows its count, and nothing else.
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 0, id = "minecraft:torch", count = 64 },
+]
+[step.expect]
+panel = ["Torch · ×64"]
+corner = "bottom-left"
+
+# An empty hand shows nothing.
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = []
+[step.expect]
+panel = []
+
+[[step]]
+command = "helditem"
+expect.feedback = "Held Item Info panel hidden"
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 0, id = "minecraft:diamond_sword", count = 1, damage = 61, max-damage = 1561, components = '[enchantments={levels:{"minecraft:sharpness":5,"minecraft:unbreaking":3}}]' },
+]
+[step.expect]
+panel = []
+
+[[step]]
+command = "helditem"
+expect.feedback = "Held Item Info panel shown"
+
+# A reload reads the stored choice back: still shown, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = ["Diamond Sword · 1500 / 1561 · Sharpness 5 · Unbreaking 3"]
+corner = "bottom-left"

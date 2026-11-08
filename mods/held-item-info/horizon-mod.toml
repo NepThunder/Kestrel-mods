@@ -1,0 +1,9 @@
+id = "held_item_info"
+name = "Held Item Info"
+version = "0.1.0"
+description = "The selected item's remaining/maximum durability, stack count and up to six enchantment names on the HUD: one line for the held item, nothing when it has nothing to say. /helditem hides or shows the line, and Options > Mods has the same switch. A port of Held Item Info by AltMugen. Ported for Kestrel by NepThunder. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/held-item-info"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["inventory", "hud", "storage", "ui"]
+experimental = ["inventory", "ui"]
