@@ -1,9 +1,10 @@
-//! Jade for Kestrel: the look-at tooltip, block identification only.
+//! Jade for Kestrel: the look-at tooltip, blocks and entities.
 //!
-//! Look at a block and a panel at the top-left shows its name, its mod, its
-//! position and how far away it is. `/jade` hides or shows the panel, and
-//! Options > Mods > Jade has the same switch; the game keeps the choice in
-//! the mod's storage.
+//! Look at a block or a mob and a panel at the top-left shows what it is:
+//! a block's name, its mod, its position and how far away it is; a mob's
+//! name, its kind, its health and how far away it is. `/jade` hides or
+//! shows the panel, and Options > Mods > Jade has the same switch; the
+//! game keeps the choice in the mod's storage.
 //!
 //! A behaviour port of Jade by Snownee (https://github.com/Snownee/Jade)
 //! and Jade for Horizon by Joeypc6 (https://github.com/Joeypc6/Jade-Horizon),
@@ -14,17 +15,20 @@
 //!
 //! What the SDK exposes, and what this port therefore shows, is the block
 //! the player's view hits (`game.raycast`, out to the reach switch: 6, 20
-//! or 64 blocks, 6 by default) and its translated name (`recipes.items`).
-//! What Jade also shows
-//! that this port cannot: entities and their health, block states and
-//! progress (crops, furnaces, machines), provider plugins, themes, config
-//! screens beyond the on/off and reach switches, and the `/jadec` command. The
-//! panel sits at the top-left because the SDK's HUD only offers corners;
-//! Jade's own overlay is centred at the top.
+//! or 64 blocks, 6 by default) and its translated name (`recipes.items`),
+//! and the mob under the crosshair (`entity.targeted`, out to the same
+//! reach; health reads only in singleplayer — in multiplayer the panel
+//! shows the mob with no health line). What Jade also shows
+//! that this port cannot: block states and progress (crops, furnaces,
+//! machines), provider plugins, themes, config screens beyond the on/off
+//! and reach switches, and the `/jadec` command. The panel sits at the
+//! top-left because the SDK's HUD only offers corners; Jade's own overlay
+//! is centred at the top.
 use std::collections::HashMap;
 
 use horizon_mod_sdk::{
     Mod, Registration,
+    entity::{self, Target},
     game::{self, Hit, Player},
     hud::{self, Corner, Line},
     recipes, storage,
@@ -130,6 +134,21 @@ fn tooltip_lines(p: &Player, hit: &Hit, names: &HashMap<String, String>) -> Vec<
     ]
 }
 
+/// The tooltip's lines for the mob under the crosshair: its name, its
+/// kind, its health out of its maximum, and how far away it is — the
+/// distance the SDK reports, eye to hit point. Health is `None` where the
+/// client cannot vouch for it (multiplayer in v1): then the panel shows
+/// the mob with no health line at all, never a fake or zero one.
+fn entity_tooltip_lines(target: &Target) -> Vec<String> {
+    let e = &target.entity;
+    let mut lines = vec![e.name.clone(), e.kind.clone()];
+    if let Some(health) = e.health {
+        lines.push(format!("Health {health:.1}/{:.1}", e.max_health));
+    }
+    lines.push(format!("{:.1}m", target.distance));
+    lines
+}
+
 /// The stored `shown` value: shown unless it says `false`.
 fn read_shown(stored: Option<Vec<u8>>) -> bool {
     stored.is_none_or(|v| v != b"false")
@@ -221,12 +240,18 @@ impl Mod for Jade {
 
     fn tick(&mut self, _tick: u64) {
         let now = match game::get_player().filter(|_| self.shown) {
-            Some(p) => match game::raycast(self.reach) {
-                Some(hit) => {
-                    let names = self.names();
-                    tooltip_lines(&p, &hit, names)
-                }
-                None => Vec::new(),
+            Some(p) => match entity::targeted(self.reach) {
+                // A mob under the crosshair comes first: the SDK's
+                // targeted hit is before any block, and out to the same
+                // reach as the block half.
+                Some(target) => entity_tooltip_lines(&target),
+                None => match game::raycast(self.reach) {
+                    Some(hit) => {
+                        let names = self.names();
+                        tooltip_lines(&p, &hit, names)
+                    }
+                    None => Vec::new(),
+                },
             },
             None => Vec::new(),
         };
@@ -274,7 +299,10 @@ horizon_mod_sdk::export_mod!(Jade);
 #[cfg(test)]
 mod tests {
     use super::*;
-    use horizon_mod_sdk::game::Hit;
+    use horizon_mod_sdk::{
+        entity::{Entity, Target},
+        game::Hit,
+    };
 
     fn player() -> Player {
         Player {
@@ -409,5 +437,80 @@ mod tests {
         assert_eq!(next_reach(6.0), 20.0);
         assert_eq!(next_reach(20.0), 64.0);
         assert_eq!(next_reach(64.0), 6.0);
+    }
+
+    fn targeted_mob(
+        name: &str,
+        kind: &str,
+        health: Option<f32>,
+        max_health: f32,
+        distance: f32,
+    ) -> Target {
+        Target {
+            entity: Entity {
+                id: 1,
+                kind: kind.into(),
+                name: name.into(),
+                x: 0.5,
+                y: 64.0,
+                z: 5.5,
+                vx: 0.0,
+                vy: 0.0,
+                vz: 0.0,
+                yaw: 0.0,
+                health,
+                max_health,
+                width: 0.6,
+                height: 1.95,
+                on_ground: true,
+                custom_name: None,
+                baby: false,
+            },
+            distance,
+        }
+    }
+
+    #[test]
+    fn entity_tooltip_shows_name_kind_health_and_distance() {
+        assert_eq!(
+            entity_tooltip_lines(&targeted_mob(
+                "Zombie",
+                "minecraft:zombie",
+                Some(14.0),
+                20.0,
+                4.7
+            )),
+            ["Zombie", "minecraft:zombie", "Health 14.0/20.0", "4.7m",]
+        );
+    }
+
+    #[test]
+    fn entity_tooltip_without_health_has_no_health_line() {
+        // Multiplayer in v1, and a player under the crosshair: health
+        // reads None, so the panel shows name, kind and distance only —
+        // never a fake or zero health.
+        assert_eq!(
+            entity_tooltip_lines(&targeted_mob("Zombie", "minecraft:zombie", None, 20.0, 4.7)),
+            ["Zombie", "minecraft:zombie", "4.7m",]
+        );
+        assert_eq!(
+            entity_tooltip_lines(&targeted_mob("Steve", "minecraft:player", None, 20.0, 2.7)),
+            ["Steve", "minecraft:player", "2.7m",]
+        );
+    }
+
+    #[test]
+    fn entity_tooltip_uses_the_display_name_not_the_kind() {
+        // A named sheep shows its custom name first, then its kind.
+        assert_eq!(
+            entity_tooltip_lines(&targeted_mob(
+                "Dolly",
+                "minecraft:sheep",
+                Some(8.0),
+                8.0,
+                5.0
+            )),
+            ["Dolly", "minecraft:sheep", "Health 8.0/8.0", "5.0m",]
+        );
     }
 }
