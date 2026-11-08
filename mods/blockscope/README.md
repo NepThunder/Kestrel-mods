@@ -14,8 +14,8 @@ box in the top-right corner.
   crosshair meets the block, as the original measures it.
 - Nothing shows when you look at no block within reach.
 - `/blockscope` hides or shows the box. Options > Mods > Blockscope has
-  the same switch, a coordinates switch and a reach switch (5, 20 or
-  64 blocks); the game keeps the choices.
+  the same switch, a coordinates switch and a reach switch (5, 20, 64 or
+  128 blocks); the game keeps the choices.
 
 ## What is missing
 

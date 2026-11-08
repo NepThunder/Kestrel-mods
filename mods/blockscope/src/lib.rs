@@ -3,7 +3,7 @@
 //! in the top-right corner. Nothing shows when you look at no block within
 //! reach. `/blockscope` hides or shows the box, and Options > Mods >
 //! Blockscope has the same switch, a coordinates switch and a reach switch
-//! (5, 20 or 64 blocks); the game keeps the choices in the mod's storage.
+//! (5, 20, 64 or 128 blocks); the game keeps the choices in the mod's storage.
 //!
 //! Behaviour reimplemented from Blockscope by Domanffe (Alexander), MIT,
 //! Copyright (c) 2026 Alexander (Domanffe); this file shares no code with
@@ -47,7 +47,7 @@ const COORDS_BUTTON: u32 = 1;
 const REACH_BUTTON: u32 = 2;
 
 /// The reaches the switch cycles through, in blocks; 5 is vanilla reach.
-const REACHES: [f32; 3] = [5.0, 20.0, 64.0];
+const REACHES: [f32; 4] = [5.0, 20.0, 64.0, 128.0];
 
 struct Blockscope {
     shown: bool,
@@ -130,6 +130,12 @@ fn reach_label(reach: f32) -> String {
     format!("Reach: {} blocks", reach as u32)
 }
 
+/// The next reach in the switch's cycle, wrapping back to the first.
+fn next_reach(reach: f32) -> f32 {
+    let i = REACHES.iter().position(|r| *r == reach).unwrap_or(0);
+    REACHES[(i + 1) % REACHES.len()]
+}
+
 impl Blockscope {
     fn name_for(&self, block: &str) -> String {
         self.names
@@ -168,8 +174,7 @@ impl Blockscope {
     }
 
     fn cycle_reach(&mut self) {
-        let i = REACHES.iter().position(|r| *r == self.reach).unwrap_or(0);
-        self.reach = REACHES[(i + 1) % REACHES.len()];
+        self.reach = next_reach(self.reach);
         let _ = storage::set(REACH_KEY, self.reach.to_string().as_bytes());
         self.refresh_settings();
     }
@@ -378,10 +383,15 @@ mod tests {
         assert_eq!(read_reach(None), 5.0);
         assert_eq!(read_reach(Some(b"20".to_vec())), 20.0);
         assert_eq!(read_reach(Some(b"64".to_vec())), 64.0);
+        assert_eq!(read_reach(Some(b"128".to_vec())), 128.0);
         // A stored reach the switch never offers falls back to 5.
         assert_eq!(read_reach(Some(b"1024".to_vec())), 5.0);
         assert_eq!(shown_label(false), "Shown: OFF");
         assert_eq!(coords_label(true), "Coordinates: ON");
         assert_eq!(reach_label(20.0), "Reach: 20 blocks");
+        // The cycle steps through all four and wraps back to 5.
+        assert_eq!(next_reach(5.0), 20.0);
+        assert_eq!(next_reach(64.0), 128.0);
+        assert_eq!(next_reach(128.0), 5.0);
     }
 }
