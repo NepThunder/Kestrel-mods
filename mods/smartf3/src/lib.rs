@@ -1,7 +1,7 @@
 //! SmartF3 for Kestrel: a tidier, configurable F3 debug screen — the same
 //! information grouped into modules you can turn off, in one panel in the
-//! top-left corner. `/smartf3` hides or shows the panel, and Options > Mods
-//! > SmartF3 has a switch per module; the game keeps the choices in the
+//! top-left corner. `/smartf3` hides or shows the panel, and Options \> Mods
+//! \> SmartF3 has a switch per module; the game keeps the choices in the
 //! mod's storage.
 //!
 //! Behaviour reimplemented from SmartF3 by d3grando, MIT, source
@@ -9,9 +9,10 @@
 //! the original. The original groups the same information into 14 modules
 //! (FPS, server, coordinates, chunk, facing, world, biome, light, chart
 //! keys, system, rendering, targeted block, fluid, entity); this port
-//! shows the six the SDK exposes — FPS (`render.frame-stats`), the
+//! shows the seven the SDK exposes — FPS (`render.frame-stats`), the
 //! coordinates, facing and world (dimension and clock) from `game-read`,
-//! the targeted block from `game.raycast` and the targeted entity from
+//! the light at the player's feet from `world.get-lights`, the targeted
+//! block from `game.raycast` and the targeted entity from
 //! `entity.targeted` — plus the player's health and food, which
 //! `game-read` exposes alongside the position — and lists the rest as
 //! missing in the README, with the reason each one is out of reach. This port's
@@ -25,23 +26,26 @@ use horizon_mod_sdk::{
     render::FrameRate,
     storage,
     ui::{self, ButtonWidget, Widget},
+    world::{self, BlockPos, LightValue},
 };
 
 /// The newest API level this mod needs, asserted in the tests below:
-/// `entity.targeted` is level 10, the newest function it imports
-/// (`recipes.items` is level 5, `game.raycast` level 2,
-/// `render.frame-stats` level 0; `crates/horizon-mods/src/api_level.rs`).
+/// `world.get-lights` is level 12, the newest function it imports
+/// (`entity.targeted` is level 10, `recipes.items` level 5,
+/// `game.raycast` level 2, `render.frame-stats` level 0;
+/// `crates/horizon-mods/src/api_level.rs`).
 #[cfg(test)]
-const API_LEVEL: u32 = 10;
+const API_LEVEL: u32 = 12;
 
 /// The storage key for whether the panel shows.
 const SHOWN_KEY: &str = "shown";
 
-/// The storage keys for the seven module switches.
+/// The storage keys for the eight module switches.
 const MOD_FPS_KEY: &str = "mod_fps";
 const MOD_COORDS_KEY: &str = "mod_coords";
 const MOD_FACING_KEY: &str = "mod_facing";
 const MOD_WORLD_KEY: &str = "mod_world";
+const MOD_LIGHT_KEY: &str = "mod_light";
 const MOD_PLAYER_KEY: &str = "mod_player";
 const MOD_BLOCK_KEY: &str = "mod_block";
 const MOD_ENTITY_KEY: &str = "mod_entity";
@@ -52,9 +56,10 @@ const FPS_BUTTON: u32 = 1;
 const COORDS_BUTTON: u32 = 2;
 const FACING_BUTTON: u32 = 3;
 const WORLD_BUTTON: u32 = 4;
-const PLAYER_BUTTON: u32 = 5;
-const BLOCK_BUTTON: u32 = 6;
-const ENTITY_BUTTON: u32 = 7;
+const LIGHT_BUTTON: u32 = 5;
+const PLAYER_BUTTON: u32 = 6;
+const BLOCK_BUTTON: u32 = 7;
+const ENTITY_BUTTON: u32 = 8;
 
 /// How far the crosshair reaches for the targeted block and entity, in
 /// blocks: far enough to name what the player looks at, not just what
@@ -68,6 +73,7 @@ struct Modules {
     coords: bool,
     facing: bool,
     world: bool,
+    light: bool,
     player: bool,
     block: bool,
     entity: bool,
@@ -81,6 +87,7 @@ impl Modules {
             coords: true,
             facing: true,
             world: true,
+            light: true,
             player: true,
             block: true,
             entity: true,
@@ -185,6 +192,37 @@ fn entity_line(target: Option<&Target>) -> String {
     }
 }
 
+/// The Light module's line: the block and sky light at the player's
+/// feet, as the game stores them, with the night-spawn verdict in the
+/// Overworld — mobs can spawn where `max(block, sky - 11) <= 7`, the
+/// light test behind vanilla's spawn rule (the random roll means a
+/// spawnable spot is a chance, not a promise). Outside the Overworld
+/// the night rule does not apply the same way, so the line carries the
+/// two numbers only. `None` — no chunk loaded there, its light not
+/// computed yet, or multiplayer, where the game lends no world — reads
+/// as unknown, never as a guessed number.
+fn light_line(light: Option<&LightValue>, dimension: &str) -> String {
+    match light {
+        None => "Light: unknown".to_string(),
+        Some(v) => {
+            let base = format!("Light {} block / {} sky", v.block, v.sky);
+            if dimension == "minecraft:overworld" {
+                let effective = (v.block as i16).max(v.sky as i16 - 11);
+                format!(
+                    "{base} ({})",
+                    if effective <= 7 {
+                        "can spawn at night"
+                    } else {
+                        "safe at night"
+                    }
+                )
+            } else {
+                base
+            }
+        }
+    }
+}
+
 /// The panel's lines for one tick's readings, in module order.
 #[allow(clippy::too_many_arguments)]
 fn build_lines(
@@ -194,6 +232,7 @@ fn build_lines(
     hit: Option<&Hit>,
     block_name: &str,
     target: Option<&Target>,
+    light: Option<&LightValue>,
     modules: Modules,
 ) -> Vec<String> {
     let mut lines = Vec::new();
@@ -220,6 +259,9 @@ fn build_lines(
             lines.push(time_of_day(clock));
         }
     }
+    if modules.light {
+        lines.push(light_line(light, &player.dimension));
+    }
     if modules.player {
         lines.push(format!("Health {:.1}/20.0", player.health));
         lines.push(format!("Food {}", player.food));
@@ -243,6 +285,7 @@ fn read_modules() -> Modules {
         coords: read_bool(storage::get(MOD_COORDS_KEY), true),
         facing: read_bool(storage::get(MOD_FACING_KEY), true),
         world: read_bool(storage::get(MOD_WORLD_KEY), true),
+        light: read_bool(storage::get(MOD_LIGHT_KEY), true),
         player: read_bool(storage::get(MOD_PLAYER_KEY), true),
         block: read_bool(storage::get(MOD_BLOCK_KEY), true),
         entity: read_bool(storage::get(MOD_ENTITY_KEY), true),
@@ -294,6 +337,7 @@ impl SmartF3 {
             MOD_COORDS_KEY => self.modules.coords = on,
             MOD_FACING_KEY => self.modules.facing = on,
             MOD_WORLD_KEY => self.modules.world = on,
+            MOD_LIGHT_KEY => self.modules.light = on,
             MOD_PLAYER_KEY => self.modules.player = on,
             MOD_BLOCK_KEY => self.modules.block = on,
             MOD_ENTITY_KEY => self.modules.entity = on,
@@ -326,6 +370,10 @@ impl SmartF3 {
             Widget::Button(ButtonWidget {
                 id: WORLD_BUTTON,
                 label: module_label("World", m.world),
+            }),
+            Widget::Button(ButtonWidget {
+                id: LIGHT_BUTTON,
+                label: module_label("Light", m.light),
             }),
             Widget::Button(ButtonWidget {
                 id: PLAYER_BUTTON,
@@ -375,6 +423,26 @@ impl Mod for SmartF3 {
             .as_ref()
             .map(|h| self.name_for(&h.block))
             .unwrap_or_default();
+        // The light at the player's feet: one one-position `get-lights`
+        // call per tick, only while the module is on — the game lends
+        // the world on the tick only, so a frame, chat or command hook
+        // would read `None` here.
+        let light = if self.modules.light {
+            let (fx, fy, fz) = (p.x.floor() as i32, p.y.floor() as i32, p.z.floor() as i32);
+            world::get_lights(
+                &p.dimension,
+                &[BlockPos {
+                    x: fx,
+                    y: fy,
+                    z: fz,
+                }],
+            )
+            .into_iter()
+            .next()
+            .and_then(|r| r.light)
+        } else {
+            None
+        };
         let now = build_lines(
             &p,
             game::get_clock().as_ref(),
@@ -382,6 +450,7 @@ impl Mod for SmartF3 {
             hit.as_ref(),
             &block_name,
             entity::targeted(REACH).as_ref(),
+            light.as_ref(),
             self.modules,
         );
         if now != self.last {
@@ -417,6 +486,7 @@ impl Mod for SmartF3 {
             COORDS_BUTTON => self.set_module(MOD_COORDS_KEY, !self.modules.coords),
             FACING_BUTTON => self.set_module(MOD_FACING_KEY, !self.modules.facing),
             WORLD_BUTTON => self.set_module(MOD_WORLD_KEY, !self.modules.world),
+            LIGHT_BUTTON => self.set_module(MOD_LIGHT_KEY, !self.modules.light),
             PLAYER_BUTTON => self.set_module(MOD_PLAYER_KEY, !self.modules.player),
             BLOCK_BUTTON => self.set_module(MOD_BLOCK_KEY, !self.modules.block),
             ENTITY_BUTTON => self.set_module(MOD_ENTITY_KEY, !self.modules.entity),
@@ -502,11 +572,12 @@ mod tests {
     }
 
     #[test]
-    fn api_level_is_ten() {
-        // Newest imported function is `entity.targeted` (level 10);
-        // `recipes.items` is level 5, `game.raycast` level 2,
-        // `render.frame-stats` level 0, the rest level 0.
-        assert_eq!(API_LEVEL, 10);
+    fn api_level_is_twelve() {
+        // Newest imported function is `world.get-lights` (level 12);
+        // `entity.targeted` is level 10, `recipes.items` level 5,
+        // `game.raycast` level 2, `render.frame-stats` level 0, the rest
+        // level 0.
+        assert_eq!(API_LEVEL, 12);
     }
 
     #[test]
@@ -596,6 +667,55 @@ mod tests {
     }
 
     #[test]
+    fn light_line_shows_block_sky_and_the_night_verdict() {
+        // Bright torchlight: neither half lets a mob spawn at night.
+        assert_eq!(
+            light_line(
+                Some(&LightValue { block: 14, sky: 15 }),
+                "minecraft:overworld"
+            ),
+            "Light 14 block / 15 sky (safe at night)"
+        );
+        // Dark at night: the sky half falls to 4 after darkening, so a
+        // mob can spawn — the verdict follows the effective value,
+        // `max(block, sky - 11)`, not either half alone.
+        assert_eq!(
+            light_line(
+                Some(&LightValue { block: 0, sky: 15 }),
+                "minecraft:overworld"
+            ),
+            "Light 0 block / 15 sky (can spawn at night)"
+        );
+        // The boundary: an effective 7 still spawns, an 8 does not.
+        assert_eq!(
+            light_line(
+                Some(&LightValue { block: 7, sky: 0 }),
+                "minecraft:overworld"
+            ),
+            "Light 7 block / 0 sky (can spawn at night)"
+        );
+        assert_eq!(
+            light_line(
+                Some(&LightValue { block: 8, sky: 0 }),
+                "minecraft:overworld"
+            ),
+            "Light 8 block / 0 sky (safe at night)"
+        );
+        // Outside the Overworld the night rule does not apply the same
+        // way, so the line carries the two numbers only.
+        assert_eq!(
+            light_line(
+                Some(&LightValue { block: 0, sky: 0 }),
+                "minecraft:the_nether"
+            ),
+            "Light 0 block / 0 sky"
+        );
+        // No read at all — unloaded, unlit, or multiplayer — is unknown,
+        // never a guessed number.
+        assert_eq!(light_line(None, "minecraft:overworld"), "Light: unknown");
+    }
+
+    #[test]
     fn all_modules_on_build_the_full_panel() {
         let lines = build_lines(
             &player(),
@@ -604,6 +724,7 @@ mod tests {
             Some(&hit()),
             "Grass Block",
             Some(&target(Some(14.0))),
+            Some(&LightValue { block: 14, sky: 15 }),
             Modules::all_on(),
         );
         assert_eq!(
@@ -614,6 +735,7 @@ mod tests {
                 "Facing South (+Z)  yaw 0.0  pitch 0.0",
                 "Dimension minecraft:overworld",
                 "Day 1, 06:00",
+                "Light 14 block / 15 sky (safe at night)",
                 "Health 20.0/20.0",
                 "Food 20",
                 "Grass Block",
@@ -622,7 +744,7 @@ mod tests {
                 "Target: Zombie (minecraft:zombie) 4.7 blocks 14.0/20.0",
             ]
         );
-        // Eleven lines: inside the HUD panel's 16-line cap.
+        // Twelve lines: inside the HUD panel's 16-line cap.
         assert!(lines.len() <= 16);
     }
 
@@ -633,6 +755,7 @@ mod tests {
             coords: false,
             facing: false,
             world: false,
+            light: false,
             player: false,
             block: false,
             entity: false,
@@ -645,6 +768,7 @@ mod tests {
                 Some(&hit()),
                 "Grass Block",
                 Some(&target(Some(14.0))),
+                Some(&LightValue { block: 14, sky: 15 }),
                 off,
             )
             .is_empty()
@@ -655,6 +779,7 @@ mod tests {
             coords: false,
             facing: false,
             world: false,
+            light: false,
             player: false,
             block: false,
             entity: true,
@@ -667,6 +792,7 @@ mod tests {
                 None,
                 "",
                 Some(&target(None)),
+                None,
                 some,
             ),
             [
@@ -678,8 +804,23 @@ mod tests {
         // dimension but no clock line.
         let world_only = Modules { world: true, ..off };
         assert_eq!(
-            build_lines(&player(), None, &frame(), None, "", None, world_only),
+            build_lines(&player(), None, &frame(), None, "", None, None, world_only),
             ["Dimension minecraft:overworld"]
+        );
+        // Only Light, with no read: one line, unknown.
+        let light_only = Modules { light: true, ..off };
+        assert_eq!(
+            build_lines(
+                &player(),
+                Some(&clock(0)),
+                &frame(),
+                None,
+                "",
+                None,
+                None,
+                light_only
+            ),
+            ["Light: unknown"]
         );
     }
 

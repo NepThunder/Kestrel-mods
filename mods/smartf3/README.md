@@ -18,6 +18,17 @@ default):
   name and the raw yaw and pitch, as F3 shows them.
 - **World** — `Dimension minecraft:overworld` and `Day 1, 06:00`: the
   dimension and the world clock.
+- **Light** — `Light 14 block / 15 sky (safe at night)`: the block and
+  sky light at the player's feet, from `world.get-lights`, one
+  one-position call per tick. In the Overworld the line also carries
+  the night-spawn verdict — `can spawn at night` where
+  `max(block, sky - 11) <= 7`, `safe at night` elsewhere (the random
+  roll means a spawnable spot is a chance, not a promise); outside the
+  Overworld the night rule does not apply the same way, so the line
+  carries the two numbers only. Where no light is read — no chunk
+  loaded there, its light not computed yet, or multiplayer, where the
+  game lends no world — the line reads `Light: unknown`, never a
+  guessed number.
 - **Player** — `Health 20.0/20.0` and `Food 20`.
 - **Target block** — the block under the crosshair: its name in your
   language, its id, and its distance with its coordinates
@@ -35,16 +46,18 @@ the mod's storage.
 
 ## Requirements
 
-Needs a Kestrel build with the SDK entity interface (API level 10,
-build 9+). The targeted-entity module works in multiplayer too; the
-health line is singleplayer-only, as above.
+Needs a Kestrel build with the SDK light interface (API level 12,
+build 18+). The targeted-entity module works in multiplayer too; the
+health line is singleplayer-only, as above. The Light module is
+singleplayer-only as well: in multiplayer it reads `Light: unknown`,
+because the game lends no world there.
 
 ## What is missing, and why
 
-The original has 14 modules. Six of them are in this port — FPS,
-coordinates, facing, world, targeted block and targeted entity — plus
+The original has 14 modules. Seven of them are in this port — FPS,
+coordinates, facing, world, light, targeted block and targeted entity — plus
 the player's health and food, which `game-read` exposes alongside the
-position. The other eight cannot be built on the SDK as it stands:
+position. The other seven cannot be built on the SDK as it stands:
 
 - **Server** — no server information is exposed to a client mod: no
   server address, no ping, no player count. The `players` capability is
@@ -54,12 +67,9 @@ position. The other eight cannot be built on the SDK as it stands:
   not exposed. (Chunk coordinates are arithmetic on the position, but
   the module is the chunk's load state as well, which the SDK does not
   expose, so the module is left out whole rather than half-built.)
-- **Biome** — `world.get-biome` exists, but only for a client mod in
-  singleplayer and only where a chunk is loaded, and the port does not
-  take the `world` capability for one line; the biome module stays out
-  until a world-reading module needs that capability anyway.
-- **Light** — block light and sky light at the player's position are
-  not exposed by any SDK interface.
+- **Biome** — `world.get-biome` exists, and the port now takes the
+  `world` capability for the Light module, so the biome module rides
+  on the same capability — but it is a later change, not this one.
 - **System** — CPU, GPU, memory and Java version are not exposed by
   any SDK interface.
 - **Rendering** — render distance, chunk counts, entity counts and the
