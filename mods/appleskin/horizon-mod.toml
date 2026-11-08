@@ -1,0 +1,9 @@
+id = "appleskin"
+name = "AppleSkin"
+version = "0.1.0"
+description = "A port of AppleSkin by soufi (a port of AppleSkin by squeek502). Ported for Kestrel by NepThunder. Shows your saturation over the food bar as a text bar, and what the food in your hand would restore: +hunger and +saturation, and the totals after eating. The exhaustion strip is not shown: the client has no exhaustion value to read. /appleskin hides or shows the panel; Options > Mods has the saturation line, the held-food preview and the position."
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "inventory", "hud", "storage", "ui"]
+experimental = ["inventory", "ui"]

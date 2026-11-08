@@ -1,0 +1,87 @@
+# Saturation at 12.4 with a steak in hand, at 14 hunger: the saturation
+# line and the preview line show in the bottom-right corner, with the
+# totals after eating (food fills to 20, saturation to 20).
+[player]
+food = 14
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 12.4
+slots = [
+  { slot = 0, id = "minecraft:cooked_beef", count = 3 },
+]
+[step.expect]
+panel = ["Saturation [######----] 12.4", "Cooked Beef +8 hunger, +12.8 sat -> 20 hunger, 20 sat"]
+corner = "bottom-right"
+
+# Eating the steak is impossible at full hunger: the preview becomes a
+# "full hunger" note instead. A golden apple at full hunger can still be
+# eaten, so its preview shows the saturation gain.
+[[step]]
+ticks = 1
+[step.player]
+food = 20
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 0, id = "minecraft:cooked_beef", count = 3 },
+]
+[step.expect]
+panel = ["Saturation [###-------] 5", "Cooked Beef: full hunger"]
+corner = "bottom-right"
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 0, id = "minecraft:golden_apple", count = 2 },
+]
+[step.expect]
+panel = ["Saturation [###-------] 5", "Golden Apple +4 hunger, +9.6 sat -> 20 hunger, 14.6 sat"]
+corner = "bottom-right"
+
+# A torch in hand is not food: the saturation line alone.
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+saturation = 5.0
+slots = [
+  { slot = 0, id = "minecraft:torch", count = 64 },
+]
+[step.expect]
+panel = ["Saturation [###-------] 5"]
+corner = "bottom-right"
+
+[[step]]
+command = "appleskin"
+expect.feedback = "AppleSkin panel hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "appleskin"
+expect.feedback = "AppleSkin panel shown"
+
+# A reload reads the stored choice back: still shown, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = ["Saturation [###-------] 5"]
+corner = "bottom-right"
+
+# Leaving the world clears the panel: no player, no hunger to show.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []
