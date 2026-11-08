@@ -1,6 +1,6 @@
 id = "jade"
 name = "Jade"
-version = "0.1.0"
+version = "0.1.1"
 description = "A port of Jade by Snownee and Joeypc6 (block identification only). Ported for Kestrel by NepThunder. Look at a block to see its name, its mod, its position and how far away it is, in a panel at the top-left; /jade hides or shows it, and Options > Mods has the same switch. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/jade"
 authors = ["NepThunder"]
 api = "0.1"

@@ -1,6 +1,6 @@
 [package]
 name = "jade"
-version = "0.1.0"
+version = "0.1.1"
 edition.workspace = true
 license = "CC-BY-NC-SA-4.0"
 publish = false

@@ -1,6 +1,6 @@
 id = "blockscope"
 name = "Blockscope"
-version = "0.1.0"
+version = "0.1.1"
 description = "A port of Blockscope by Domanffe. Ported for Kestrel by NepThunder. The block under your crosshair — its name in your language, its id, its distance and its coordinates — in a small box in the top-right corner. /blockscope hides or shows the box; Options > Mods has the same switch, a coordinates switch and a reach switch (5, 20, 64 or 128 blocks). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/blockscope"
 authors = ["NepThunder"]
 api = "0.1"
