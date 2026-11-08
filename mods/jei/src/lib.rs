@@ -951,10 +951,65 @@ fn to_browser_view(v: &View) -> browser::RecipeView {
     }
 }
 
+/// Recipes converted per tick while the tables load: small enough that one
+/// tick's work stays far under the 50M tick fuel budget even for
+/// vanilla-size tables (1,500 items, 1,600 recipes). The old code converted
+/// the whole table in a single frame call (10M budget) and the runtime
+/// killed the mod at world load for it.
+const LOAD_CHUNK: usize = 200;
+
+/// The recipe table, converted `LOAD_CHUNK` recipes at a time.
+struct RecipeLoader {
+    raw: Vec<recipes::Recipe>,
+    table: Vec<Recipe>,
+    done: usize,
+}
+
+impl RecipeLoader {
+    fn new(raw: Vec<recipes::Recipe>) -> Self {
+        let n = raw.len();
+        Self {
+            raw,
+            table: Vec::with_capacity(n),
+            done: 0,
+        }
+    }
+
+    /// Converts one slice; true when the whole table is converted.
+    fn step(&mut self) -> bool {
+        let end = (self.done + LOAD_CHUNK).min(self.raw.len());
+        for r in &self.raw[self.done..end] {
+            self.table.push(convert_recipe(r));
+        }
+        self.done = end;
+        self.done == self.raw.len()
+    }
+
+    fn finish(self) -> Vec<Recipe> {
+        self.table
+    }
+}
+
+/// How far the one-time table load has got.
+enum Load {
+    /// No world open, or the load has not started.
+    Idle,
+    /// The item table is in; the recipe table is still to be read.
+    Items(Vec<Item>),
+    /// The recipe table is being converted a slice per tick.
+    Recipes {
+        items: Vec<Item>,
+        loader: RecipeLoader,
+    },
+    /// The viewer is built; nothing more to load.
+    Done,
+}
+
 struct Jei {
     viewer: Option<Viewer>,
     give: bool,
     lang: Lang,
+    load: Load,
 }
 
 fn context<'a>(known: &'a [i32], give: bool) -> Context<'a> {
@@ -968,26 +1023,54 @@ fn context<'a>(known: &'a [i32], give: bool) -> Context<'a> {
 }
 
 impl Jei {
-    /// Loads the tables once a world is open, and drops them when it closes.
-    fn load(&mut self) {
+    /// One step of the table load per tick, so no single call comes near
+    /// the tick fuel budget: the item table on the first tick, the recipe
+    /// table on the second, the conversion `LOAD_CHUNK` recipes at a time,
+    /// then the viewer. Drops the tables when the world closes.
+    fn tick_load(&mut self) {
         let in_world = game::get_player().is_some();
-        if in_world && self.viewer.is_none() {
-            let items: Vec<Item> = recipes::items()
-                .into_iter()
-                .map(|i| Item {
-                    id: i.id,
-                    name: i.name,
-                    tags: i.tags,
-                })
-                .collect();
-            let table: Vec<Recipe> = recipes::all().iter().map(convert_recipe).collect();
-            let (viewer, out) = Viewer::new(items, table, self.lang);
-            self.viewer = Some(viewer);
-            self.exec(out);
-        } else if !in_world && self.viewer.is_some() {
-            browser::set_recipes("", &[], 0, &[]);
-            browser::set_items(&[]);
+        if !in_world {
+            if self.viewer.is_some() {
+                browser::set_recipes("", &[], 0, &[]);
+                browser::set_items(&[]);
+            }
             self.viewer = None;
+            self.load = Load::Idle;
+            return;
+        }
+        if self.viewer.is_some() {
+            return;
+        }
+        match std::mem::replace(&mut self.load, Load::Idle) {
+            Load::Idle => {
+                let items: Vec<Item> = recipes::items()
+                    .into_iter()
+                    .map(|i| Item {
+                        id: i.id,
+                        name: i.name,
+                        tags: i.tags,
+                    })
+                    .collect();
+                self.load = Load::Items(items);
+            }
+            Load::Items(items) => {
+                let loader = RecipeLoader::new(recipes::all());
+                self.load = Load::Recipes { items, loader };
+            }
+            Load::Recipes { items, mut loader } => {
+                if loader.step() {
+                    let table = loader.finish();
+                    let (viewer, out) = Viewer::new(items, table, self.lang);
+                    self.viewer = Some(viewer);
+                    self.exec(out);
+                    self.load = Load::Done;
+                } else {
+                    self.load = Load::Recipes { items, loader };
+                }
+            }
+            Load::Done => {
+                self.load = Load::Done;
+            }
         }
     }
 
@@ -1122,13 +1205,17 @@ impl Mod for Jei {
             viewer: None,
             give,
             lang,
+            load: Load::Idle,
         };
         me.page();
-        Ok((me, Registration::new().command("jei").on_frame()))
+        Ok((me, Registration::new().command("jei").on_frame().on_tick()))
+    }
+
+    fn tick(&mut self, _tick: u64) {
+        self.tick_load();
     }
 
     fn frame(&mut self, _seconds: f32) {
-        self.load();
         // The keys matter only over an item, which `browser` reports.
         let _ = input::poll();
         if self.viewer.is_none() {
@@ -1146,6 +1233,9 @@ impl Mod for Jei {
         match command(args) {
             Some(Command::About) => Ok(Some(match &self.viewer {
                 Some(viewer) => about_counts(viewer.item_count(), viewer.recipe_count()),
+                None if !matches!(self.load, Load::Idle) => {
+                    format!("{}: loading...", about())
+                }
                 None => about(),
             })),
             Some(Command::ToggleGive) => {
@@ -1779,5 +1869,97 @@ mod tests {
             &context(&[]),
         );
         assert_eq!(out, vec![super::Out::Say("No recipes for: Stone".into())]);
+    }
+
+    // The load that killed the mod on a real world: vanilla-size tables
+    // (1,500 items, 1,600 recipes of nine five-item slots, as in the
+    // runtime's `recipes_reads_the_tables`) converted a slice at a time.
+    fn vanilla_items(n: usize) -> Vec<super::recipes::Item> {
+        (0..n)
+            .map(|i| super::recipes::Item {
+                id: format!("minecraft:item_{i}"),
+                name: format!("Item {i}"),
+                tags: vec!["planks".into(), "logs".into()],
+            })
+            .collect()
+    }
+
+    fn vanilla_recipes(n: usize, items: usize) -> Vec<super::recipes::Recipe> {
+        let stack = |item: u32| super::recipes::Stack {
+            item,
+            count: 1,
+            components: String::new(),
+        };
+        let mut recipes: Vec<super::recipes::Recipe> = (0..n)
+            .map(|i| super::recipes::Recipe {
+                id: format!("minecraft:recipe_{i}"),
+                kind: super::recipes::Kind::CraftingShaped,
+                category: "crafting_misc".into(),
+                group: String::new(),
+                width: 3,
+                height: 3,
+                slots: (0..9)
+                    .map(|k| {
+                        (0..5)
+                            .map(|j| stack(((i + k + j) % items) as u32))
+                            .collect()
+                    })
+                    .collect(),
+                results: vec![super::recipes::Stack {
+                    item: 7,
+                    count: 4,
+                    components: String::new(),
+                }],
+                cooking_time: 0,
+                experience: 0.0,
+                book_id: i as i32,
+            })
+            .collect();
+        recipes[1].kind = super::recipes::Kind::Brewing;
+        recipes[1].results[0].components =
+            "[minecraft:potion_contents={potion:\"minecraft:swiftness\"}]".into();
+        recipes
+    }
+
+    #[test]
+    fn vanilla_tables_load_in_bounded_chunks() {
+        let items = vanilla_items(1500);
+        let raw = vanilla_recipes(1600, 1500);
+        let mut loader = super::RecipeLoader::new(raw);
+        let mut steps = 0;
+        let mut converted = 0;
+        while !loader.step() {
+            steps += 1;
+            let now = loader.done;
+            assert!(
+                now - converted <= super::LOAD_CHUNK,
+                "one step converted more than LOAD_CHUNK"
+            );
+            converted = now;
+        }
+        steps += 1;
+        assert_eq!(steps, 8, "1,600 recipes at 200 a tick");
+        let table = loader.finish();
+        assert_eq!(table.len(), 1600);
+        assert_eq!(table[1].kind, super::Kind::Brewing);
+        assert_eq!(
+            table[1].results[0].components,
+            "[minecraft:potion_contents={potion:\"minecraft:swiftness\"}]"
+        );
+        let items: Vec<super::Item> = items
+            .into_iter()
+            .map(|i| super::Item {
+                id: i.id,
+                name: i.name,
+                tags: i.tags,
+            })
+            .collect();
+        let (viewer, _) = super::Viewer::new(items, table, super::Lang::En);
+        assert_eq!(viewer.item_count(), 1500);
+        assert_eq!(viewer.recipe_count(), 1600);
+        assert_eq!(
+            super::about_counts(viewer.item_count(), viewer.recipe_count()),
+            "JEI 0.1.0: 1500 items, 1600 recipes"
+        );
     }
 }
