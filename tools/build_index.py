@@ -61,6 +61,7 @@ ALLOW_IDS = {
     "lookat",
     "smartf3",
     "basic_hud",
+    "speedrun_timer",
 }
 
 

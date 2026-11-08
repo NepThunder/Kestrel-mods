@@ -1,0 +1,177 @@
+# Speedrun Timer: the run arms in a world, starts on the first move, stops
+# when the player leaves the End for the overworld, keeps counting on death,
+# resets when the world is left, and saves finished runs and the personal
+# best across a reload. The timer is the frame deltas: each frame is 1/60 s
+# in the sandbox, so 60 frames read 00:00:01.000.
+#
+# The player starts at 0.5 64 0.5 in the Overworld, full health.
+
+# In a world, standing still: armed at zero, no start.
+[[step]]
+frames = 1
+[step.expect]
+commands = ["speedrun"]
+chat = []
+panel = ["00:00:00.000"]
+corner = "top-left"
+
+# The first move starts the run; the starting frame itself counts zero.
+[[step]]
+player = { x = 1.5 }
+frames = 1
+[step.expect]
+chat = ["Speedrun timer started"]
+panel = ["00:00:00.000"]
+
+# 60 frames: one second of live milliseconds.
+[[step]]
+frames = 60
+[step.expect]
+chat = []
+panel = ["00:00:01.000"]
+
+[[step]]
+command = "speedrun"
+[step.expect]
+feedback = "Speedrun timer: running, 00:00:01.000"
+
+# Into the End: the finish line is armed, the run goes on.
+[[step]]
+player = { dimension = "minecraft:the_end" }
+frames = 1
+[step.expect]
+chat = []
+panel = ["00:00:01.016"]
+
+# Death in the End is not a finish: health 0 suspends the reading, and
+# the time keeps counting through the death.
+[[step]]
+player = { health = 0.0 }
+frames = 30
+[step.expect]
+chat = []
+panel = ["00:00:01.516"]
+
+# Respawn in the overworld: still no finish, the run goes on.
+[[step]]
+player = { health = 20.0, dimension = "minecraft:overworld", x = 0.5, y = 64.0, z = 0.5 }
+frames = 1
+[step.expect]
+chat = []
+panel = ["00:00:01.533"]
+
+# Back to the End for the real finish.
+[[step]]
+player = { dimension = "minecraft:the_end" }
+frames = 60
+[step.expect]
+chat = []
+panel = ["00:00:02.533"]
+
+# The exit portal: the run finishes, a personal best, and the panel keeps
+# the final time with the best beside it.
+[[step]]
+player = { dimension = "minecraft:overworld" }
+frames = 1
+[step.expect]
+chat = ["Run finished: 00:00:02.550 — personal best"]
+panel = ["00:00:02.550  done   PB 00:00:02.550"]
+
+[[step]]
+command = "speedrun"
+[step.expect]
+feedback = "Speedrun timer: finished, 00:00:02.550"
+
+# A reload reads the stored best and runs back: the run in progress is
+# gone (only finished runs are saved), the new world arms at zero — and
+# the personal best is still beside it, which is what survived.
+[[step]]
+reload = true
+frames = 1
+[step.expect]
+chat = []
+panel = ["00:00:00.000   PB 00:00:02.550"]
+
+# A second, slower run: three seconds, then the End and back.
+[[step]]
+player = { x = 1.5 }
+frames = 1
+[step.expect]
+chat = ["Speedrun timer started"]
+panel = ["00:00:00.000   PB 00:00:02.550"]
+
+[[step]]
+frames = 180
+[step.expect]
+chat = []
+panel = ["00:00:03.000   PB 00:00:02.550"]
+
+[[step]]
+player = { dimension = "minecraft:the_end" }
+frames = 1
+[step.expect]
+chat = []
+panel = ["00:00:03.016   PB 00:00:02.550"]
+
+# Slower than the best, so no personal best this time — and the panel
+# still shows the old best, which survived the reload.
+[[step]]
+player = { dimension = "minecraft:overworld" }
+frames = 1
+[step.expect]
+chat = ["Run finished: 00:00:03.033"]
+panel = ["00:00:03.033  done   PB 00:00:02.550"]
+
+# Reset by hand: back to waiting for a world, no panel.
+[[step]]
+command = "speedrun reset"
+[step.expect]
+feedback = "Speedrun timer reset"
+panel = []
+
+# Stopping when nothing runs says so.
+[[step]]
+command = "speedrun stop"
+[step.expect]
+feedback = "Speedrun timer is not running"
+
+# Start by hand, half a second, stop by hand: saved, but no personal
+# best (a hand stop never counts as one).
+[[step]]
+command = "speedrun start"
+[step.expect]
+feedback = "Speedrun timer started"
+
+[[step]]
+frames = 30
+[step.expect]
+chat = []
+panel = ["00:00:00.500   PB 00:00:02.550"]
+
+[[step]]
+command = "speedrun stop"
+[step.expect]
+feedback = "Speedrun timer stopped: 00:00:00.500"
+panel = ["00:00:00.500  done   PB 00:00:02.550"]
+
+# An unknown option is an error, not a run.
+[[step]]
+command = "speedrun frobnicate"
+[step.expect]
+error = "Unknown option frobnicate: use /speedrun, /speedrun start, /speedrun stop, /speedrun reset"
+
+# Leaving the world for a second resets the timer on its own.
+[[step]]
+title-screen = true
+frames = 60
+[step.expect]
+chat = []
+panel = []
+
+# The next world arms again at zero, the personal best still beside it.
+[[step]]
+player = { x = 0.5, y = 64.0, z = 0.5, dimension = "minecraft:overworld" }
+frames = 1
+[step.expect]
+chat = []
+panel = ["00:00:00.000   PB 00:00:02.550"]
