@@ -1,0 +1,137 @@
+# LookAt: the mob under the crosshair in the tooltip, and /lookat hides
+# and shows it, with the choice kept across a reload.
+#
+# The sandbox cannot set a raycast hit — its snapshot never carries one —
+# so the block half of the tooltip (name, id, namespace, position and
+# distance) is covered instead by the unit tests in src/lib.rs (the pure
+# name, distance and line builders) and by a direct sandbox run, which
+# sets the view hit on the snapshot and reads the panel back. What this
+# script does prove: the mob half, in singleplayer and multiplayer, a
+# player under the crosshair with no health, a wall hiding the target,
+# the toggle answering, the choice surviving a reload, and leaving the
+# world clearing the panel.
+#
+# The player stands at 0.5 64 0.5 facing south (+z).
+
+[[step]]
+ticks = 1
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 14.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+commands = ["lookat"]
+chat = []
+panel = [
+  "Zombie",
+  "minecraft:zombie",
+  "♥♥♥♥♥♥♥♡♡♡ 14.0/20.0",
+  "Distance 4.7",
+]
+corner = "top-left"
+
+# A player under the crosshair is named too, with no health line: the
+# game never vouches for a player's health.
+[[step]]
+ticks = 1
+[[step.entities]]
+id = 5
+kind = "minecraft:player"
+name = "Steve"
+x = 0.5
+y = 64.0
+z = 3.5
+health = 20.0
+max-health = 20.0
+width = 0.6
+height = 1.8
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 14.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+chat = []
+panel = ["Steve", "minecraft:player", "Distance 2.7"]
+
+# A wall between the player and the mob hides it from the crosshair, and
+# there is no block hit in the sandbox, so the tooltip clears.
+[[step]]
+ticks = 1
+blocks = [{ x = 0, y = 65, z = 3, state = "minecraft:stone" }]
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 14.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+chat = []
+panel = []
+
+[[step]]
+command = "lookat"
+expect.feedback = "LookAt tooltip hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+# A reload reads the stored choice back: still hidden, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "lookat"
+expect.feedback = "LookAt tooltip shown"
+
+# Multiplayer: the crosshair target still answers, but health reads None,
+# so there is no health line. The step-3 wall is taken down first: script
+# blocks persist across steps, and it still stands in the southward ray.
+[[step]]
+multiplayer = true
+ticks = 1
+blocks = [{ x = 0, y = 65, z = 3, state = "minecraft:air" }]
+[[step.entities]]
+id = 1
+kind = "minecraft:zombie"
+name = "Zombie"
+x = 0.5
+y = 64.0
+z = 5.5
+health = 14.0
+max-health = 20.0
+width = 0.6
+height = 1.95
+[step.expect]
+chat = []
+panel = ["Zombie", "minecraft:zombie", "Distance 4.7"]
+
+# Leaving the world clears the panel.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []

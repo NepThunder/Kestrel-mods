@@ -1,0 +1,9 @@
+id = "lookat"
+name = "LookAt"
+version = "0.1.0"
+description = "A port of LookAt by d3grando. Ported for Kestrel by NepThunder. The block or mob under your crosshair as a tooltip at the top of the screen: its name in your language, the namespace it comes from, its position and distance — and for a mob, its health as hearts and numbers. /lookat hides or shows it; Options > Mods has the range (6, 20, 64, 256 or 1024 blocks), position, health and entities switches. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/lookat"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["entity", "game-read", "hud", "recipes", "storage", "ui"]
+experimental = ["entity", "recipes", "ui"]
