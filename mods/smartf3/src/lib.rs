@@ -1,7 +1,7 @@
 //! SmartF3 for Kestrel: a tidier, configurable F3 debug screen — the same
 //! information grouped into modules you can turn off, in one panel in the
-//! top-left corner. `/smartf3` hides or shows the panel, and Options \> Mods
-//! \> SmartF3 has a switch per module; the game keeps the choices in the
+//! top-left corner. `/smartf3` hides or shows the panel, and Options > Mods
+//! > SmartF3 has a switch per module; the game keeps the choices in the
 //! mod's storage.
 //!
 //! Behaviour reimplemented from SmartF3 by d3grando, MIT, source
