@@ -1,0 +1,9 @@
+id = "basic_hud"
+name = "The Basic HUD"
+version = "0.1.0"
+description = "A port of The Basic HUD by repositorykreml1n. Ported for Kestrel by NepThunder. A corner HUD panel: coordinates, FPS, clock, speed, CPS, player health, held-item and armour durability, and recent pickups. /basichud hides or shows the panel; Options > Mods has a switch per widget, the corner, and the pickup display time. Effect timers, item cooldowns, ping, the Tab list, the drag-and-drop editor, totem-use counting and the ten interface languages are not in this port: the SDK does not expose what they need. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/basic-hud"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "hud", "render", "input", "inventory", "storage", "ui", "recipes"]
+experimental = ["render", "input", "inventory", "ui", "recipes"]
