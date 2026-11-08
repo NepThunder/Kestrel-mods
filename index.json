@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-08T09:58:23Z",
+  "generated": "2026-11-08T10:01:47Z",
   "projects": [
     {
       "id": "appleskin",
@@ -415,6 +415,45 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/jei-0.1.1/jei.kmod",
             "size": 65345,
             "sha256": "8e2df4652abd746dda5805b6574028af08308776ef6fdda82adf9d0509420970"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lookat",
+      "kind": "mod",
+      "name": "LookAt",
+      "summary": "A port of LookAt by d3grando.",
+      "description": "A port of LookAt by d3grando. Ported for Kestrel by NepThunder. The block or mob under your crosshair as a tooltip at the top of the screen: its name in your language, the namespace it comes from, its position and distance — and for a mob, its health as hearts and numbers. /lookat hides or shows it; Options > Mods has the range (6, 20, 64, 256 or 1024 blocks), position, health and entities switches. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/lookat",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/lookat",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-08",
+          "changelog": "LookAt 0.1.0 — the block or mob under your crosshair as a tooltip at the top of the screen: its name in your language, the namespace it comes from, its position and distance — and for a mob, its health as hearts and numbers. /lookat hides or shows it; Options > Mods has the range (6, 20, 64, 256 or 1024 blocks), position, health and entities switches.\n\nA port of LookAt by d3grando. Ported for Kestrel by NepThunder.\n\nNot in this port: the item icon (the SDK HUD is a text panel), the harvest-tool check (the harvest rule is not exposed), and non-living entities like boats and armor stands (the v1 entity API covers living mobs only).\n\nRuns on Kestrel build 9+ (API level 10).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "entity",
+            "game-read",
+            "hud",
+            "recipes",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "lookat.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/lookat-0.1.0/lookat.kmod",
+            "size": 59642,
+            "sha256": "c9b92193d276239a303a57a12ff1580b8de958c12953384839e92b6e8c5b3857"
           }
         }
       ]
