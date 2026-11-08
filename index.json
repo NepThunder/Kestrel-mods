@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-08T10:11:33Z",
+  "generated": "2026-11-08T10:36:15Z",
   "projects": [
     {
       "id": "appleskin",
@@ -345,8 +345,8 @@
       "id": "jade",
       "kind": "mod",
       "name": "Jade",
-      "summary": "A port of Jade by Snownee and Joeypc6 (block identification only).",
-      "description": "A port of Jade by Snownee and Joeypc6 (block identification only). Ported for Kestrel by NepThunder. Look at a block to see its name, its mod, its position and how far away it is, in a panel at the top-left; /jade hides or shows it, and Options > Mods has the same switch. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/jade",
+      "summary": "A port of Jade by Snownee and Joeypc6 (block and entity identification).",
+      "description": "A port of Jade by Snownee and Joeypc6 (block and entity identification). Ported for Kestrel by NepThunder. Look at a block or a mob to see what it is — a block's name, its mod, its position and how far away it is, or a mob's name, its kind, its health and how far away it is — in a panel at the top-left; /jade hides or shows it, and Options > Mods has the same switch. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/jade",
       "authors": [
         "NepThunder"
       ],
@@ -357,9 +357,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/jade",
       "versions": [
         {
-          "version": "0.1.1",
+          "version": "0.2.0",
           "published": "2026-11-08",
-          "changelog": "Jade 0.1.1: the tooltip gains a reach switch — 6, 20 or 64 blocks (6 by default, the player's reach) — in Options > Mods > Jade. Import jade.kmod in Kestrel; it runs on any current build (SDK API level 5).",
+          "changelog": "Jade 0.2.0 — entity tooltips join the block tooltip: look at a mob to see its name, its kind, its health and how far away it is, in the same top-left panel. In multiplayer the panel shows name, kind and distance with no health line — health is not synced to clients in v1. The block half is unchanged: name, mod, position, distance, reach switch 6/20/64.\n\nA port of Jade by Snownee and Joeypc6 (block and entity identification). Ported for Kestrel by NepThunder.\n\nStill not in this port: entity health in multiplayer, block states/progress, provider plugins, themes, the /jadec command and the game rule.\n\nRuns on Kestrel build 9+ (API level 10).",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -368,14 +368,15 @@
             "recipes",
             "chat",
             "storage",
-            "ui"
+            "ui",
+            "entity"
           ],
           "game": "26.3",
           "file": {
             "name": "jade.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/jade-0.1.1/jade.kmod",
-            "size": 48475,
-            "sha256": "467cb59b3d6e5b4e85f2909951c67ea3db140d009d86833b9114fab6dcc45453"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/jade-0.2.0/jade.kmod",
+            "size": 49736,
+            "sha256": "fde63a885f29258bc05b5e503ceaad692669512b721ebadeaa950e4d8d67690e"
           }
         }
       ]
