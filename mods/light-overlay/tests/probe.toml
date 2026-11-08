@@ -1,0 +1,95 @@
+# Light Overlay: crosses on the block tops where mobs can spawn. The
+# player stands at 0.5 64 0.5 facing south (+z), so the feet are 0 64 0
+# and the ground is the grass at y 63. The scan is spread across
+# ticks — the probe on the first, two four-level bands a tick after
+# that — so the first step runs 8 ticks: the cold scan walks all 12
+# bands (every other column is air here and never resolves early)
+# and draws on the seventh. The radius is 16; every other column is
+# air in this harness, so only the fixture columns draw.
+#
+# (0, 64, 0) reads block 0, sky 15: spawnable at night only — yellow.
+# (1, 64, 0) reads block 0, sky 0: spawnable at any time — red.
+# (2, 64, 0) reads block 14, sky 15: safe — no cross.
+# (3, 64, 0) has no light fixture: unlit, so no cross.
+# (-1, 64, 0) reads block 0, sky 15: yellow, like (0, 64, 0).
+# (0, 64, 1) holds tall grass over the grass at (0, 63, 1): the spawn
+# position is not air, so that column draws nothing.
+# Red draws first, then yellow nearest first; a cross is two diagonals
+# at 64.02, inset 0.1 from the block's edges, 2.0 wide — red 4294901760,
+# yellow 4294967040.
+
+[[step]]
+blocks = [
+  { x = 0, y = 63, z = 0, state = "minecraft:grass_block" },
+  { x = 1, y = 63, z = 0, state = "minecraft:grass_block" },
+  { x = 2, y = 63, z = 0, state = "minecraft:grass_block" },
+  { x = 3, y = 63, z = 0, state = "minecraft:grass_block" },
+  { x = -1, y = 63, z = 0, state = "minecraft:grass_block" },
+  { x = 0, y = 63, z = 1, state = "minecraft:grass_block" },
+  { x = 0, y = 64, z = 1, state = "minecraft:tall_grass" },
+]
+lights = [
+  { x = 0, y = 64, z = 0, block = 0, sky = 15 },
+  { x = 1, y = 64, z = 0, block = 0, sky = 0 },
+  { x = 2, y = 64, z = 0, block = 14, sky = 15 },
+  { x = -1, y = 64, z = 0, block = 0, sky = 15 },
+]
+ticks = 8
+[step.expect]
+commands = ["lightoverlay"]
+chat = []
+panel = ["Red: 1  Yellow: 2", "Radius: 16  Rule: Modern"]
+world-lines = [
+  [1.1, 64.02, 0.1, 1.9, 64.02, 0.9, 4294901760, 2.0],
+  [1.9, 64.02, 0.1, 1.1, 64.02, 0.9, 4294901760, 2.0],
+  [0.1, 64.02, 0.1, 0.9, 64.02, 0.9, 4294967040, 2.0],
+  [0.9, 64.02, 0.1, 0.1, 64.02, 0.9, 4294967040, 2.0],
+  [-0.9, 64.02, 0.1, -0.1, 64.02, 0.9, 4294967040, 2.0],
+  [-0.1, 64.02, 0.1, -0.9, 64.02, 0.9, 4294967040, 2.0],
+]
+
+[[step]]
+command = "lightoverlay"
+expect.feedback = "Light Overlay disabled"
+
+# Disabled, nothing draws even though the ground is still spawnable.
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+world-lines = []
+
+# A reload reads the stored choice back: still disabled, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+world-lines = []
+
+[[step]]
+command = "lightoverlay"
+expect.feedback = "Light Overlay enabled"
+
+# Enabled again, the same crosses draw — red first, then yellow.
+# The cache is empty after the reload, so the cold scan runs again.
+[[step]]
+ticks = 8
+[step.expect]
+panel = ["Red: 1  Yellow: 2", "Radius: 16  Rule: Modern"]
+world-lines = [
+  [1.1, 64.02, 0.1, 1.9, 64.02, 0.9, 4294901760, 2.0],
+  [1.9, 64.02, 0.1, 1.1, 64.02, 0.9, 4294901760, 2.0],
+  [0.1, 64.02, 0.1, 0.9, 64.02, 0.9, 4294967040, 2.0],
+  [0.9, 64.02, 0.1, 0.1, 64.02, 0.9, 4294967040, 2.0],
+  [-0.9, 64.02, 0.1, -0.1, 64.02, 0.9, 4294967040, 2.0],
+  [-0.1, 64.02, 0.1, -0.9, 64.02, 0.9, 4294967040, 2.0],
+]
+
+# Leaving the world clears the crosses and the panel.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []
+world-lines = []

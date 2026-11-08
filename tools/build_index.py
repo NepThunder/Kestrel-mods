@@ -64,6 +64,7 @@ ALLOW_IDS = {
     "speedrun_timer",
     "waypoints",
     "hitbox_plus",
+    "light_overlay",
 }
 
 

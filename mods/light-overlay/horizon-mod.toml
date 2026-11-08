@@ -1,0 +1,9 @@
+id = "light_overlay"
+name = "Light Overlay"
+version = "0.1.0"
+description = "A port of Light Overlay by CayMac. Ported for Kestrel by NepThunder. Press F7 (or /lightoverlay) to scan the block tops around you and mark where hostile mobs can spawn: a red cross where they can spawn any time, a yellow cross where they can spawn at night. Options > Mods > Light Overlay has the same switch, a scan-radius switch (8, 12, 16 or 20 blocks), a safe-blocks switch and the spawn-rule switch (Modern or Legacy). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/light-overlay"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["world", "game-read", "render", "input", "chat", "hud", "storage", "ui"]
+experimental = ["render", "input", "ui"]
