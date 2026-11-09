@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T17:42:13Z",
+  "generated": "2026-11-09T18:18:56Z",
   "projects": [
     {
       "id": "appleskin",
@@ -122,7 +122,7 @@
       "kind": "mod",
       "name": "The Basic HUD",
       "summary": "A port of The Basic HUD by repositorykreml1n.",
-      "description": "A port of The Basic HUD by repositorykreml1n. Ported for Kestrel by NepThunder. A corner HUD panel: coordinates, FPS, clock, speed, CPS, player health, held-item and armour durability, and recent pickups. /basichud hides or shows the panel; Options > Mods has a switch per widget, the corner, and the pickup display time. Effect timers, item cooldowns, ping, the Tab list, the drag-and-drop editor, totem-use counting and the ten interface languages are not in this port: the SDK does not expose what they need. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/basic-hud",
+      "description": "A port of The Basic HUD by repositorykreml1n. Ported for Kestrel by NepThunder. A corner HUD panel: coordinates, FPS, clock, speed, CPS, player health, effect timers, held-item and armour durability, and recent pickups. /basichud hides or shows the panel; Options > Mods has a switch per widget, the corner, and the pickup display time. Item cooldowns, ping, the Tab list, the drag-and-drop editor, totem-use counting and the ten interface languages are not in this port: the SDK does not expose what they need. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/basic-hud",
       "authors": [
         "NepThunder"
       ],
@@ -133,9 +133,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/basic-hud",
       "versions": [
         {
-          "version": "0.1.0",
-          "published": "2026-11-08",
-          "changelog": "Basic HUD 0.1.0 (partial) — a corner HUD panel: coordinates, FPS, clock, speed, CPS, player health, held-item and armour durability, and recent pickups. /basichud hides or shows the panel; Options > Mods has a switch per widget, the corner, and the pickup display time.\n\nA port of The Basic HUD by repositorykreml1n. Ported for Kestrel by NepThunder.\n\nNot in this port: effect timers, item cooldowns, ping, the Tab list, the drag-and-drop HUD editor, totem-use counting and the ten interface languages — none of that is exposed by the SDK. Per-widget position, scale, colours, opacity, padding and shadows are not in this port either; the SDK HUD is plain text lines in one corner.\n\nRuns on Kestrel build 9+ (API level 9).",
+          "version": "0.1.1",
+          "published": "2026-11-09",
+          "changelog": "Completes the effect timers on SDK API 18: the panel now lists each active effect with its real amplifier and remaining time (Speed II 1:01, Regeneration inf), behind its own settings switch. Everything else is unchanged from 0.1.0. Needs Kestrel build 31 or newer.",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -151,9 +151,9 @@
           "game": "26.3",
           "file": {
             "name": "basic_hud.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/basic-hud-0.1.0/basic_hud.kmod",
-            "size": 49253,
-            "sha256": "b6ea165249c49f86716f0a59c39629d557c9bb02f17c10c5d3777801dd22b0bb"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/basic_hud-0.1.1/basic_hud.kmod",
+            "size": 51597,
+            "sha256": "952cbf432e2388b668646b79a715a269ff02e2a9e1e041c1a8fba57188b6ee97"
           }
         }
       ]
@@ -1082,6 +1082,43 @@
       ]
     },
     {
+      "id": "movement_status",
+      "kind": "mod",
+      "name": "Movement Status",
+      "summary": "A behaviour port of Movement Status by UniDex101 (MIT, https://github.com/UniDex101/movement-status).",
+      "description": "A behaviour port of Movement Status by UniDex101 (MIT, https://github.com/UniDex101/movement-status). Ported for Kestrel by NepThunder. Your current movement state in the bottom-left corner, read live from the player: Sprint [Held] / Sprint [Toggled], Sneak [Held] / Sneak [Toggled], Flying [Creative] / Flying [Elytra] — several at once when several apply. It respects the game's own Toggle Sprint and Toggle Crouch options: with an option on, the state it latches reads [Toggled]. Options > Mods > Movement Status holds the original's one setting, the semi-transparent background box. This is a status display only: it changes no movement, keybinds or gameplay. One label is coarser than the original's: the SDK exposes the toggle options and the movement state but not the physical key, so with a toggle option on the label reads [Toggled] even while the key is also held, where the original could tell the two apart. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/movement_status",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/movement_status",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Movement Status (MIT), on SDK API 18: Sprint/Sneak/Flying state in the bottom-left with the original's exact [Held]/[Toggled] and [Creative]/[Elytra] labels and its background-box setting. Needs Kestrel build 31 or newer.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "movement_status.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/movement_status-0.1.0/movement_status.kmod",
+            "size": 17666,
+            "sha256": "7851e2d2dc4dc65d2b192b2813142d2ee635ebf1f3c8a416462af7c8f5ea18f5"
+          }
+        }
+      ]
+    },
+    {
       "id": "punchy",
       "kind": "mod",
       "name": "Punchy",
@@ -1149,6 +1186,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/pvp_music-0.1.0/pvp_music.kmod",
             "size": 16295,
             "sha256": "99db01f7dfb7811cbfb0e753ff05455f736e665f6d9b07c033b6e405ac81f539"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rider_hud",
+      "kind": "mod",
+      "name": "Rider HUD",
+      "summary": "A behaviour port of Rider HUD by Xariami (MIT, https://github.com/maliferen/horizon-rider-hud).",
+      "description": "A behaviour port of Rider HUD by Xariami (MIT, https://github.com/maliferen/horizon-rider-hud). Ported for Kestrel by NepThunder. While you ride a mount, vanilla hides your hunger behind the mount's health; this port puts the hunger row back — in the familiar vanilla style, with the game's own food sprites — in a row directly above the mount's heart rows, so hunger and mount health are on screen at the same time (the mount's hearts are the game's own, drawn where vanilla draws them). Options > Mods > Rider HUD holds the hunger toggle. Two pieces of the original are NOT in this port: the experience bar staying visible while riding, and the jump bar's dynamic switching with it — the SDK exposes no experience read and no jump-charge read, so neither bar can be drawn honestly; they arrive when the SDK gains those reads. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/rider_hud",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/rider_hud",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Rider HUD (MIT), on SDK API 18: while riding, your hunger row returns above the mount's hearts (the game already draws the hearts and hides the food — this adds the food back, with the Hunger-effect variants). Living mounts only; the XP/jump bars are not expressible in the SDK yet, as documented in the mod. Needs Kestrel build 31 or newer.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "rider_hud.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/rider_hud-0.1.0/rider_hud.kmod",
+            "size": 19549,
+            "sha256": "271cf48617b40d7215bc4fd776e8f19142d97135d9b4b8cd4912bbe40457fd5e"
           }
         }
       ]
@@ -1306,6 +1380,41 @@
       ]
     },
     {
+      "id": "status_effect_hud",
+      "kind": "mod",
+      "name": "Status Effect HUD",
+      "summary": "A behaviour port of Status Effect HUD by CayMac (MIT, https.",
+      "description": "A behaviour port of Status Effect HUD by CayMac (MIT, https://github.com/CayMac97/status-effect-hud), itself a port of Status Effect Bars and Inventory HUD+ (Potion HUD). Ported for Kestrel by NepThunder. Every active potion and beacon effect is listed at the top left of the HUD with the game's own mob_effect sprite, its name and Roman numeral level (II, III, IV), a colour-coded mm:ss countdown (white over 30s, yellow 10-30s, flashing red at 10s and under, an aqua infinity symbol for permanent effects) and a smooth duration bar in the effect's authentic vanilla potion colour. The original's translated effect names are shown from each effect's id instead: the SDK has no translation lookup, so a name is the id's own words (Fire Resistance for minecraft:fire_resistance) — the same words in English. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/status_effect_hud",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/status_effect_hud",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Status Effect HUD (MIT), on SDK API 18: your active effects with the game's own effect sprites, Roman-numeral amplifiers, colour-coded countdowns (white, yellow under 30s, flashing red under 10s, aqua for infinite) and duration bars in each effect's vanilla colour. Needs Kestrel build 31 or newer.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "status_effect_hud.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/status_effect_hud-0.1.0/status_effect_hud.kmod",
+            "size": 31001,
+            "sha256": "a7252f2b3a3d834fe13c50f305a52f8f60049e09dd007f2231228adcc8c143f8"
+          }
+        }
+      ]
+    },
+    {
       "id": "stuck",
       "kind": "mod",
       "name": "Stuck?",
@@ -1337,6 +1446,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/stuck-0.1.0/stuck.kmod",
             "size": 17967,
             "sha256": "f4778be2ae26146378cfa19187444910184b64832510933a452223a8f62f5b9d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "toggle_sprint",
+      "kind": "mod",
+      "name": "Toggle Sprint",
+      "summary": "A behaviour port of Toggle Sprint by CayMac (MIT, https.",
+      "description": "A behaviour port of Toggle Sprint by CayMac (MIT, https://github.com/CayMac97/toggle-sprint), itself a port of Better Sprinting and the Lunar/Badlion ToggleSprint HUD. Ported for Kestrel by NepThunder. Sprint and sneak toggle instead of holding the key down: the port drives the game's own Toggle Sprint and Toggle Crouch options (API 18's set-movement-toggles — the settings-grade write, saved to options.txt as the options page saves it), flipped by the V and C keys or from Options > Mods > Toggle Sprint, so the toggled sneak pauses inside inventory and chest screens exactly as the game's own option handles screens. The classic status HUD shows [Sprinting (Toggled)], [Sprinting (Key Held)], [Sneaking (Toggled)], [Sneaking (Key Held)], [Flying], [Gliding (Elytra)] and [Riding] in the bottom-left corner. Two pieces of the original are NOT in this port: the Creative Fly Speed Boost (the SDK has no fly-speed write, so its multiplier setting and the HUD's (Nx Boost) suffix are omitted rather than shown doing nothing) and the [Swimming] line (the self read has no in-water state). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/toggle_sprint",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/toggle_sprint",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Toggle Sprint (MIT), on SDK API 18: V and C flip the game's own sprint/sneak toggle options (persisted in the game options, exactly like the original's end state), with the original's HUD lines — [Sprinting (Toggled)], [Sprinting (Key Held)], [Sneaking (Toggled)], [Flying], [Gliding (Elytra)], [Riding]. Needs Kestrel build 31 or newer.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "hud",
+            "input",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "toggle_sprint.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/toggle_sprint-0.1.0/toggle_sprint.kmod",
+            "size": 16610,
+            "sha256": "f00ea36e376ed696765b522bfa793b533a33334a957b3a1c33fcf77a32445f35"
           }
         }
       ]
