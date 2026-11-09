@@ -1,0 +1,8 @@
+id = "flesh_to_leather"
+name = "Flesh to Leather"
+version = "1.0.0"
+description = "Smelt rotten flesh into leather in a furnace."
+authors = ["CGRLabs"]
+api = "0.2"
+side = "both"
+capabilities = ["registries"]

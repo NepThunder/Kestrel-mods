@@ -88,6 +88,7 @@ ALLOW_IDS = {
     "movement_status",
     "toggle_sprint",
     "rider_hud",
+    "flesh_to_leather",
 }
 
 
