@@ -11,7 +11,15 @@
 #
 # What this script does not prove: the N/M keys (the sandbox sends no key
 # events) and the list screen and settings page (the sandbox checks no
-# screens) — those are covered by the unit tests in src/lib.rs.
+# screens) — those are covered by the unit tests in src/lib.rs. The
+# labels' text and position are not proved here either: the harness has
+# no HUD-shape step, so the label shapes (text, colour, projected
+# position, the behind-the-camera skip, the sixteen cap) are covered
+# instead by the unit tests in src/lib.rs, which project through a fake
+# camera, and by a direct sandbox run, which reads the HUD shapes back.
+# The steps below do run the label path through the real
+# `render.project`: a waypoint ahead of the camera, then the same one
+# behind it after turning round, so a bad projection would stop the mod.
 
 [[step]]
 ticks = 1
@@ -58,6 +66,45 @@ world-lines = []
 # Back in the Overworld it shows again.
 [[step]]
 player = { dimension = "minecraft:overworld" }
+ticks = 1
+[step.expect]
+panel = ["Home · 1 m"]
+
+# Twenty blocks north the waypoint is ahead of the camera: the tick
+# projects it for a label, and the panel reads 21 m.
+[[step]]
+player = { z = -20.5 }
+ticks = 1
+[step.expect]
+panel = ["Home · 21 m"]
+world-lines = [
+  [0.0, 64.0, 0.0, 1.0, 64.0, 0.0, 4294923605, 2.0],
+  [0.0, 64.0, 0.0, 0.0, 65.0, 0.0, 4294923605, 2.0],
+  [0.0, 64.0, 0.0, 0.0, 64.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 0.0, 1.0, 65.0, 0.0, 4294923605, 2.0],
+  [1.0, 65.0, 0.0, 0.0, 65.0, 0.0, 4294923605, 2.0],
+  [0.0, 65.0, 0.0, 0.0, 65.0, 1.0, 4294923605, 2.0],
+  [0.0, 65.0, 1.0, 0.0, 64.0, 1.0, 4294923605, 2.0],
+  [0.0, 64.0, 1.0, 1.0, 64.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 1.0, 1.0, 64.0, 0.0, 4294923605, 2.0],
+  [0.0, 65.0, 1.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [1.0, 64.0, 1.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [1.0, 65.0, 0.0, 1.0, 65.0, 1.0, 4294923605, 2.0],
+  [0.5, 64.0, 0.5, 0.5, 96.0, 0.5, 4294923605, 2.0],
+]
+
+# Turned round it is behind the camera: no label, but the panel and the
+# markers still list it — facing never hides a waypoint.
+[[step]]
+player = { yaw = 180.0 }
+ticks = 1
+[step.expect]
+panel = ["Home · 21 m"]
+
+# Back where the player started, facing south again, so the death step
+# below still marks [0, 64, 0].
+[[step]]
+player = { z = 0.5, yaw = 0.0 }
 ticks = 1
 [step.expect]
 panel = ["Home · 1 m"]

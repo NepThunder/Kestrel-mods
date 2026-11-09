@@ -23,6 +23,13 @@ project, not to them. Licence: MIT, the same licence as Waypoints.
   block-sized box in its colour plus a beam 32 blocks above it, drawn
   with the new `render.set-world` (API level 11). The markers are
   depth-tested, so a wall hides them, and they hide with the HUD (F1).
+  Each one also carries an in-world label — its name and distance as
+  HUD text at its projected position (`render.project`, API level 14),
+  e.g. `Base Camp · 12 m`, floating just above its box, nearest
+  sixteen at most. A label has no occlusion test, so it shows through
+  walls, as the panel's distance already does; a waypoint behind the
+  camera gets no label. Labels follow the world-markers switch:
+  turning markers off hides them too.
 - **HUD distance panel**: the top-left panel lists each visible
   waypoint of your dimension with its name and distance, nearest first,
   e.g. `Base Camp · 12 m` — `1.2 km` from a kilometre on.
@@ -39,10 +46,6 @@ project, not to them. Licence: MIT, the same licence as Waypoints.
 
 ## What is missing
 
-- **In-world name/distance labels** — the original draws each
-  waypoint's name and distance at its position in the world. The SDK
-  has no world-text capability in v1, so the marker is geometry only
-  and the name and distance live on the HUD panel instead.
 - **The editor with text fields** — the original's create/edit form
   (name, X/Y/Z, colour swatches, dimension, visible) needs text input,
   which the SDK's widgets do not offer. N creates a waypoint at once
@@ -60,14 +63,14 @@ project, not to them. Licence: MIT, the same licence as Waypoints.
   waypoint is made.
 - **Minimap dots** — the minimap API has no waypoint overlay, so there
   are none.
-- **The 2D screen marker dot** — replaced by the 3D box and beam, which
-  the game itself projects; no manual projection is needed or done.
+- **The 2D screen marker dot** — replaced by the 3D box and beam plus
+  the projected in-world label.
 
 ## Use
 
 Download `waypoints.kmod`, import it in Kestrel (Mods → Import file),
-enable it. It needs SDK level 11 (`render.set-world`, Kestrel build
-17+).
+enable it. It needs SDK level 14 (`render.project`, Kestrel build
+24+).
 
 ## Build
 
