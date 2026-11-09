@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T11:02:18Z",
+  "generated": "2026-11-09T13:54:04Z",
   "projects": [
     {
       "id": "appleskin",
@@ -812,6 +812,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/moregamma-0.1.0/moregamma.kmod",
             "size": 38728,
             "sha256": "126f6c17db06ffd6ae9bb934d4e81536702fb577673d063ff96ab89a63930bfc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "punchy",
+      "kind": "mod",
+      "name": "Punchy",
+      "summary": "A behaviour port of Punchy! by PunchyDevGuy (All Rights Reserved; no code or assets copied — the feel reimplemented against the Kestrel SDK, API 16).",
+      "description": "A behaviour port of Punchy! by PunchyDevGuy (All Rights Reserved; no code or assets copied — the feel reimplemented against the Kestrel SDK, API 16). The first-person hand lags behind your look on a spring, follows through on your attacks, and bobs with more weight. Options > Mods > Punchy sets the intensity and which parts run, and /punchy reports them. First-person only in v1; the original's resource pack and third-person changes are out of scope. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "First-person hand feel for Kestrel: spring-lag look sway, attack follow-through and bob emphasis, built on SDK API 16 (hand). Clean-room behaviour port of Punchy! by PunchyDevGuy — no code or assets copied. Needs a Kestrel build with SDK API 16.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "punchy.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/punchy-0.1.0/punchy.kmod",
+            "size": 21402,
+            "sha256": "6eb32a5ffe7fd5432dc42c333de42813900f1dcf4e964340126f18551aa15b33"
           }
         }
       ]
