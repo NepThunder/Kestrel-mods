@@ -1,0 +1,68 @@
+# Freelook: the mod loads, owns one command, and idles cleanly with no
+# indicator. `/freelook` latches it on (the indicator shows, top-right)
+# and again latches it off; a reload leaves it off.
+#
+# The script harness has no key steps, so it cannot drive X: hold-key
+# state is covered instead by the unit tests in src/lib.rs (the pure
+# hold/toggle/latch state machine) and the mouse routing — the mouse
+# turning the camera while the player keeps walking — is a device test
+# (see README.md), not something the harness can show.
+
+[[step]]
+ticks = 1
+expect.commands = ["freelook"]
+
+# At rest: no indicator.
+[[step]]
+frames = 1
+[step.expect]
+panel = []
+
+# /freelook latches it on: the indicator shows, top-right.
+[[step]]
+command = "freelook"
+[step.expect]
+feedback = "Freelook enabled"
+panel = ["[Freelook]"]
+corner = "top-right"
+
+# It stays on across frames with no further input.
+[[step]]
+frames = 5
+[step.expect]
+panel = ["[Freelook]"]
+corner = "top-right"
+
+# /freelook again latches it off: the indicator clears.
+[[step]]
+command = "freelook"
+[step.expect]
+feedback = "Freelook disabled"
+panel = []
+
+# On again, then a reload: the latch is fresh state, so the reloaded
+# mod starts off and the camera is the player's own.
+[[step]]
+command = "freelook"
+[step.expect]
+feedback = "Freelook enabled"
+panel = ["[Freelook]"]
+
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+# Leaving the world clears the indicator too.
+[[step]]
+command = "freelook"
+[step.expect]
+feedback = "Freelook enabled"
+panel = ["[Freelook]"]
+
+[[step]]
+title-screen = true
+frames = 1
+[step.expect]
+panel = []

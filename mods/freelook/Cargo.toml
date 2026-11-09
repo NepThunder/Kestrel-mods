@@ -1,0 +1,16 @@
+[package]
+name = "freelook"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Freelook for Kestrel: hold X to look around freely while your character keeps walking and facing the way it was. A behaviour port of Freelook by Krzysix17."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true
