@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T17:32:46Z",
+  "generated": "2026-11-09T17:34:41Z",
   "projects": [
     {
       "id": "appleskin",
@@ -228,6 +228,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/classic-zoom-0.1.0/classic_zoom.kmod",
             "size": 12665,
             "sha256": "b76610d05f3be31866f3e3c521c70a23f6316d550bc5f200f01431d1c3c07f05"
+          }
+        }
+      ]
+    },
+    {
+      "id": "compass_bar",
+      "kind": "mod",
+      "name": "Compass Bar",
+      "summary": "A behaviour port of Compass Enhanced by Isaac (Fernandes585), MIT (https://github.com/Fernandes585/Compass-Enhanced).",
+      "description": "A behaviour port of Compass Enhanced by Isaac (Fernandes585), MIT (https://github.com/Fernandes585/Compass-Enhanced). Ported for Kestrel by NepThunder. A compass bar across the top of the screen: the eight compass letters (N, NE, E, SE, S, SW, W, NW) in one colour and a degree scale, sliding smoothly as you turn. Options > Mods > Compass Bar holds the original's settings: the bar on/off, the background box, the size (75% to 150%) and the letter colour. The original's death points are NOT included: the client SDK exposes no death event, so there is nothing to hang a death marker on yet — they arrive when the SDK gains one, and the death-point settings go with them. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/compass_bar",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/compass_bar",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Compass Enhanced by Isaac (MIT): a compass bar across the top of the screen with coloured direction letters and a degree scale, with the original's settings (bar on/off, background, size, letter colour). Death points are not included: the client SDK exposes no death event yet.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "compass_bar.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/compass_bar-0.1.0/compass_bar.kmod",
+            "size": 25139,
+            "sha256": "4f073dfc08d56582f923ca6eda159d650163bffeebf08a1e4f7f8e4a25b742db"
           }
         }
       ]
