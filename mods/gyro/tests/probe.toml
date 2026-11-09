@@ -1,0 +1,213 @@
+# Gyro: while gliding, the camera banks and rolls with the look. The
+# player starts at 0.5 64 0.5 facing south (+z), yaw 0.
+#
+# The script harness has no mouse, so the look bank — the roll from the
+# camera's yaw offset — is covered by the unit tests in src/lib.rs; what
+# this script does prove is the velocity bank (the slip between the
+# velocity and the heading), the glide gate (a sprint never engages, at
+# rest nothing is held), the ease to the bank and back to level, the
+# toggle, the choice surviving a reload, and leaving the world clearing
+# the panel. The player glides east at 10 m/s while facing south, so the
+# velocity is 90° off the heading and the slip bank caps at +30°, eased
+# 10° a tick. The G key itself is not pressed by the harness — the
+# command covers the toggle instead.
+#
+# At rest, disabled: nothing held, no panel.
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["gyro"]
+chat = []
+panel = []
+
+[[step]]
+command = "gyro"
+[step.expect]
+feedback = "Gyro disabled"
+
+[[step]]
+command = "gyro on"
+[step.expect]
+feedback = "Gyro enabled"
+
+# Enabled, still at rest: the glide gate holds — no override, no panel.
+[[step]]
+ticks = 1
+[step.expect]
+chat = []
+panel = []
+
+[[step]]
+command = "gyro"
+[step.expect]
+feedback = "Gyro enabled - roll +0°, 0 m/s"
+
+# Gliding east at 10 m/s: three fast ticks to engage, then the roll
+# eases 10° a tick toward the +30° slip cap.
+[[step]]
+player = { x = 1.0 }
+ticks = 1
+[step.expect]
+chat = []
+panel = []
+
+[[step]]
+player = { x = 1.5 }
+ticks = 1
+[step.expect]
+chat = []
+panel = []
+
+[[step]]
+player = { x = 2.0 }
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +10°, 10 m/s"]
+corner = "top-left"
+
+[[step]]
+player = { x = 2.5 }
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +20°, 10 m/s"]
+
+[[step]]
+player = { x = 3.0 }
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +30°, 10 m/s"]
+
+[[step]]
+command = "gyro"
+[step.expect]
+feedback = "Gyro enabled - roll +30°, 10 m/s"
+
+# Toggle off mid-glide: the view eases back to level, then releases.
+[[step]]
+command = "gyro off"
+[step.expect]
+feedback = "Gyro disabled"
+
+[[step]]
+player = { x = 3.5 }
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +20°, 10 m/s"]
+
+[[step]]
+player = { x = 4.0 }
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +10°, 10 m/s"]
+
+[[step]]
+player = { x = 4.5 }
+ticks = 1
+[step.expect]
+chat = []
+panel = []
+
+# A reload reads the stored choice back: still disabled.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+chat = []
+panel = []
+
+[[step]]
+command = "gyro"
+[step.expect]
+feedback = "Gyro disabled"
+
+# On again, and gliding again: the same engage and bank.
+[[step]]
+command = "gyro on"
+[step.expect]
+feedback = "Gyro enabled"
+
+[[step]]
+player = { x = 5.0 }
+ticks = 1
+[step.expect]
+chat = []
+panel = []
+
+[[step]]
+player = { x = 5.5 }
+ticks = 1
+[step.expect]
+chat = []
+panel = []
+
+[[step]]
+player = { x = 6.0 }
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +10°, 10 m/s"]
+
+[[step]]
+player = { x = 6.5 }
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +20°, 10 m/s"]
+
+[[step]]
+player = { x = 7.0 }
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +30°, 10 m/s"]
+
+# Landing: the player stops, the view levels and the camera releases.
+[[step]]
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +20°, 0 m/s"]
+
+[[step]]
+ticks = 1
+[step.expect]
+chat = []
+panel = ["Gyro: roll +10°, 0 m/s"]
+
+[[step]]
+ticks = 1
+[step.expect]
+chat = []
+panel = []
+
+[[step]]
+command = "gyro"
+[step.expect]
+feedback = "Gyro enabled - roll +0°, 0 m/s"
+
+# An unknown option is an error, not a toggle.
+[[step]]
+command = "gyro frobnicate"
+[step.expect]
+error = "Unknown option frobnicate: use /gyro, /gyro on, /gyro off"
+
+# Leaving the world clears the panel.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+chat = []
+panel = []
+
+# Back in a world, at rest: enabled, but the glide gate holds again.
+[[step]]
+player = { x = 0.5, y = 64.0, z = 0.5, dimension = "minecraft:overworld" }
+ticks = 1
+[step.expect]
+chat = []
+panel = []

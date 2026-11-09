@@ -1,0 +1,16 @@
+[package]
+name = "gyro"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Gyro for Kestrel: while you glide, the camera banks and rolls with your look — move the mouse and the horizon tilts, up to a full barrel roll when you look right round. A behaviour port of Gyro by CGRLabs, camera only: the flight itself stays vanilla."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true
