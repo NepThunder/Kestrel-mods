@@ -1,6 +1,7 @@
 //! Waypoints for Kestrel: N creates a waypoint where you stand, M lists
 //! them, and every visible waypoint of your dimension shows a box and a
-//! beam in the world plus its name and distance on the HUD. Dying can
+//! beam in the world, its name and distance on the HUD panel, and an
+//! in-world label with its name and distance at its position. Dying can
 //! leave a red Death waypoint where it happened.
 //!
 //! Behaviour ported from Waypoints by Nirokx (MIT, Copyright (c) 2026
@@ -15,28 +16,31 @@
 //! What the SDK cannot do, the original's native build can: the editor
 //! with its text fields (the SDK has no text input widget, so N creates
 //! a waypoint at once with a suggested name and `/wp` renames,
-//! moves and recolours), per-world storage (the SDK exposes no world
+//! moves and recolours) and per-world storage (the SDK exposes no world
 //! folder or server address, so every world shares one list, filtered by
-//! dimension), and in-world name/distance labels (no world-text
-//! capability in v1: the marker is geometry only and the name and
-//! distance live on the HUD panel). Death waypoints are inferred from
-//! the player's health reaching zero, not from a death event, which the
-//! SDK does not expose.
+//! dimension). In-world name/distance labels are HUD text placed by
+//! `render.project` (API level 14): there is no world-text capability,
+//! so a label shows through walls, as the panel's distance already does.
+//! Death waypoints are inferred from the player's health reaching zero,
+//! not from a death event, which the SDK does not expose.
 use horizon_mod_sdk::{
     Mod, Registration, chat,
     game::{self, Player},
     hud::{self, Corner, Line},
     input::{self, Event},
-    render::{self, WorldBox, WorldLine, WorldPoint, WorldShape},
+    render::{
+        self, Point, ScreenPoint, Shape, TextShape, WorldBox, WorldLine, WorldPoint, WorldShape,
+    },
     storage,
     ui::{self, ButtonWidget, ListWidget, Screen, TextWidget, Widget},
 };
 
 /// The newest API level this mod needs, asserted in the tests below:
-/// `render.set-world` is level 11, `input.register-key` level 6 (see
+/// `render.project` is level 14, `render.set-world` level 11,
+/// `input.register-key` level 6 (see
 /// `crates/horizon-mods/src/api_level.rs`).
 #[cfg(test)]
-const API_LEVEL: u32 = 11;
+const API_LEVEL: u32 = 14;
 
 /// The keys' names for `register-key`, and their defaults.
 const CREATE_KEY: &str = "create";
@@ -88,6 +92,12 @@ const MAX_WAYPOINTS: usize = 512;
 const MAX_MARKERS: usize = 78;
 /// How far a waypoint's beam reaches above its block, in blocks.
 const BEAM_HEIGHT: f64 = 32.0;
+/// How many in-world labels at most: the same nearest sixteen the HUD
+/// panel lists, so a tick projects at most sixteen points.
+const MAX_LABELS: usize = 16;
+/// How far above a waypoint's block centre its label floats, in blocks:
+/// just above its box.
+const LABEL_RAISE: f64 = 1.0;
 const BOX_WIDTH: f32 = 2.0;
 const BEAM_WIDTH: f32 = 2.0;
 
@@ -362,6 +372,9 @@ struct Waypoints {
     /// The panel's lines last sent (text and colour), so an unchanged one
     /// costs no call.
     last_panel: Vec<(String, u32)>,
+    /// The labels last sent (text, colour, x, y), so an unchanged set
+    /// costs no call.
+    last_labels: Vec<(String, u32, f32, f32)>,
 }
 
 impl Waypoints {
@@ -592,6 +605,58 @@ impl Waypoints {
             }
         }
         shapes
+    }
+
+    /// The label's anchor: the block centre raised above its box.
+    fn label_point(w: &Waypoint) -> WorldPoint {
+        let c = centre(w);
+        WorldPoint {
+            x: c[0],
+            y: c[1] + LABEL_RAISE,
+            z: c[2],
+        }
+    }
+
+    /// The in-world labels: name and distance as HUD text at the
+    /// projected position of each visible waypoint of this dimension,
+    /// nearest first, at most `MAX_LABELS`. A waypoint behind the camera
+    /// projects with `visible` false and gets no label. There is no
+    /// occlusion test: a label shows through walls, as the panel's
+    /// distance already does.
+    fn label_shapes(
+        &self,
+        player: &Player,
+        project: impl Fn(WorldPoint) -> ScreenPoint,
+    ) -> Vec<Shape> {
+        self.visible(player)
+            .into_iter()
+            .take(MAX_LABELS)
+            .filter_map(|(d, i)| {
+                let w = &self.waypoints[i];
+                let s = project(Self::label_point(w));
+                if !s.visible {
+                    return None;
+                }
+                Some(Shape::Text(TextShape {
+                    text: format!("{} · {}", w.name, distance_text(d)),
+                    at: Point { x: s.x, y: s.y },
+                    color: w.color,
+                    centered: true,
+                    shadow: true,
+                }))
+            })
+            .collect()
+    }
+
+    /// The labels as (text, colour, x, y), for change detection.
+    fn label_state(shapes: &[Shape]) -> Vec<(String, u32, f32, f32)> {
+        shapes
+            .iter()
+            .map(|s| match s {
+                Shape::Text(t) => (t.text.clone(), t.color, t.at.x, t.at.y),
+                _ => unreachable!("labels are text shapes"),
+            })
+            .collect()
     }
 
     /// The filtered rows, as waypoint indices in list order.
@@ -1059,6 +1124,7 @@ impl Mod for Waypoints {
             last_alive: None,
             death_recorded: false,
             last_panel: Vec::new(),
+            last_labels: Vec::new(),
         };
         let hooks = Registration::new().command("wp").on_tick().on_frame();
         Ok((state, hooks))
@@ -1069,6 +1135,10 @@ impl Mod for Waypoints {
             if !self.last_panel.is_empty() {
                 hud::clear();
                 self.last_panel.clear();
+            }
+            if !self.last_labels.is_empty() {
+                render::set_hud(&[]);
+                self.last_labels.clear();
             }
             render::set_world(&[]);
             self.last_alive = None;
@@ -1107,6 +1177,21 @@ impl Mod for Waypoints {
             Vec::new()
         };
         render::set_world(&shapes);
+        // The in-world labels, with the markers: name and distance at
+        // each visible waypoint's projected position. The projection
+        // reads the last frame's camera, so a label lags the camera by
+        // a frame.
+        if self.markers {
+            let labels = self.label_shapes(&player, render::project);
+            let now = Self::label_state(&labels);
+            if now != self.last_labels {
+                self.last_labels = now;
+                render::set_hud(&labels);
+            }
+        } else if !self.last_labels.is_empty() {
+            self.last_labels.clear();
+            render::set_hud(&[]);
+        }
     }
 
     fn frame(&mut self, _seconds: f32) {
@@ -1196,6 +1281,7 @@ mod tests {
             last_alive: None,
             death_recorded: false,
             last_panel: Vec::new(),
+            last_labels: Vec::new(),
         }
     }
 
@@ -1211,10 +1297,11 @@ mod tests {
     }
 
     #[test]
-    fn api_level_is_eleven() {
-        // Newest imported function is `render.set-world` (level 11);
-        // `input.register-key` is level 6, the rest level 0.
-        assert_eq!(API_LEVEL, 11);
+    fn api_level_is_fourteen() {
+        // Newest imported function is `render.project` (level 14);
+        // `render.set-world` is level 11, `input.register-key` level 6,
+        // the rest level 0.
+        assert_eq!(API_LEVEL, 14);
     }
 
     #[test]
@@ -1468,6 +1555,91 @@ mod tests {
                 .push(waypoint(&format!("W{i}"), [i, 64, 0], OVERWORLD, 0xFFFFFF));
         }
         assert_eq!(s.marker_shapes(OVERWORLD, &player()).len(), MAX_MARKERS * 2);
+    }
+
+    #[test]
+    fn labels_draw_name_and_distance_at_the_projected_position() {
+        let mut s = state();
+        s.waypoints
+            .push(waypoint("Home", [0, 64, 20], OVERWORLD, 0xFF5555));
+        // The projection records what it was asked to project.
+        let asked = std::cell::RefCell::new(Vec::new());
+        let shapes = s.label_shapes(&player(), |p| {
+            asked.borrow_mut().push(p);
+            ScreenPoint {
+                x: 213.5,
+                y: 121.0,
+                visible: true,
+                depth: 20.0,
+            }
+        });
+        // The anchor is the block centre raised above its box.
+        assert_eq!(asked.borrow().len(), 1);
+        assert_eq!(
+            (
+                asked.borrow()[0].x,
+                asked.borrow()[0].y,
+                asked.borrow()[0].z
+            ),
+            (0.5, 65.5, 20.5)
+        );
+        assert_eq!(shapes.len(), 1);
+        match &shapes[0] {
+            Shape::Text(t) => {
+                assert_eq!(t.text, "Home · 20 m");
+                assert_eq!((t.at.x, t.at.y), (213.5, 121.0));
+                assert_eq!(t.color, 0xFF5555);
+                assert!(t.centered && t.shadow);
+            }
+            other => panic!("expected a text label, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn labels_skip_waypoints_behind_the_camera_hidden_ones_and_other_dimensions() {
+        let mut s = state();
+        s.waypoints
+            .push(waypoint("Home", [0, 64, 20], OVERWORLD, 0xFF5555));
+        s.waypoints
+            .push(waypoint("Hidden", [0, 64, 10], OVERWORLD, 0xFFFF55));
+        s.waypoints[1].hidden = true;
+        s.waypoints
+            .push(waypoint("Nether base", [0, 64, 10], NETHER, 0xFFAA00));
+        // Behind the camera: nothing is drawn.
+        let behind = s.label_shapes(&player(), |_| ScreenPoint {
+            x: 0.0,
+            y: 0.0,
+            visible: false,
+            depth: -10.0,
+        });
+        assert!(behind.is_empty());
+        // Ahead: only the visible waypoint of this dimension.
+        let ahead = s.label_shapes(&player(), |_| ScreenPoint {
+            x: 100.0,
+            y: 50.0,
+            visible: true,
+            depth: 10.0,
+        });
+        assert_eq!(ahead.len(), 1);
+        match &ahead[0] {
+            Shape::Text(t) => assert_eq!(t.text, "Home · 20 m"),
+            other => panic!("expected a text label, got {other:?}"),
+        }
+        // Sixteen labels at most, nearest first.
+        for i in 0..20 {
+            s.waypoints
+                .push(waypoint(&format!("W{i}"), [i, 64, 20], OVERWORLD, 0xFFFFFF));
+        }
+        assert_eq!(
+            s.label_shapes(&player(), |_| ScreenPoint {
+                x: 0.0,
+                y: 0.0,
+                visible: true,
+                depth: 1.0,
+            })
+            .len(),
+            MAX_LABELS
+        );
     }
 
     #[test]
