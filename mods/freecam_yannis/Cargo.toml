@@ -1,0 +1,16 @@
+[package]
+name = "freecam_yannis"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "FreeCam for Kestrel: F4 free camera, F6 follow view and nine tripod positions. A behaviour port of FreeCam by Yannis_."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

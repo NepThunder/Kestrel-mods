@@ -1,0 +1,9 @@
+id = "freecam_yannis"
+name = "FreeCam"
+version = "0.1.0"
+description = "A behaviour port of FreeCam by Yannis_ (MIT). Ported for Kestrel by NepThunder. F4 starts the free camera (fly it on I / comma / semicolon / apostrophe / equal / minus), F6 switches to a follow view parked behind and above you (distance 28, height 18 — settings) with the HUD hidden, F4 ends it. Hold F4 and press 1-9 to save the camera position as that tripod; press 1-9 with the camera off to start at a saved tripod — tripods are kept per world. Limits: the follow view is parked where F6 put it (it does not track a moving player, and the HUD hide is the whole HUD, where the original hides only the crosshair); the tripod keys are the mod's own bindings defaulting to the number row, and pressing one also selects its hotbar slot; tripods are keyed by dimension, the only world identity a client mod can read. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam_yannis"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "input", "chat", "storage", "ui"]
+experimental = ["render", "input", "ui"]
