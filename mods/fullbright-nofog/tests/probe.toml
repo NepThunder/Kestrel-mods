@@ -1,0 +1,108 @@
+# Fullbright & NoFog: one toggle (B, or /fullbright-nofog) fades the
+# gamma from the player's own Brightness (0.5) to 10.0 over 20 ticks
+# and turns distance fog off; toggling again fades it back to 0.5 and
+# turns fog back on. A corner panel says "Fullbright & NoFog on"
+# while the effect is on. The script harness cannot press keys, so
+# the B toggle is covered by the key registration and the unit tests
+# in src/lib.rs; what this script does prove is the command toggle,
+# the fade's end state (via /fullbright-nofog status, which reads the
+# effective gamma and fog back from the host), the panel, the choice
+# surviving a reload — on and off — the multiplayer path, and leaving
+# the world clearing the panel.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["fullbright-nofog"]
+chat = []
+panel = []
+
+# The toggle, on: the fade runs 20 ticks, then the panel shows and
+# the effective values read back as gamma 10, fog off.
+[[step]]
+command = "fullbright-nofog"
+expect.feedback = "Fullbright & NoFog on"
+
+[[step]]
+ticks = 20
+[step.expect]
+panel = ["Fullbright & NoFog on"]
+
+[[step]]
+command = "fullbright-nofog status"
+expect.feedback = "gamma 10 fog off"
+
+# Explicit on while already on answers the same, without restarting
+# anything; a bad argument is a red error, not a toggle.
+[[step]]
+command = "fullbright-nofog on"
+expect.feedback = "Fullbright & NoFog on"
+
+[[step]]
+command = "fullbright-nofog nope"
+expect.error = "Usage: /fullbright-nofog [on|off|status]"
+
+# Multiplayer: gamma and fog are render state, not world reads, so
+# the effect holds on a server too.
+[[step]]
+multiplayer = true
+ticks = 1
+[step.expect]
+panel = ["Fullbright & NoFog on"]
+
+[[step]]
+command = "fullbright-nofog status"
+expect.feedback = "gamma 10 fog off"
+
+# The toggle, off: the fade runs 20 ticks back, the panel clears, and
+# the effective values read back as the player's own 0.5, fog on.
+[[step]]
+command = "fullbright-nofog"
+expect.feedback = "Fullbright & NoFog off"
+
+[[step]]
+ticks = 20
+[step.expect]
+panel = []
+
+[[step]]
+command = "fullbright-nofog status"
+expect.feedback = "gamma 0.5 fog on"
+
+# A reload reads the stored choice back: still off, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "fullbright-nofog status"
+expect.feedback = "gamma 0.5 fog on"
+
+# On again, then a reload mid-fade: the fresh instance reads the
+# stored on-choice and fades from the Brightness in force (0.5) to
+# 10.0 again, fog off.
+[[step]]
+command = "fullbright-nofog"
+expect.feedback = "Fullbright & NoFog on"
+
+[[step]]
+ticks = 5
+
+[[step]]
+reload = true
+ticks = 20
+[step.expect]
+panel = ["Fullbright & NoFog on"]
+
+[[step]]
+command = "fullbright-nofog status"
+expect.feedback = "gamma 10 fog off"
+
+# Leaving the world clears the panel.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []
