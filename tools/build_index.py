@@ -84,6 +84,10 @@ ALLOW_IDS = {
     "fair_freecam",
     "freecam_plus",
     "fullbright_horizon",
+    "status_effect_hud",
+    "movement_status",
+    "toggle_sprint",
+    "rider_hud",
 }
 
 

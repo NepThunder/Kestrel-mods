@@ -1,0 +1,9 @@
+id = "status_effect_hud"
+name = "Status Effect HUD"
+version = "0.1.0"
+description = "A behaviour port of Status Effect HUD by CayMac (MIT, https://github.com/CayMac97/status-effect-hud), itself a port of Status Effect Bars and Inventory HUD+ (Potion HUD). Ported for Kestrel by NepThunder. Every active potion and beacon effect is listed at the top left of the HUD with the game's own mob_effect sprite, its name and Roman numeral level (II, III, IV), a colour-coded mm:ss countdown (white over 30s, yellow 10-30s, flashing red at 10s and under, an aqua infinity symbol for permanent effects) and a smooth duration bar in the effect's authentic vanilla potion colour. The original's translated effect names are shown from each effect's id instead: the SDK has no translation lookup, so a name is the id's own words (Fire Resistance for minecraft:fire_resistance) — the same words in English. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/status_effect_hud"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render"]
+experimental = ["render"]

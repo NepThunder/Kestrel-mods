@@ -1,0 +1,33 @@
+# Status Effect HUD: the mod loads and ticks; with no effects
+# nothing is drawn and no chat appears, and with the step's own
+# effects (API 18 fixtures) the rows are drawn — the sprite rows
+# themselves are render shapes, which this harness does not
+# assert; the names, numerals, countdown wording and colours,
+# bar fractions and layout are covered by the unit tests in
+# src/lib.rs. The original has no commands and no settings page,
+# so there is nothing else to probe.
+
+[[step]]
+ticks = 2
+[step.expect]
+chat = []
+commands = []
+
+[[step]]
+ticks = 2
+[[step.effects]]
+id = "minecraft:speed"
+amplifier = 1
+duration = 1234
+[[step.effects]]
+id = "minecraft:regeneration"
+duration = -1
+ambient = true
+show-particles = false
+[step.expect]
+chat = []
+
+[[step]]
+ticks = 2
+[step.expect]
+chat = []
