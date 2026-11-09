@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T05:46:22Z",
+  "generated": "2026-11-09T08:44:56Z",
   "projects": [
     {
       "id": "appleskin",
@@ -350,7 +350,7 @@
       "kind": "mod",
       "name": "Freecam",
       "summary": "A port of Freecam by hakergeniusz (a rewrite of Freecam by the Freecam authors).",
-      "description": "A port of Freecam by hakergeniusz (a rewrite of Freecam by the Freecam authors). Ported for Kestrel by NepThunder. Press Y (or /freecam) to detach the camera: fly it on dedicated keys — I forward, comma back, semicolon left, apostrophe right, equal up, minus down — while your player stays where they were, and the mouse looks around. Options > Mods > Freecam has the same switch plus the fly-speed switch (2, 5, 10, 20 or 40 blocks/s); the game keeps the speed. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam",
+      "description": "A port of Freecam by hakergeniusz (a rewrite of Freecam by the Freecam authors). Ported for Kestrel by NepThunder. Press Y (or /freecam) to detach the camera: fly it on dedicated keys — I forward, comma back, semicolon left, apostrophe right, equal up, minus down — while your player stays where they were, and the mouse looks around. Options > Mods > Freecam has the same switch plus the fly-speed switch (2, 5, 10, 20, 30, 40 or 60 blocks/s); the game keeps the speed. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam",
       "authors": [
         "NepThunder"
       ],
@@ -361,9 +361,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam",
       "versions": [
         {
-          "version": "0.1.0",
+          "version": "0.1.1",
           "published": "2026-11-09",
-          "changelog": "Freecam 0.1.0 — a port of Freecam by hakergeniusz (a rewrite of Freecam by the Freecam authors).\n\nPress Y (or /freecam) to detach the camera and fly it on dedicated keys — I forward, comma back, semicolon left, apostrophe right, equal up, minus down — while your player stays where they were, and the mouse looks around. Options > Mods > Freecam has the same switch plus the fly-speed switch (2, 5, 10, 20 or 40 blocks/s); the game keeps the speed.\n\nRequires Kestrel build 24 or newer (camera API, level 14). Works in singleplayer and multiplayer.\n\nNotes: the camera stops at walls and at 64 blocks from the player — no wall-clip in this version. WASD still walks your player while the camera is detached; only the dedicated keys fly the camera.",
+          "changelog": "No HUD notice while detached — the toggle answers in chat only. The fly-speed switch now cycles 2, 5, 10, 20, 30, 40 or 60 blocks/s.",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -371,16 +371,15 @@
             "render",
             "input",
             "chat",
-            "hud",
             "storage",
             "ui"
           ],
           "game": "26.3",
           "file": {
             "name": "freecam.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/freecam-0.1.0/freecam.kmod",
-            "size": 48155,
-            "sha256": "d691c8b54511ec791fa164ec4f1d458a7b91bf75933c9609e79c25bf5214cbf0"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/freecam-0.1.1/freecam.kmod",
+            "size": 47565,
+            "sha256": "75a931d5f72e939b1b1629420b03e6655ce95332f24cdff3443ca813ffe349d5"
           }
         }
       ]
