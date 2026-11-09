@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T21:15:49Z",
+  "generated": "2026-11-09T22:11:24Z",
   "projects": [
     {
       "id": "accurate_block_placement",
@@ -194,6 +194,47 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/basic_hud-0.1.1/basic_hud.kmod",
             "size": 51597,
             "sha256": "952cbf432e2388b668646b79a715a269ff02e2a9e1e041c1a8fba57188b6ee97"
+          }
+        }
+      ]
+    },
+    {
+      "id": "betterf3",
+      "kind": "mod",
+      "name": "BetterF3",
+      "summary": "A behaviour port of BetterF3 by cominixo and TreyRuffy, MIT (https://github.com/TreyRuffy/BetterF3), via DeportedToHell's Horizon port.",
+      "description": "A behaviour port of BetterF3 by cominixo and TreyRuffy, MIT (https://github.com/TreyRuffy/BetterF3), via DeportedToHell's Horizon port. Ported for Kestrel by NepThunder. Replaces the F3 debug screen with BetterF3's colour-coded modules in two columns — Minecraft, FPS, Coordinates, Chunks, Location and Misc on the left, Help and Targeted on the right — each module in its own colour, with line backgrounds, text shadow and the sliding animation, all changeable in Options > Mods > BetterF3 or on the config screen the mod's own key opens (the key starts unbound; bind it on that page). Five of the original's thirteen modules are NOT in this port — Graphics, Server, Entities, Sounds and System, with the memory line: the client SDK has no read for what they show, so they are left out rather than faked. The slime-chunk line is out for the same reason (no world-seed read), the font scale has no scaled text to set in the SDK, hiding the boss bar and scoreboard while F3 is open cannot be targeted by any SDK surface, and F3+M / F3+F stay the game's own debug keys. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/betterf3",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/betterf3",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of BetterF3 (MIT) on SDK API 22 (container-screen).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "world",
+            "entity",
+            "render",
+            "screen",
+            "input",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "betterf3.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/betterf3-0.1.0/betterf3.kmod",
+            "size": 52549,
+            "sha256": "3b32d9f266d578fbcdccce43b08c02777de993c3722fab1c52a0769abfedbc86"
           }
         }
       ]
@@ -1338,6 +1379,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/lookat-0.1.0/lookat.kmod",
             "size": 59642,
             "sha256": "c9b92193d276239a303a57a12ff1580b8de958c12953384839e92b6e8c5b3857"
+          }
+        }
+      ]
+    },
+    {
+      "id": "modmenu",
+      "kind": "mod",
+      "name": "Mod Menu",
+      "summary": "A behaviour port of Mod Menu by Prospector and TerraformersMC, MIT (https://github.com/TerraformersMC/ModMenu), via DeportedToHell's Horizon port.",
+      "description": "A behaviour port of Mod Menu by Prospector and TerraformersMC, MIT (https://github.com/TerraformersMC/ModMenu), via DeportedToHell's Horizon port. Ported for Kestrel by NepThunder. A Mods button on the title screen and in the pause menu, and an Open Mod Menu key (it starts unbound; bind it in Options > Mods > Mod Menu). PARTIAL, by the platform's limits: the buttons open Mod Menu's screen, but the list on it shows only Mod Menu itself — the client SDK has no read of the game's installed-mod list, so the other mods' names, versions, icons and badges, the mod count, search, sorting, the library filter, per-mod details and links, update checks and the flashing update indicator are NOT in this port. They arrive when that read lands; nothing is invented in their place. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/modmenu",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/modmenu",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Mod Menu (MIT), partial, on SDK API 22 (container-screen).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "screen",
+            "input",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "modmenu.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/modmenu-0.1.0/modmenu.kmod",
+            "size": 18548,
+            "sha256": "fafb4dbb2d82423756d7a1300e221119287e027f222de9307bba7a072bf56ca3"
           }
         }
       ]
