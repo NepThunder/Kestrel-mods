@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T22:11:24Z",
+  "generated": "2026-11-09T23:16:05Z",
   "projects": [
     {
       "id": "accurate_block_placement",
@@ -536,6 +536,41 @@
       ]
     },
     {
+      "id": "eatinganimation",
+      "kind": "mod",
+      "name": "Eating Animation",
+      "summary": "A behaviour port of Eating Animation by Theoness1 (https://github.com/Theoness1/EatingAnimation), MIT, via soufied's Horizon port.",
+      "description": "A behaviour port of Eating Animation by Theoness1 (https://github.com/Theoness1/EatingAnimation), MIT, via soufied's Horizon port. Ported for Kestrel by NepThunder. While you eat food, or drink a potion or milk, the item in your hand shows its bitten frames as you go: the code registers one item-model rule per food and drink (43 of them), and the frame definitions ship in this same package as content (capability registries, api 0.2) — one .kmod, nothing else to install, no resource pack needed, exactly as the original's frames are built into it. Each definition asks the game's own resolver to step four frames on the use's elapsed ticks, so the bites land at the same fractions of every item's own eating or drinking time, in first and third person. The frame ART is this port's own, not the original's: each frame is a flat model sampling a cropped piece of the item's own vanilla texture — a bite out of the corner for food, the top emptied away for drinks — where the original draws its own bitten textures; no assets are copied and none are shipped. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/eatinganimation",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/eatinganimation",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Eating Animation (SDK API 23, item-model district). One self-contained .kmod: code plus frame definitions for 43 foods and drinks.",
+          "api": "0.2",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "registries"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "eatinganimation.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/eatinganimation-0.1.0/eatinganimation.kmod",
+            "size": 112005,
+            "sha256": "18567d9eeccc02f1b5c25a1bf35f21a8269ad4b9d055843e4fdec3e9b4de7339"
+          }
+        }
+      ]
+    },
+    {
       "id": "fair_freecam",
       "kind": "mod",
       "name": "Fair Freecam",
@@ -571,6 +606,42 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fair_freecam-0.1.0/fair_freecam.kmod",
             "size": 50305,
             "sha256": "9cff9ffc845fbd6cf713d1d98d365dc60b693a9a47f7f8d39644c757414d42b3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fast_items",
+      "kind": "mod",
+      "name": "Fast Items",
+      "summary": "A behaviour port of Fast Items for Horizon by Lyvt (https.",
+      "description": "A behaviour port of Fast Items for Horizon by Lyvt (https://github.com/Lyvt-Dev/FastItems-for-Horizon), MIT, inspired by Noryea's Fast Items (independently written, as the original is; no code from it). Ported for Kestrel by NepThunder. Dropped flat items (potions, tools, food) lie as one flat face turned to face you — the sprite's edges and hidden back face are not drawn — and dropped block items keep their 3D model but face the camera instead of spinning, as in Lunar Client and Badlion. Item bobbing, stacks, pickup animation, culling and glow outlines work as before, and dropped items' blob shadows can be turned off. Only dropped items change: inventory icons, held items, item frames and servers stay as they are. The original keeps its settings in config/fast-items.json; the port's are on the standard settings page in Options > Mods > Fast Items — Flat Items, Block Items, Dropped Shadows — the compromise every port here makes. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fast_items",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fast_items",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Fast Items (SDK API 23, item-model district): dropped flat items as camera-facing sprites, block items as billboards, optional dropped-item shadows off.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "fast_items.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fast_items-0.1.0/fast_items.kmod",
+            "size": 16599,
+            "sha256": "9dab449fd885e4047cf95c303779fc0802a9aa9d6efea6717d88a583385e7b34"
           }
         }
       ]
@@ -1114,6 +1185,45 @@
       ]
     },
     {
+      "id": "itemnew",
+      "kind": "mod",
+      "name": "Item New",
+      "summary": "A behaviour port of Item New by d3grando (https://github.com/d3grando/itemnew), MIT, inspired by Item Highlighter.",
+      "description": "A behaviour port of Item New by d3grando (https://github.com/d3grando/itemnew), MIT, inspired by Item Highlighter. Ported for Kestrel by NepThunder. Items you just got — picked up, crafted, taken from a chest, given — glow in the hotbar and in inventory and container screens until you point at them or close the screen. Three styles (glow, glow with a star, by rarity colour), which screens show the marks, and when a mark clears are settings in Options > Mods > Item New; /itemnew hides or shows the marks, /itemnew clear forgets them. Newness is the port's own diffing of the inventory snapshots the SDK lends: a slot counts as new when its stack grew beyond what the player's inventory (or the open container) held a tick before, so moving items around marks nothing. Two differences from the original, both limits of the surface: a new item moved to another slot loses its mark (the diff cannot follow it), and the by-rarity style colours every stack of a newly gained item in its rarity's colour, because a stack's rarity lives in its item's defaults, which no SDK read exposes — the mark is a host-matched stack decoration, as the API 23 design prescribes. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/itemnew",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/itemnew",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Item New (SDK API 23, item-model district): newly gained items glow in the hotbar and screens until hovered or the screen closes.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "command",
+            "inventory",
+            "render",
+            "screen",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "itemnew.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/itemnew-0.1.0/itemnew.kmod",
+            "size": 42921,
+            "sha256": "40b93fb5efd971e180bf71179ef896ff4b3e6efd5f8947a143500e4191857d55"
+          }
+        }
+      ]
+    },
+    {
       "id": "jade",
       "kind": "mod",
       "name": "Jade",
@@ -1560,6 +1670,42 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/pvp_music-0.1.0/pvp_music.kmod",
             "size": 16295,
             "sha256": "99db01f7dfb7811cbfb0e753ff05455f736e665f6d9b07c033b6e405ac81f539"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rarity_borders",
+      "kind": "mod",
+      "name": "Rarity Borders",
+      "summary": "A behaviour port of Rarity Borders by Xariami (https://github.com/maliferen/horizon-rarity-borders), MIT.",
+      "description": "A behaviour port of Rarity Borders by Xariami (https://github.com/maliferen/horizon-rarity-borders), MIT. Ported for Kestrel by NepThunder. Clean, vanilla-style coloured borders on inventory items by rarity: yellow for Uncommon, aqua for Rare, light purple for Epic — a square outline with a highlighted bottom edge, drawn by the game on inventory and container slots. Borders for Common items and for the hotbar are the original's two optional features, both off until you turn them on in Options > Mods > Rarity Borders. The rarity itself is matched by the game against each stack's full components, its item's defaults included: a mod cannot read a stack's rarity (the SDK's components string is only what a stack carries beyond its defaults), so the port declares one border per rarity and never learns any slot's rarity itself. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/rarity_borders",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/rarity_borders",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Rarity Borders (SDK API 23, item-model district): vanilla-style coloured borders on inventory items by rarity.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "rarity_borders.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/rarity_borders-0.1.0/rarity_borders.kmod",
+            "size": 16310,
+            "sha256": "639481ca1971939640e71410333c84a16de9e6de3ebcbb243a3e7ab1ebfe49fb"
           }
         }
       ]
