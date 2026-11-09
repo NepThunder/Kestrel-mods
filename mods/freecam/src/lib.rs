@@ -40,7 +40,6 @@
 //! camera is a view, not a body.
 use horizon_mod_sdk::{
     Mod, Registration, chat, game,
-    hud::{self, Corner, Line},
     input::{self, Event},
     render::{self, CameraOverride, WorldPoint},
     storage,
@@ -57,7 +56,7 @@ const API_LEVEL: u32 = 14;
 const EYE: f64 = 1.62;
 /// Blocks per second the camera flies, and the speeds the switch
 /// offers; 10 is the original's middle ground and Fair Freecam's.
-const SPEEDS: [f32; 5] = [2.0, 5.0, 10.0, 20.0, 40.0];
+const SPEEDS: [f32; 7] = [2.0, 5.0, 10.0, 20.0, 30.0, 40.0, 60.0];
 const DEFAULT_SPEED: f32 = 10.0;
 
 /// The toggle key's name for `register-key`, and its default: Y. The
@@ -215,7 +214,6 @@ struct Freecam {
     detached: bool,
     held: Held,
     speed: f32,
-    last_panel: Vec<String>,
 }
 
 impl Freecam {
@@ -235,38 +233,6 @@ impl Freecam {
         )
     }
 
-    /// The notice while detached: the toggle key and the fly speed.
-    fn panel_lines(&self) -> Vec<String> {
-        vec![
-            "Freecam on — Y to return".to_string(),
-            format!("Speed: {} blocks/s", self.speed),
-        ]
-    }
-
-    fn show_panel(&mut self) {
-        let lines = self.panel_lines();
-        if lines != self.last_panel {
-            self.last_panel = lines.clone();
-            hud::set_panel(
-                Corner::TopLeft,
-                &lines
-                    .iter()
-                    .map(|text| Line {
-                        text: text.clone(),
-                        color: 0xFFFFFF,
-                    })
-                    .collect::<Vec<_>>(),
-            );
-        }
-    }
-
-    fn clear_panel(&mut self) {
-        if !self.last_panel.is_empty() {
-            hud::clear();
-            self.last_panel.clear();
-        }
-    }
-
     /// The settings page: the freecam switch and the fly speed.
     fn refresh_settings(&self) {
         ui::set_settings(&[
@@ -282,8 +248,8 @@ impl Freecam {
     }
 
     /// Detach the camera at the player's eye, looking where they look,
-    /// or release it back to the player. Releasing also clears the
-    /// notice and forgets any held movement keys.
+    /// or release it back to the player. Releasing also forgets any
+    /// held movement keys.
     fn set_detached(&mut self, on: bool) {
         if on {
             let Some(player) = game::get_player() else {
@@ -301,12 +267,10 @@ impl Freecam {
                 pitch: player.pitch,
                 roll: 0.0,
             }));
-            self.show_panel();
         } else {
             self.detached = false;
             self.held.clear();
             render::set_camera(None);
-            self.clear_panel();
         }
         self.refresh_settings();
     }
@@ -315,9 +279,6 @@ impl Freecam {
         self.speed = next_speed(self.speed);
         let _ = storage::set(SPEED_KEY, self.speed.to_string().as_bytes());
         self.refresh_settings();
-        if self.detached {
-            self.show_panel();
-        }
     }
 }
 
@@ -334,7 +295,6 @@ impl Mod for Freecam {
             detached: false,
             held: Held::default(),
             speed: read_speed(storage::get(SPEED_KEY)),
-            last_panel: Vec::new(),
         };
         Ok((state, Registration::new().command("freecam").on_tick()))
     }
@@ -357,8 +317,8 @@ impl Mod for Freecam {
             }
         }
         if game::get_player().is_none() {
-            // Leaving the world releases the camera and clears the
-            // notice; the host restores the player's camera anyway.
+            // Leaving the world releases the camera; the host
+            // restores the player's camera anyway.
             if self.detached {
                 self.set_detached(false);
             }
@@ -575,39 +535,22 @@ mod tests {
         assert_eq!(read_speed(Some(b"2".to_vec())), 2.0);
         assert_eq!(read_speed(Some(b"5".to_vec())), 5.0);
         assert_eq!(read_speed(Some(b"20".to_vec())), 20.0);
+        assert_eq!(read_speed(Some(b"30".to_vec())), 30.0);
         assert_eq!(read_speed(Some(b"40".to_vec())), 40.0);
+        assert_eq!(read_speed(Some(b"60".to_vec())), 60.0);
         // A stored speed the switch never offers falls back to 10.
         assert_eq!(read_speed(Some(b"99".to_vec())), 10.0);
         assert_eq!(read_speed(Some(b"nope".to_vec())), 10.0);
-        // The cycle steps through all five and wraps back to 2.
+        // The cycle steps through all seven and wraps back to 2.
         assert_eq!(next_speed(2.0), 5.0);
         assert_eq!(next_speed(5.0), 10.0);
         assert_eq!(next_speed(10.0), 20.0);
-        assert_eq!(next_speed(20.0), 40.0);
-        assert_eq!(next_speed(40.0), 2.0);
+        assert_eq!(next_speed(20.0), 30.0);
+        assert_eq!(next_speed(30.0), 40.0);
+        assert_eq!(next_speed(40.0), 60.0);
+        assert_eq!(next_speed(60.0), 2.0);
         assert_eq!(on_off(true), "ON");
         assert_eq!(on_off(false), "OFF");
     }
 
-    #[test]
-    fn panel_shows_the_toggle_key_and_the_speed() {
-        let freecam = Freecam {
-            detached: true,
-            held: Held::default(),
-            speed: 10.0,
-            last_panel: Vec::new(),
-        };
-        assert_eq!(
-            freecam.panel_lines(),
-            ["Freecam on — Y to return", "Speed: 10 blocks/s"]
-        );
-        let freecam = Freecam {
-            speed: 40.0,
-            ..freecam
-        };
-        assert_eq!(
-            freecam.panel_lines(),
-            ["Freecam on — Y to return", "Speed: 40 blocks/s"]
-        );
-    }
 }

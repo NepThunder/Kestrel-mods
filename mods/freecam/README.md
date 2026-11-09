@@ -20,12 +20,11 @@ Kestrel-mods project, not to them.
   equal up, minus down — all rebindable on the mod's page. The
   mouse looks around while you fly. A diagonal flies at the same
   speed as a straight line, and opposite keys cancel.
-- **The fly speed**: the settings page cycles 2, 5, 10, 20 or 40
-  blocks per second (10 by default); the game keeps your choice.
-- **The HUD notice**: "Freecam on — Y to return" and the speed sit
-  in the top-left corner while detached, and the toggle answers in
-  chat ("Freecam on" / "Freecam off"). It clears when you toggle
-  off, leave the world, or unload the mod.
+- **The fly speed**: the settings page cycles 2, 5, 10, 20, 30, 40
+  or 60 blocks per second (10 by default); the game keeps your choice.
+- **No HUD notice**: nothing sits in the top-left corner while
+  detached — the toggle answers in chat only ("Freecam on" /
+  "Freecam off"). The settings page still shows the current speed.
 - **Your setting is never changed**: the mod only ever holds its
   own camera in the game, never writes your yaw, pitch, or
   perspective. Disabling or unloading the mod restores your own
@@ -71,7 +70,7 @@ Two limits come from the camera API itself, not this port:
   larger cap, or none in singleplayer, is a policy change.
 - **The first loaded camera mod wins.** Another mod holding the
   camera (Freelook, a scripted camera) drives it instead of this
-  one until it releases; this mod's notice may say on while the
+  one until it releases; the chat line may say on while the
   view is the other mod's. Disable the other mod to fly this one.
 - **Multiplayer works.** The camera is render-only, like third
   person and shake, so it detaches on a server exactly as in
