@@ -1,6 +1,6 @@
 id = "punchy"
 name = "Punchy"
-version = "0.2.0"
+version = "0.2.1"
 description = "A behaviour port of Punchy! by PunchyDevGuy (All Rights Reserved; no code or assets copied — the feel reimplemented against the Kestrel SDK). The first-person hand lags behind your look on a spring, attacks with authored animations — a sword slash and a spear jab replace the vanilla swing, and other swings keep part of it with a follow-through on top — and bobs with more weight. Options > Mods > Punchy sets the intensity and which parts run, and /punchy reports them. First-person only; the original's resource pack and third-person changes are out of scope. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy"
 authors = ["NepThunder"]
 api = "0.1"

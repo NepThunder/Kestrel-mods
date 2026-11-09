@@ -27,9 +27,19 @@
 //! swing pose itself. A sword's whack is replaced outright (scale
 //! 0) by the slash curve below and a spear's stab by the jab —
 //! the original's headline per-weapon animations, rebuilt — while
-//! any other whack keeps a third of the vanilla swing with the
+//! any other whack keeps part of the vanilla swing with the
 //! 0.1.1 follow-through on top as its weight. Sway and bob still
 //! add over the top; the claim replaces only the swing.
+//!
+//! 0.2.1 retunes from the owner's device pass on 0.2.0: the slash
+//! read as a different animation from vanilla, not a heavier one
+//! — its wind-up is shorter (0.15 of the swing) and its keyframes
+//! sit roughly halfway back toward vanilla's own sweep — while
+//! the tools' attacks and the bob read as plain vanilla, so the
+//! tools keep more of the vanilla swing under the same bump
+//! (half instead of a third) and the bob weights rise by about
+//! two fifths. The target everywhere: vanilla's shape, more
+//! weight.
 
 use horizon_mod_sdk::{
     HandTransform, Mod, Registration, SwingAnim, hand, storage,
@@ -104,25 +114,29 @@ fn smoothstep(t: f32) -> f32 {
 /// offset's units (blocks, degrees): the whole animation, worn
 /// while the vanilla swing is scaled to nothing. Three phases
 /// between two keyframes — the wind-up's peak and the slash's
-/// end: the wind-up (p < 0.25) lifts the hand up and back,
-/// pitched up and yawed in; the slash (0.25..0.6) cuts across —
-/// the yaw sweeps out, pitch and roll drop, the hand drives
-/// forward — on a fast-in ease, so the cut accelerates; the
-/// recovery (0.6..1) smoothsteps back to rest. Zero at both ends.
+/// end: the wind-up (p < 0.15) lifts the hand a little up and
+/// back, pitched up and yawed in; the slash (0.15..0.55) cuts
+/// across — the yaw sweeps out, pitch and roll drop, the hand
+/// drives forward — on a fast-in ease, so the cut accelerates;
+/// the recovery (0.55..1) smoothsteps back to rest. Zero at both
+/// ends. 0.2.1 pulled the keyframes roughly halfway back toward
+/// vanilla's sweep and shortened the wind-up: on device, 0.2.0's
+/// slash read as a different animation, not a heavier vanilla
+/// one.
 fn slash_curve(p: f32) -> HandTransform {
     let p = p.clamp(0.0, 1.0);
     // [x, y, z, pitch, yaw, roll]
-    const WIND: [f32; 6] = [0.05, 0.06, 0.05, 18.0, -12.0, 0.0];
-    const CUT: [f32; 6] = [0.05, -0.04, -0.22, -30.0, 38.0, -24.0];
-    let pose: [f32; 6] = if p < 0.25 {
-        let t = smoothstep(p / 0.25);
+    const WIND: [f32; 6] = [0.03, 0.035, 0.03, 8.0, -6.0, 0.0];
+    const CUT: [f32; 6] = [0.03, -0.025, -0.14, -18.0, 20.0, -12.0];
+    let pose: [f32; 6] = if p < 0.15 {
+        let t = smoothstep(p / 0.15);
         std::array::from_fn(|i| WIND[i] * t)
-    } else if p < 0.6 {
-        let t = (p - 0.25) / 0.35;
+    } else if p < 0.55 {
+        let t = (p - 0.15) / 0.4;
         let t = t * t;
         std::array::from_fn(|i| WIND[i] + (CUT[i] - WIND[i]) * t)
     } else {
-        let t = 1.0 - smoothstep((p - 0.6) / 0.4);
+        let t = 1.0 - smoothstep((p - 0.55) / 0.45);
         std::array::from_fn(|i| CUT[i] * t)
     };
     HandTransform {
@@ -142,7 +156,7 @@ fn slash_curve(p: f32) -> HandTransform {
 fn jab_curve(p: f32) -> HandTransform {
     let s = follow_through(p);
     HandTransform {
-        z: -0.45 * s * s,
+        z: -0.38 * s * s,
         pitch: -6.0 * s,
         ..REST
     }
@@ -169,7 +183,7 @@ fn bob_emphasis(phase: f32, amount: f32) -> (f32, f32, f32) {
     let s = (phase * std::f32::consts::PI).sin();
     let c = (phase * std::f32::consts::PI).cos();
     let a = (amount * 10.0).clamp(0.0, 1.0);
-    (s * 0.03 * a, -c.abs() * 0.06 * a, s * 4.0 * a)
+    (s * 0.04 * a, -c.abs() * 0.085 * a, s * 5.5 * a)
 }
 
 /// The next intensity step, wrapping from 100 back to 0.
@@ -346,14 +360,15 @@ impl Mod for Punchy {
                     t.roll += c.roll;
                 }
                 SwingAnim::Whack => {
-                    hand::set_swing_scale(0.35);
+                    hand::set_swing_scale(0.5);
                     self.swing_claimed = true;
                     let f = follow_through(p);
                     // Forward (view space looks along -z), down,
                     // pitched over the swing, and a touch in toward
                     // the centre: the 0.1.1 follow-through, now the
-                    // weight on a third of the vanilla swing instead
-                    // of a layer over all of it.
+                    // weight on half the vanilla swing instead of a
+                    // layer over all of it (a third in 0.2.0 read as
+                    // plain vanilla on device).
                     t.z -= 0.30 * f;
                     t.y -= 0.08 * f;
                     t.pitch += 28.0 * f;
@@ -453,15 +468,15 @@ mod tests {
         assert_eq!(parts(slash_curve(0.0)), [0.0; 6]);
         assert_eq!(parts(slash_curve(1.0)), [0.0; 6]);
         // Mid wind-up: pitched up, yawed in.
-        let wind = slash_curve(0.125);
+        let wind = slash_curve(0.075);
         assert!(wind.pitch > 0.0 && wind.yaw < 0.0, "wind-up: {wind:?}");
         // The slash's end pose, exactly: yaw swept out, pitch and
         // roll dropped, driven forward.
-        let cut = slash_curve(0.6);
-        assert!((cut.yaw - 38.0).abs() < 1e-4, "yaw {}", cut.yaw);
-        assert!((cut.pitch + 30.0).abs() < 1e-4, "pitch {}", cut.pitch);
-        assert!((cut.roll + 24.0).abs() < 1e-4, "roll {}", cut.roll);
-        assert!((cut.z + 0.22).abs() < 1e-4, "z {}", cut.z);
+        let cut = slash_curve(0.55);
+        assert!((cut.yaw - 20.0).abs() < 1e-4, "yaw {}", cut.yaw);
+        assert!((cut.pitch + 18.0).abs() < 1e-4, "pitch {}", cut.pitch);
+        assert!((cut.roll + 12.0).abs() < 1e-4, "roll {}", cut.roll);
+        assert!((cut.z + 0.14).abs() < 1e-4, "z {}", cut.z);
         // The recovery eases home: part-way back by p = 0.8.
         let back = slash_curve(0.8);
         assert!(back.yaw > 0.0 && back.yaw < cut.yaw, "recovering: {back:?}");
@@ -479,11 +494,11 @@ mod tests {
             parts(jab_curve(1.0))
         );
         let mid = jab_curve(0.5);
-        assert!((mid.z + 0.45).abs() < 1e-6, "thrust {}", mid.z);
+        assert!((mid.z + 0.38).abs() < 1e-6, "thrust {}", mid.z);
         assert!((mid.pitch + 6.0).abs() < 1e-6, "pitch {}", mid.pitch);
         // Sharpened: a quarter in, the thrust is well under what a
-        // plain sine would give (-0.32), at -0.225.
-        assert!(jab_curve(0.25).z > -0.25, "z {}", jab_curve(0.25).z);
+        // plain sine would give (-0.27), at -0.19.
+        assert!(jab_curve(0.25).z > -0.20, "z {}", jab_curve(0.25).z);
     }
 
     #[test]
@@ -540,15 +555,15 @@ mod tests {
         // or roll.
         let (x, y, roll) = bob_emphasis(0.0, 0.1);
         assert_eq!((x, roll), (0.0, 0.0));
-        assert!((y + 0.06).abs() < 1e-6);
+        assert!((y + 0.085).abs() < 1e-6);
         // A quarter cycle on: full sway and roll, no dip.
         let (x, y, roll) = bob_emphasis(0.5, 0.1);
-        assert!((x - 0.03).abs() < 1e-6);
+        assert!((x - 0.04).abs() < 1e-6);
         assert!(y.abs() < 1e-6);
-        assert!((roll - 4.0).abs() < 1e-6);
+        assert!((roll - 5.5).abs() < 1e-6);
         // Half the walk speed, half the emphasis.
         let (x, _, _) = bob_emphasis(0.5, 0.05);
-        assert!((x - 0.015).abs() < 1e-6);
+        assert!((x - 0.02).abs() < 1e-6);
         // No bob amount, no emphasis.
         assert_eq!(bob_emphasis(0.5, 0.0), (0.0, 0.0, 0.0));
     }
