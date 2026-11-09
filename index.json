@@ -1,7 +1,47 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T20:01:57Z",
+  "generated": "2026-11-09T21:15:49Z",
   "projects": [
+    {
+      "id": "accurate_block_placement",
+      "kind": "mod",
+      "name": "Accurate Block Placement",
+      "summary": "A behaviour port of Accurate Block Placement.",
+      "description": "A behaviour port of Accurate Block Placement: Reborn (MIT) by Clayborn, Flourick, schwar and KadTheHunter, via Lutziano888's Horizon port (https://github.com/Lutziano888/horizon-accurate-block-placement). Ported for Kestrel by NepThunder. Hold right click with a block and every new spot you look at gets a block at once, instead of vanilla's one every four ticks: no spot skipped however fast you move, and staring at one spot adds nothing. A single click stays a single block (it waits out vanilla's four ticks, unless you turn the view by 10 degrees), and building backwards re-arms a placed block once you have stepped a full block back. Blocks that react to a click (doors, chests, buttons, levers, scaffolding...) get vanilla's click alone. Settings (Options > Mods > Accurate Block Placement): Accurate placement on/off and Allowed on servers, both on by default, plus a toggle key, unbound by default. Some servers see fast, accurate placing as a cheat: check their rules. Two things differ from the original, both limits of the client SDK: it cannot switch vanilla's own held-repeat off, so holding still on one spot keeps vanilla's four-tick cadence instead of the original's full stop; and it cannot ask the game whether the held item is a block item, so it learns from the first click of a hold — once the game has placed one, the rest of the hold is accelerated. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/accurate_block_placement",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/accurate_block_placement",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "input",
+            "world",
+            "actions",
+            "storage",
+            "ui",
+            "chat"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "accurate_block_placement.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/accurate_block_placement-0.1.0/accurate_block_placement.kmod",
+            "size": 26480,
+            "sha256": "f563fb62b3c926e6cc6fe50317e0f621713d0a6d2090e38286d8d4115e8ce7cb"
+          }
+        }
+      ]
+    },
     {
       "id": "appleskin",
       "kind": "mod",
@@ -265,6 +305,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/compass_bar-0.1.0/compass_bar.kmod",
             "size": 25139,
             "sha256": "4f073dfc08d56582f923ca6eda159d650163bffeebf08a1e4f7f8e4a25b742db"
+          }
+        }
+      ]
+    },
+    {
+      "id": "context_tools",
+      "kind": "mod",
+      "name": "Context Tool Swap",
+      "summary": "A behaviour port of Context Tool Swap (MIT) by TTCjonasTTC and Qwen (https://github.com/TTCjonasTTC/context_toolswap).",
+      "description": "A behaviour port of Context Tool Swap (MIT) by TTCjonasTTC and Qwen (https://github.com/TTCjonasTTC/context_toolswap). Ported for Kestrel by NepThunder. Press middle click with a tool in hand, looking at a block — or simply start breaking a block — and the right tool for it is swapped out of your hotbar into your hand: the best one you carry there, correct for the block's drops first, then fastest, as the original picks. /toolswap turns it on or off (on by default), as in the original. PARTIAL, as the roadmap flagged: the swap reaches the hotbar only — a tool that is only in your bag cannot be moved into your hand until the SDK gains an inventory-actions district (B6), where the original reaches the whole inventory. Also: the original skips creative and spectator, which a client mod cannot detect (the SDK shows no game mode), and the middle click keeps its vanilla pick-block as well, because a registered key does not consume the button. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/context_tools",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/context_tools",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "input",
+            "inventory",
+            "actions",
+            "storage"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "context_tools.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/context_tools-0.1.0/context_tools.kmod",
+            "size": 29315,
+            "sha256": "3fbbe841d4139a50a96c8c599c0d012f309b3987d6945cf0cbcffe2278ddced1"
           }
         }
       ]
@@ -1442,6 +1519,46 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/rider_hud-0.1.0/rider_hud.kmod",
             "size": 19549,
             "sha256": "271cf48617b40d7215bc4fd776e8f19142d97135d9b4b8cd4912bbe40457fd5e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "right_click_crops",
+      "kind": "mod",
+      "name": "Right-Click Crops",
+      "summary": "A behaviour port of Right-Click Crops (MIT) by AyanoKaito (https://github.com/AyanoKaito/horizon-right-click-crops).",
+      "description": "A behaviour port of Right-Click Crops (MIT) by AyanoKaito (https://github.com/AyanoKaito/horizon-right-click-crops). Ported for Kestrel by NepThunder. Right-click a mature plant to harvest it with the game's own loot and replant it for one matching planting item — from the harvest itself first, then your inventory: wheat, carrots, potatoes, beetroot, nether wart, cocoa, torchflower and pitcher crop are replanted; sugar cane, cactus, bamboo, kelp and the vines keep their base or anchor; pumpkin and melon keep their attached stem. Each of the sixteen families can be switched off in Options > Mods > Right-Click Crops. The click is left alone when bone meal is in either hand, when you crouch holding an item, and when you use shears on a pumpkin; sweet and glow berries are never touched. Differences from the original, all limits of the client SDK: payment can only come from your hand, your hotbar or your offhand — a planting item deeper in the bag cannot be moved to your hand yet, so the crop is then harvested without replanting; the survival-only gate cannot be applied because the SDK shows a client mod no game mode; and the tall plants, the torchflower's farmland check and the pumpkin/melon stem check read the world's blocks, which the SDK lends to client mods in single player only, so on a server those families wait (the soil crops still harvest and replant there). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/right_click_crops",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/right_click_crops",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "input",
+            "world",
+            "inventory",
+            "actions",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "right_click_crops.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/right_click_crops-0.1.0/right_click_crops.kmod",
+            "size": 26789,
+            "sha256": "ece144640725b1e354ca455ab95b37721f07386a36ab623592594acd10580e26"
           }
         }
       ]
