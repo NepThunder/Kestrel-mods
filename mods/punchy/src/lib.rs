@@ -15,9 +15,12 @@
 //! out of scope here. This port's home is
 //! <https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy>.
 //!
-//! The numbers below are a first tuning, done without a device:
-//! the shapes (a spring, a sine follow-through, vanilla's own bob
-//! cycle) are the port; their weights want on-device iteration.
+//! The shapes (a spring, a sine follow-through, vanilla's own bob
+//! cycle) are the port; the weights were first tuned without a
+//! device, then retuned after on-device testing (0.1.1: the bob
+//! emphasis had run ten times too weak — the game's bob amount is
+//! vanilla's 0..0.1 scale, not 0..1 — and the follow-through was
+//! lost inside the vanilla swing).
 
 use horizon_mod_sdk::{
     HandTransform, Mod, Registration, SwingKind, hand, storage,
@@ -85,10 +88,17 @@ fn follow_through(p: f32) -> f32 {
 /// them — weighted by `amount`: a sideways sway in blocks, a dip
 /// in blocks, and a roll in degrees. Copying the game's formulas
 /// keeps the hand's bob in step with the camera's.
+///
+/// The game's `amount` is vanilla's bob value: it ramps toward the
+/// horizontal speed capped at **0.1**, so 0.1 is a full walk or
+/// sprint, not 1. It is normalised to 0..1 before weighting —
+/// 0.1.0 weighted the raw value and the emphasis ran ten times too
+/// weak to see.
 fn bob_emphasis(phase: f32, amount: f32) -> (f32, f32, f32) {
     let s = (phase * std::f32::consts::PI).sin();
     let c = (phase * std::f32::consts::PI).cos();
-    (s * 0.02 * amount, -c.abs() * 0.04 * amount, s * 2.5 * amount)
+    let a = (amount * 10.0).clamp(0.0, 1.0);
+    (s * 0.03 * a, -c.abs() * 0.06 * a, s * 4.0 * a)
 }
 
 /// The next intensity step, wrapping from 100 back to 0.
@@ -239,10 +249,14 @@ impl Mod for Punchy {
             let f = follow_through(state.swing_progress);
             // Forward (view space looks along -z), down, pitched
             // over the swing, and a touch in toward the centre.
-            t.z -= 0.16 * f;
-            t.y -= 0.045 * f;
-            t.pitch += 16.0 * f;
-            t.yaw -= 5.0 * f;
+            // Weighted to read as a distinct thrust past the vanilla
+            // swing: 0.1.0's gentler numbers (0.16 forward, 16
+            // degrees) blended into the swing and went unseen on
+            // device.
+            t.z -= 0.30 * f;
+            t.y -= 0.08 * f;
+            t.pitch += 28.0 * f;
+            t.yaw -= 8.0 * f;
         }
         if self.bob {
             let (x, y, roll) = bob_emphasis(state.bob_phase, state.bob_amount);
@@ -352,15 +366,20 @@ mod tests {
 
     #[test]
     fn bob_emphasis_follows_the_games_cycle() {
-        // Phase 0: the dip is at its deepest, no sway or roll.
-        let (x, y, roll) = bob_emphasis(0.0, 1.0);
+        // The game's amount is vanilla's 0..0.1 scale: 0.1 is a
+        // full walk. Phase 0: the dip is at its deepest, no sway
+        // or roll.
+        let (x, y, roll) = bob_emphasis(0.0, 0.1);
         assert_eq!((x, roll), (0.0, 0.0));
-        assert!((y + 0.04).abs() < 1e-6);
+        assert!((y + 0.06).abs() < 1e-6);
         // A quarter cycle on: full sway and roll, no dip.
-        let (x, y, roll) = bob_emphasis(0.5, 1.0);
-        assert!((x - 0.02).abs() < 1e-6);
+        let (x, y, roll) = bob_emphasis(0.5, 0.1);
+        assert!((x - 0.03).abs() < 1e-6);
         assert!(y.abs() < 1e-6);
-        assert!((roll - 2.5).abs() < 1e-6);
+        assert!((roll - 4.0).abs() < 1e-6);
+        // Half the walk speed, half the emphasis.
+        let (x, _, _) = bob_emphasis(0.5, 0.05);
+        assert!((x - 0.015).abs() < 1e-6);
         // No bob amount, no emphasis.
         assert_eq!(bob_emphasis(0.5, 0.0), (0.0, 0.0, 0.0));
     }

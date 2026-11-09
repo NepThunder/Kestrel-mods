@@ -17,4 +17,4 @@ Every rendered frame the game hands the mod the hand's state — look direction 
 
 - First-person only: that is all the hand API poses.
 - One transform covers both hands, as the API's state does.
-- The feel is tuned blind — the spring weights and follow-through sizes are a first pass and want on-device iteration.
+- The feel was first tuned blind; 0.1.1 retunes it from on-device testing (the bob emphasis now uses the game's real 0..0.1 bob scale, and the follow-through is stronger). True swing-replacement animations need an SDK addition and come separately.
