@@ -1,0 +1,9 @@
+id = "fullbright_nofog"
+name = "Fullbright & NoFog"
+version = "0.1.0"
+description = "A port of Fullbright & NoFog by Nirokx. Ported for Kestrel by NepThunder. Press B (or /fullbright-nofog) to fade to maximum brightness (gamma 10.0, the 1000% Fullbright value) and remove distance fog — the Nether's 96-block fog wall included; press it again to fade back to your own Brightness and turn fog back on. Options > Mods > Fullbright & NoFog has the same switch plus a fade switch; the game keeps your choices. Works in singleplayer and multiplayer. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fullbright-nofog"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "input", "chat", "hud", "storage", "ui"]
+experimental = ["render", "input", "ui"]
