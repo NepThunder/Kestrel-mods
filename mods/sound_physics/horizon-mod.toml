@@ -1,6 +1,6 @@
 id = "sound_physics"
 name = "Sound Physics"
-version = "0.1.0"
+version = "0.1.1"
 description = "A behaviour port of Sound Physics Remastered by henkelmax (GPL-3.0). Ported for Kestrel by NepThunder. Sounds are quietened and muffled by the blocks between you and them, and caves and enclosed spaces give them reverb. Options > Mods > Sound Physics sets the reverb amount and the occlusion strength, and /soundphysics reports the enclosure estimate around you. Single-player only in v1: the SDK's world reads are. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/sound_physics"
 authors = ["NepThunder"]
 api = "0.1"

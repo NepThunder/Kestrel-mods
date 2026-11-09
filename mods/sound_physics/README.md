@@ -7,7 +7,7 @@ A behaviour port of [Sound Physics Remastered](https://github.com/henkelmax/soun
 ## How it works
 
 - **Occlusion.** When a world sound starts, the mod samples the blocks along the line from the sound to your ears. The fraction of the line inside solid blocks sets how much the sound is quietened (down to 8% through a fully solid line) and muffled.
-- **Reverb.** Ten times a second the mod probes the blocks around you in 26 directions. The enclosed fraction drives a shared reverb in the game's mixer: open sky is dry, a cave rings for seconds.
+- **Reverb.** Ten times a second the mod probes the blocks around you in 17 directions at and above eye level (the ground below is not counted, so open sky reads as open). The enclosed fraction drives a shared reverb in the game's mixer: open sky is dry, a cave rings for seconds.
 - **Settings** (Options > Mods > Sound Physics): Reverb (0/25/50/75/100%) and Occlusion (same steps). `/soundphysics` reports the current enclosure estimate and the settings.
 
 ## Limits in v1

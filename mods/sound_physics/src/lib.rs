@@ -45,35 +45,29 @@ const REVERB_BUTTON: u32 = 1;
 const OCCLUSION_BUTTON: u32 = 2;
 /// Occlusion samples along a long sound's line, at most.
 const MAX_SAMPLES: usize = 32;
-/// The 26 directions around the listener the enclosure probe casts:
-/// the 6 axes, the 12 edge diagonals and the 8 corners of a cube.
-const PROBE_DIRS: [(i32, i32, i32); 26] = [
+/// The 17 directions the enclosure probe casts: the axes, edge
+/// diagonals and corners at or above the listener's horizon. Nothing
+/// below the horizon is cast: the ground is always solid under the
+/// listener, and counting it read about 35% enclosure in the open
+/// (0.1.0's bug). Walls and ceilings are what enclose a sound.
+const PROBE_DIRS: [(i32, i32, i32); 17] = [
     (1, 0, 0),
     (-1, 0, 0),
     (0, 1, 0),
-    (0, -1, 0),
     (0, 0, 1),
     (0, 0, -1),
     (1, 1, 0),
-    (1, -1, 0),
     (-1, 1, 0),
-    (-1, -1, 0),
     (1, 0, 1),
     (1, 0, -1),
     (-1, 0, 1),
     (-1, 0, -1),
     (0, 1, 1),
     (0, 1, -1),
-    (0, -1, 1),
-    (0, -1, -1),
     (1, 1, 1),
     (1, 1, -1),
-    (1, -1, 1),
-    (1, -1, -1),
     (-1, 1, 1),
     (-1, 1, -1),
-    (-1, -1, 1),
-    (-1, -1, -1),
 ];
 /// The distances the enclosure probe checks in each direction.
 const PROBE_RADII: [i32; 2] = [5, 11];
@@ -399,6 +393,17 @@ mod tests {
         // A cave at the default reverb setting sends half its echo.
         let send = compose(0.0, 0.6, 1.0, 0.5);
         assert!((send.reverb - 0.3).abs() < 1e-6);
+    }
+
+    #[test]
+    fn probe_never_looks_below_the_horizon() {
+        // The ground under the listener is always solid; when the
+        // probe cast downward directions (26 of them in 0.1.0), those
+        // samples always hit earth and open ground read about 35%
+        // enclosure. Every cast direction now stays at or above eye
+        // level, so on open ground no sample can be solid.
+        assert_eq!(PROBE_DIRS.len(), 17);
+        assert!(PROBE_DIRS.iter().all(|&(_, dy, _)| dy >= 0));
     }
 
     #[test]
