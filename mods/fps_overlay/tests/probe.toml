@@ -1,0 +1,10 @@
+# FPS Counter: the mod loads and ticks (the original draws from
+# the tick hook); each tick reads the test game's frame counter
+# and draws the box when the text changes. The wording, defaults
+# and settings logic are covered by the unit tests in src/lib.rs.
+# The original has no command, so there is none to probe.
+
+[[step]]
+ticks = 25
+[step.expect]
+chat = []

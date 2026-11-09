@@ -1,0 +1,9 @@
+id = "fps_overlay"
+name = "FPS Counter"
+version = "0.1.0"
+description = "A port of Horizon's own FPS Counter (MIT), formerly a built-in extra, for Kestrel by NepThunder. Frames per second in a small box in a corner of the screen, with the slowest frame and the 1% low of the last 5 seconds if you turn them on. Options > Mods > FPS Counter sets the corner and the minimum and 1% low — the original's two settings, with its defaults (top left, minimum and 1% low off). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fps_overlay"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "ui", "storage"]
+experimental = ["render", "ui"]
