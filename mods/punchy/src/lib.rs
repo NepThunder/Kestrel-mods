@@ -7,12 +7,12 @@
 //! <https://www.curseforge.com/minecraft/mc-mods/punchy>): the
 //! original is a closed-source Java mod and resource pack; this
 //! file shares no code or assets with it — the feel is rebuilt
-//! against the Kestrel SDK's hand API (API 16, capability
-//! `render`): every frame the game hands the mod the hand's state
-//! (look, swing, bob), and the mod hands back the one transform
-//! the game multiplies into the arm's and the item's poses. The
-//! original's resource-pack look and its third-person changes are
-//! out of scope here. This port's home is
+//! against the Kestrel SDK's hand API (capability `render`, API
+//! 16; the swing terms are API 17): every frame the game hands
+//! the mod the hand's state (look, swing, bob), and the mod hands
+//! back the one transform the game multiplies into the arm's and
+//! the item's poses. The original's resource-pack look and its
+//! third-person changes are out of scope here. This port's home is
 //! <https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy>.
 //!
 //! The shapes (a spring, a sine follow-through, vanilla's own bob
@@ -21,16 +21,26 @@
 //! emphasis had run ten times too weak — the game's bob amount is
 //! vanilla's 0..0.1 scale, not 0..1 — and the follow-through was
 //! lost inside the vanilla swing).
+//!
+//! 0.2.0's attacks are authored, not added: on API 17 the mod
+//! reads which swing animation is playing and scales the vanilla
+//! swing pose itself. A sword's whack is replaced outright (scale
+//! 0) by the slash curve below and a spear's stab by the jab —
+//! the original's headline per-weapon animations, rebuilt — while
+//! any other whack keeps a third of the vanilla swing with the
+//! 0.1.1 follow-through on top as its weight. Sway and bob still
+//! add over the top; the claim replaces only the swing.
 
 use horizon_mod_sdk::{
-    HandTransform, Mod, Registration, SwingKind, hand, storage,
+    HandTransform, Mod, Registration, SwingAnim, hand, storage,
     ui::{self, ButtonWidget, Widget},
 };
 
-/// The newest API level this mod needs: `hand` is level 16
+/// The newest API level this mod needs: `hand` is level 16 and
+/// its swing terms (`get-swing-anim`, `set-swing-scale`) level 17
 /// (`crates/horizon-mods/src/api_level.rs`).
 #[cfg(test)]
-const API_LEVEL: u32 = 16;
+const API_LEVEL: u32 = 17;
 
 /// The setting steps the intensity switch offers, as percents.
 const STEPS: [u32; 5] = [0, 25, 50, 75, 100];
@@ -81,6 +91,67 @@ impl Spring {
 /// forward and dips as the swing passes its centre.
 fn follow_through(p: f32) -> f32 {
     (p.clamp(0.0, 1.0) * std::f32::consts::PI).sin()
+}
+
+/// A smoothstep of `t` (0..1): flat at both ends — the easing the
+/// slash's wind-up and recovery ride.
+fn smoothstep(t: f32) -> f32 {
+    let t = t.clamp(0.0, 1.0);
+    t * t * (3.0 - 2.0 * t)
+}
+
+/// The authored sword slash at swing progress `p` (0..1), in the
+/// offset's units (blocks, degrees): the whole animation, worn
+/// while the vanilla swing is scaled to nothing. Three phases
+/// between two keyframes — the wind-up's peak and the slash's
+/// end: the wind-up (p < 0.25) lifts the hand up and back,
+/// pitched up and yawed in; the slash (0.25..0.6) cuts across —
+/// the yaw sweeps out, pitch and roll drop, the hand drives
+/// forward — on a fast-in ease, so the cut accelerates; the
+/// recovery (0.6..1) smoothsteps back to rest. Zero at both ends.
+fn slash_curve(p: f32) -> HandTransform {
+    let p = p.clamp(0.0, 1.0);
+    // [x, y, z, pitch, yaw, roll]
+    const WIND: [f32; 6] = [0.05, 0.06, 0.05, 18.0, -12.0, 0.0];
+    const CUT: [f32; 6] = [0.05, -0.04, -0.22, -30.0, 38.0, -24.0];
+    let pose: [f32; 6] = if p < 0.25 {
+        let t = smoothstep(p / 0.25);
+        std::array::from_fn(|i| WIND[i] * t)
+    } else if p < 0.6 {
+        let t = (p - 0.25) / 0.35;
+        let t = t * t;
+        std::array::from_fn(|i| WIND[i] + (CUT[i] - WIND[i]) * t)
+    } else {
+        let t = 1.0 - smoothstep((p - 0.6) / 0.4);
+        std::array::from_fn(|i| CUT[i] * t)
+    };
+    HandTransform {
+        x: pose[0],
+        y: pose[1],
+        z: pose[2],
+        pitch: pose[3],
+        yaw: pose[4],
+        roll: pose[5],
+    }
+}
+
+/// The authored spear jab at swing progress `p` (0..1): a straight
+/// thrust — forward on a sharpened sine (the follow-through's
+/// sine squared, so the peak is brief and the ends linger),
+/// pitched a touch down. Zero at both ends.
+fn jab_curve(p: f32) -> HandTransform {
+    let s = follow_through(p);
+    HandTransform {
+        z: -0.45 * s * s,
+        pitch: -6.0 * s,
+        ..REST
+    }
+}
+
+/// A sword, for the slash: the held item's id ends `_sword`, the
+/// way the game's own item ids name them.
+fn is_sword(held_item: Option<&str>) -> bool {
+    held_item.is_some_and(|id| id.ends_with("_sword"))
 }
 
 /// The hand's extra bob for a frame, from the game's own bob
@@ -157,6 +228,11 @@ struct Punchy {
     /// An offset is outstanding with the game: `clear-offset` is
     /// only sent while one is, so rest frames stay silent.
     offset_set: bool,
+    /// A swing-scale claim is outstanding with the game (API 17):
+    /// this mod holds the vanilla swing below 1.0, and hands it
+    /// back (`set-swing-scale(1.0)`) when the swing ends, the
+    /// attacks switch off, or the effect rests.
+    swing_claimed: bool,
 }
 
 impl Punchy {
@@ -191,9 +267,13 @@ impl Punchy {
         )
     }
 
-    /// Take the offset back and rest the springs, so nothing stale
-    /// lands when the effect resumes.
+    /// Take the offset back, hand the swing back, and rest the
+    /// springs, so nothing stale lands when the effect resumes.
     fn release(&mut self) {
+        if self.swing_claimed {
+            hand::set_swing_scale(1.0);
+            self.swing_claimed = false;
+        }
         if self.offset_set {
             hand::clear_offset();
             self.offset_set = false;
@@ -213,6 +293,7 @@ impl Mod for Punchy {
             lag_yaw: Spring::default(),
             lag_pitch: Spring::default(),
             offset_set: false,
+            swing_claimed: false,
         };
         Ok((state, Registration::new().command("punchy").on_frame()))
     }
@@ -245,18 +326,58 @@ impl Mod for Punchy {
             t.roll += lag_yaw * SWAY_ROLL;
             t.pitch -= lag_pitch * SWAY_TURN;
         }
-        if self.attacks && state.swinging && state.swing_kind == SwingKind::Attack {
-            let f = follow_through(state.swing_progress);
-            // Forward (view space looks along -z), down, pitched
-            // over the swing, and a touch in toward the centre.
-            // Weighted to read as a distinct thrust past the vanilla
-            // swing: 0.1.0's gentler numbers (0.16 forward, 16
-            // degrees) blended into the swing and went unseen on
-            // device.
-            t.z -= 0.30 * f;
-            t.y -= 0.08 * f;
-            t.pitch += 28.0 * f;
-            t.yaw -= 8.0 * f;
+        if self.attacks && state.swinging {
+            // API 17: which animation is playing decides the claim
+            // on the vanilla swing and the offset worn over it.
+            // The claim itself is not intensity-scaled — a replaced
+            // swing is replaced; the authored offsets below scale
+            // with the rest at the end of the frame.
+            let p = state.swing_progress;
+            match hand::get_swing_anim() {
+                SwingAnim::Whack if is_sword(state.held_item.as_deref()) => {
+                    hand::set_swing_scale(0.0);
+                    self.swing_claimed = true;
+                    let c = slash_curve(p);
+                    t.x += c.x;
+                    t.y += c.y;
+                    t.z += c.z;
+                    t.pitch += c.pitch;
+                    t.yaw += c.yaw;
+                    t.roll += c.roll;
+                }
+                SwingAnim::Whack => {
+                    hand::set_swing_scale(0.35);
+                    self.swing_claimed = true;
+                    let f = follow_through(p);
+                    // Forward (view space looks along -z), down,
+                    // pitched over the swing, and a touch in toward
+                    // the centre: the 0.1.1 follow-through, now the
+                    // weight on a third of the vanilla swing instead
+                    // of a layer over all of it.
+                    t.z -= 0.30 * f;
+                    t.y -= 0.08 * f;
+                    t.pitch += 28.0 * f;
+                    t.yaw -= 8.0 * f;
+                }
+                SwingAnim::Stab => {
+                    hand::set_swing_scale(0.0);
+                    self.swing_claimed = true;
+                    let c = jab_curve(p);
+                    t.z += c.z;
+                    t.pitch += c.pitch;
+                }
+                SwingAnim::None => {
+                    // Swinging with no animation playing (an item
+                    // use, say): hold no claim this frame.
+                    if self.swing_claimed {
+                        hand::set_swing_scale(1.0);
+                        self.swing_claimed = false;
+                    }
+                }
+            }
+        } else if self.swing_claimed {
+            hand::set_swing_scale(1.0);
+            self.swing_claimed = false;
         }
         if self.bob {
             let (x, y, roll) = bob_emphasis(state.bob_phase, state.bob_amount);
@@ -322,8 +443,56 @@ mod tests {
     use super::*;
 
     #[test]
-    fn api_level_is_16() {
-        assert_eq!(API_LEVEL, 16);
+    fn api_level_is_17() {
+        assert_eq!(API_LEVEL, 17);
+    }
+
+    #[test]
+    fn slash_curve_rests_at_the_ends_and_cuts_mid_swing() {
+        let parts = |t: HandTransform| [t.x, t.y, t.z, t.pitch, t.yaw, t.roll];
+        assert_eq!(parts(slash_curve(0.0)), [0.0; 6]);
+        assert_eq!(parts(slash_curve(1.0)), [0.0; 6]);
+        // Mid wind-up: pitched up, yawed in.
+        let wind = slash_curve(0.125);
+        assert!(wind.pitch > 0.0 && wind.yaw < 0.0, "wind-up: {wind:?}");
+        // The slash's end pose, exactly: yaw swept out, pitch and
+        // roll dropped, driven forward.
+        let cut = slash_curve(0.6);
+        assert!((cut.yaw - 38.0).abs() < 1e-4, "yaw {}", cut.yaw);
+        assert!((cut.pitch + 30.0).abs() < 1e-4, "pitch {}", cut.pitch);
+        assert!((cut.roll + 24.0).abs() < 1e-4, "roll {}", cut.roll);
+        assert!((cut.z + 0.22).abs() < 1e-4, "z {}", cut.z);
+        // The recovery eases home: part-way back by p = 0.8.
+        let back = slash_curve(0.8);
+        assert!(back.yaw > 0.0 && back.yaw < cut.yaw, "recovering: {back:?}");
+    }
+
+    #[test]
+    fn jab_curve_peaks_mid_swing() {
+        let parts = |t: HandTransform| [t.x, t.y, t.z, t.pitch, t.yaw, t.roll];
+        assert_eq!(parts(jab_curve(0.0)), [0.0; 6]);
+        // At p = 1 the sine's tail is float dust, not exactly zero
+        // (the follow-through test above reads it the same way).
+        assert!(
+            parts(jab_curve(1.0)).iter().all(|v| v.abs() < 1e-6),
+            "rests at the end: {:?}",
+            parts(jab_curve(1.0))
+        );
+        let mid = jab_curve(0.5);
+        assert!((mid.z + 0.45).abs() < 1e-6, "thrust {}", mid.z);
+        assert!((mid.pitch + 6.0).abs() < 1e-6, "pitch {}", mid.pitch);
+        // Sharpened: a quarter in, the thrust is well under what a
+        // plain sine would give (-0.32), at -0.225.
+        assert!(jab_curve(0.25).z > -0.25, "z {}", jab_curve(0.25).z);
+    }
+
+    #[test]
+    fn swords_are_the_items_whose_ids_end_so() {
+        assert!(is_sword(Some("minecraft:diamond_sword")));
+        assert!(is_sword(Some("minecraft:wooden_sword")));
+        assert!(!is_sword(Some("minecraft:iron_axe")));
+        assert!(!is_sword(Some("minecraft:trident")));
+        assert!(!is_sword(None));
     }
 
     #[test]
