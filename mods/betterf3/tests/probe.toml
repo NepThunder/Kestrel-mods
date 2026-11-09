@@ -1,0 +1,59 @@
+# BetterF3: the mod loads at the title and in the world, claims
+# the debug surface, and runs its frame draw across the screen
+# fixtures — closed, open over the game, open then closed over
+# the pause screen — without a word of chat. The overlay itself
+# is drawn with render shapes, which the script harness cannot
+# read back; the module texts, colours, chunk maths, clock and
+# geometry are covered by the unit tests in src/lib.rs. The
+# original has no commands, so none are owned.
+
+[[step]]
+ticks = 2
+[step.expect]
+commands = []
+chat = []
+
+# F3 opens over the game: the facts gather and the columns
+# slide in across thirty frames.
+[[step]]
+ticks = 2
+frames = 30
+[step.screen]
+id = "playing"
+debug-open = true
+[step.expect]
+chat = []
+
+# Still open, still playing: the draw settles and the values
+# keep refreshing.
+[[step]]
+ticks = 10
+frames = 30
+[step.expect]
+chat = []
+
+# F3 closes over the pause screen: the slide runs back out.
+[[step]]
+ticks = 2
+frames = 30
+[step.screen]
+id = "paused"
+debug-open = false
+[step.expect]
+chat = []
+
+# Off the world entirely (the title): the mod reads no player
+# and draws nothing.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+chat = []
+
+# A reload reads the stored settings back and still loads.
+[[step]]
+reload = true
+ticks = 2
+[step.expect]
+commands = []
+chat = []

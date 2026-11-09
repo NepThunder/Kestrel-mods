@@ -1,0 +1,9 @@
+id = "betterf3"
+name = "BetterF3"
+version = "0.1.0"
+description = "A behaviour port of BetterF3 by cominixo and TreyRuffy, MIT (https://github.com/TreyRuffy/BetterF3), via DeportedToHell's Horizon port. Ported for Kestrel by NepThunder. Replaces the F3 debug screen with BetterF3's colour-coded modules in two columns — Minecraft, FPS, Coordinates, Chunks, Location and Misc on the left, Help and Targeted on the right — each module in its own colour, with line backgrounds, text shadow and the sliding animation, all changeable in Options > Mods > BetterF3 or on the config screen the mod's own key opens (the key starts unbound; bind it on that page). Five of the original's thirteen modules are NOT in this port — Graphics, Server, Entities, Sounds and System, with the memory line: the client SDK has no read for what they show, so they are left out rather than faked. The slime-chunk line is out for the same reason (no world-seed read), the font scale has no scaled text to set in the SDK, hiding the boss bar and scoreboard while F3 is open cannot be targeted by any SDK surface, and F3+M / F3+F stay the game's own debug keys. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/betterf3"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "world", "entity", "render", "screen", "input", "storage", "ui"]
+experimental = ["entity", "render", "screen", "input", "ui"]

@@ -1,0 +1,9 @@
+id = "modmenu"
+name = "Mod Menu"
+version = "0.1.0"
+description = "A behaviour port of Mod Menu by Prospector and TerraformersMC, MIT (https://github.com/TerraformersMC/ModMenu), via DeportedToHell's Horizon port. Ported for Kestrel by NepThunder. A Mods button on the title screen and in the pause menu, and an Open Mod Menu key (it starts unbound; bind it in Options > Mods > Mod Menu). PARTIAL, by the platform's limits: the buttons open Mod Menu's screen, but the list on it shows only Mod Menu itself — the client SDK has no read of the game's installed-mod list, so the other mods' names, versions, icons and badges, the mod count, search, sorting, the library filter, per-mod details and links, update checks and the flashing update indicator are NOT in this port. They arrive when that read lands; nothing is invented in their place. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/modmenu"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["screen", "input", "storage", "ui"]
+experimental = ["screen", "input", "ui"]

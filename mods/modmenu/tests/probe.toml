@@ -1,0 +1,52 @@
+# Mod Menu: the mod loads at the title and in the pause menu,
+# hears presses on both of its declared buttons (title drained
+# through the frame hook, pause through ticks), and stays
+# silent throughout. The screen a press opens is a ui screen,
+# which the script harness cannot read back; the button
+# declarations, the list and details widgets and the settings
+# labels are covered by the unit tests in src/lib.rs. The
+# original has no commands, so none are owned.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = []
+chat = []
+
+# At the title, the Mods button is pressed: heard through the
+# frame hook, since the title has no ticks.
+[[step]]
+frames = 5
+press-button = 1
+[step.screen]
+id = "title"
+[step.expect]
+chat = []
+
+# In the pause menu, the other button is pressed and heard
+# through the tick hook.
+[[step]]
+ticks = 1
+press-button = 2
+[step.screen]
+id = "paused"
+[step.expect]
+chat = []
+
+# Playing, with no press: nothing opens, nothing is said.
+[[step]]
+ticks = 2
+[step.screen]
+id = "playing"
+[step.expect]
+chat = []
+
+# A reload keeps the switches and re-declares the buttons.
+[[step]]
+reload = true
+ticks = 1
+[step.screen]
+id = "title"
+[step.expect]
+commands = []
+chat = []

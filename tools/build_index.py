@@ -98,6 +98,8 @@ ALLOW_IDS = {
     "accurate_block_placement",
     "right_click_crops",
     "context_tools",
+    "betterf3",
+    "modmenu",
 }
 
 
