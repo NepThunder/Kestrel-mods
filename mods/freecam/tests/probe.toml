@@ -1,0 +1,70 @@
+# Freecam: Y (or /freecam) detaches the camera at the player's eye,
+# looking where they look, and shows the notice; toggling again
+# releases it back to the player. The player stands at 0.5 64 0.5
+# facing south (+z), so the eye is 0.5 65.6 0.5, yaw 0, pitch 0.
+#
+# The script harness cannot press keys or hold them, so the Y toggle
+# and the six fly keys are covered by the unit tests in src/lib.rs
+# (the held-key state machine and the fly math) and by the sandbox
+# load test's key path; what this script does prove is the toggle
+# itself through /freecam, the camera call behind it (the feedback
+# carries the effective pose, as the camera probe's does), the
+# notice, the release on reload, and leaving the world clearing the
+# notice. Movement while detached is unit-tested only: a tick with
+# no movement key held leaves the camera exactly where it was.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["freecam"]
+chat = []
+panel = []
+
+# Toggle on: the camera detaches at the player's eye, and the
+# notice shows the toggle key and the default 10 blocks/s speed.
+[[step]]
+command = "freecam"
+[step.expect]
+feedback = "Freecam on — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = ["Freecam on — Y to return", "Speed: 10 blocks/s"]
+
+# A tick with no movement key held: the camera stays where it was,
+# and the notice stays up.
+[[step]]
+ticks = 1
+[step.expect]
+panel = ["Freecam on — Y to return", "Speed: 10 blocks/s"]
+
+# Toggle off: the camera is the player's own again, notice gone.
+[[step]]
+command = "freecam"
+[step.expect]
+feedback = "Freecam off — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = []
+
+# On again, then a reload: unloading the mod releases its camera,
+# so the notice is gone and the camera is the player's own.
+[[step]]
+command = "freecam"
+[step.expect]
+feedback = "Freecam on — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = ["Freecam on — Y to return", "Speed: 10 blocks/s"]
+
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "freecam"
+[step.expect]
+feedback = "Freecam on — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = ["Freecam on — Y to return", "Speed: 10 blocks/s"]
+
+# Leaving the world releases the camera and clears the notice.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []

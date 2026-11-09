@@ -1,0 +1,9 @@
+id = "freecam"
+name = "Freecam"
+version = "0.1.0"
+description = "A port of Freecam by hakergeniusz (a rewrite of Freecam by the Freecam authors). Ported for Kestrel by NepThunder. Press Y (or /freecam) to detach the camera: fly it on dedicated keys — I forward, comma back, semicolon left, apostrophe right, equal up, minus down — while your player stays where they were, and the mouse looks around. Options > Mods > Freecam has the same switch plus the fly-speed switch (2, 5, 10, 20 or 40 blocks/s); the game keeps the speed. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "input", "chat", "hud", "storage", "ui"]
+experimental = ["render", "input", "ui"]
