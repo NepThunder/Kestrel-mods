@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T18:18:56Z",
+  "generated": "2026-11-09T18:32:12Z",
   "projects": [
     {
       "id": "appleskin",
@@ -418,6 +418,40 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fair_freecam-0.1.0/fair_freecam.kmod",
             "size": 50305,
             "sha256": "9cff9ffc845fbd6cf713d1d98d365dc60b693a9a47f7f8d39644c757414d42b3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "flesh_to_leather",
+      "kind": "mod",
+      "name": "Flesh to Leather",
+      "summary": "Smelt rotten flesh into leather in a furnace.",
+      "description": "Smelt rotten flesh into leather in a furnace.",
+      "authors": [
+        "CGRLabs"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/flesh_to_leather",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "published": "2026-11-09",
+          "changelog": "Content pack by CGRLabs (MIT), repacked byte-identical from the Horizon registry (SHA-256 verified against the registry pin): smelt rotten flesh into leather in a furnace. Data only — no code. Content packs take effect after a restart, and a world using one needs the same pack on the server to join, as the pack itself documents.",
+          "api": "0.2",
+          "side": "both",
+          "capabilities": [
+            "registries"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "flesh_to_leather.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/flesh_to_leather-1.0.0/flesh_to_leather.kmod",
+            "size": 812,
+            "sha256": "2caac39306a051b53ae489137fa2a3a204fc8f156860fcbc4568275392a7e5c6"
           }
         }
       ]
