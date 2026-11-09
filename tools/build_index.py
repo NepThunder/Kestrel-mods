@@ -68,6 +68,9 @@ ALLOW_IDS = {
     "fullbright",
     "moregamma",
     "fullbright_nofog",
+    "freecam",
+    "freelook",
+    "gyro",
 }
 
 
