@@ -73,6 +73,8 @@ ALLOW_IDS = {
     "gyro",
     "sound_physics",
     "punchy",
+    "keystrokes",
+    "fps_overlay",
 }
 
 

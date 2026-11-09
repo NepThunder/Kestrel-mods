@@ -1,0 +1,9 @@
+id = "keystrokes"
+name = "Keystrokes"
+version = "0.1.0"
+description = "A port of Horizon's own Keystrokes overlay (MIT), formerly a built-in extra, for Kestrel by NepThunder. Your movement keys as you bound them, the two mouse buttons and the space bar in a corner, lit while held, with clicks per second under each mouse button. Options > Mods > Keystrokes sets the corner and turns clicks per second off or on — the original's two settings, with its defaults (top left, clicks per second on). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/keystrokes"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "input", "ui", "storage"]
+experimental = ["render", "input", "ui"]

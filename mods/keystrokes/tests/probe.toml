@@ -1,0 +1,13 @@
+# Keystrokes: the mod loads and runs frames. The test game has no
+# key bindings for the mod to read, so the mappings come back
+# empty and the overlay draws its boxes unlit with empty labels —
+# the frame hook, the input reads and the corner draw are all
+# exercised. Held states, labels and clicks per second cannot be
+# scripted by this harness; the defaults and change-detection
+# logic are covered by the unit tests in src/lib.rs. The original
+# has no command, so there is none to probe.
+
+[[step]]
+frames = 30
+[step.expect]
+chat = []
