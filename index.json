@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T17:08:06Z",
+  "generated": "2026-11-09T17:22:58Z",
   "projects": [
     {
       "id": "appleskin",
@@ -832,9 +832,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy",
       "versions": [
         {
-          "version": "0.2.1",
+          "version": "0.3.0",
           "published": "2026-11-09",
-          "changelog": "Feel pass from on-device testing of 0.2.0. The sword slash now sits much closer to vanilla: shorter wind-up and a sweep roughly halfway back toward vanilla's own, instead of a different animation. Other items keep half the vanilla swing under the follow-through (was a third — read as plain vanilla), the spear jab is a touch softer, and the bob is about 40% stronger. Sway unchanged. Still needs SDK API 17 (dev build 30+).",
+          "changelog": "Rebuilt around what the original Punchy! actually does, from its own page and gameplay loops. Sword swings now chain into combos — chained swings alternate forehand and backhand. Each tool has its own stroke: a pickaxe swings forward, an axe chops in from the side, a shovel digs down-forward and holds part of its depth between strokes while you keep digging. And every attack now settles home with a small overshoot instead of easing stiffly to a stop. Sway and bob unchanged. Needs SDK API 17 (dev build 30+).",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -846,9 +846,9 @@
           "game": "26.3",
           "file": {
             "name": "punchy.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/punchy-0.2.1/punchy.kmod",
-            "size": 22106,
-            "sha256": "dfd4712802c12c27cdf3fb98d5c5cb3d29a098eb9286a514eb195e86d3b3b4d4"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/punchy-0.3.0/punchy.kmod",
+            "size": 22996,
+            "sha256": "7ea5e5c124c8e5ee04bcf7dab7c7d24d3b74a9981963494568aaffd9d6ab36e2"
           }
         }
       ]
