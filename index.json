@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T17:34:41Z",
+  "generated": "2026-11-09T17:38:49Z",
   "projects": [
     {
       "id": "appleskin",
@@ -812,6 +812,43 @@
       ]
     },
     {
+      "id": "killc",
+      "kind": "mod",
+      "name": "KillC",
+      "summary": "A behaviour port of KillC by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12.",
+      "description": "A behaviour port of KillC by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12. Ported for Kestrel by NepThunder. /killc and /suicide kill you; /killc <player> kills another player. Each is the vanilla kill command run as you, with your permissions — the original is a server plugin whose word is law, this port asks the server, so a server that denies you the kill denies the command (see the README's gap list). The original's random respawn near (0, 0) is on with the original's radius of 100, and follows the kill: you are teleported to a random surface spot right away, which is also where a denied kill leaves the feature (the teleport runs with the same permissions). /killc config on|off|random on|off and /killc radius <blocks> hold the original's config (config/killc.json's enabled, useRandomSpawn, randomSpawnRadius). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/killc",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/killc",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of KillC by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12: /killc, /suicide and /killc <player>, run as you with your permissions, with the original's config (enabled, random respawn, radius 100).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "command",
+            "game-read",
+            "world",
+            "storage"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "killc.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/killc-0.1.0/killc.kmod",
+            "size": 21258,
+            "sha256": "43d26c34bb68874db2c20c3d1a21161a9ad47ba5ba7ee2f419760ed260be903a"
+          }
+        }
+      ]
+    },
+    {
       "id": "light_overlay",
       "kind": "mod",
       "name": "Light Overlay",
@@ -964,6 +1001,76 @@
       ]
     },
     {
+      "id": "pvp_music",
+      "kind": "mod",
+      "name": "PVP Music",
+      "summary": "A behaviour port of PvP Music by Countered (CC0-1.0), via the Horizon port by sparticle62ops.",
+      "description": "A behaviour port of PvP Music by Countered (CC0-1.0), via the Horizon port by sparticle62ops. Ported for Kestrel by NepThunder. The original plays battle tracks during combat from a companion sound pack; this port keeps the original's combat detection — mutual combat remembered for 5 s, a wither within 30 blocks starts a fight — and reports the battle state with /pvpmusic, but the SDK cannot inject or switch music tracks, so no battle music plays in this port (see the README's gap list). Detection is single-player only in v1: the SDK's entity list is. /pvpmusic reports the state and the tracked fights. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/pvp_music",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/pvp_music",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of PvP Music by Countered (CC0-1.0), via the Horizon port by sparticle62ops. This release carries the original's combat detection (mutual-combat window, hurt/wither ranges) and /pvpmusic state. The battle tracks themselves are not included: the SDK cannot start or switch music tracks yet — that gap is documented in the mod, not substituted.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "entity"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "pvp_music.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/pvp_music-0.1.0/pvp_music.kmod",
+            "size": 16295,
+            "sha256": "99db01f7dfb7811cbfb0e753ff05455f736e665f6d9b07c033b6e405ac81f539"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rmotd",
+      "kind": "mod",
+      "name": "RMotd",
+      "summary": "A behaviour port of RMotd by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12.",
+      "description": "A behaviour port of RMotd by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12. Ported for Kestrel by NepThunder. The original rotates the MOTD of a world opened to LAN every 10 seconds, managed in game with /randommotd and /motd, from the list in config/rmotd.json. This port keeps the list — one MOTD per line in the mod's storage file 'motds' — and the commands (/randommotd on/off, /motd, /motd create <name> <motd>, /motd reload), with the rotation running on the same 10-second beat and the current MOTD shown in chat as it changes; but the SDK has no LAN-server or MOTD surface, so nothing writes the server list's MOTD (see the README's gap list). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/rmotd",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/rmotd",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of RMotd by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12: MOTD list managed in game with /randommotd, /motd, /motd create and /motd reload, rotating every 10 seconds. The LAN MOTD itself cannot be written from the SDK yet, so rotation is announced in your own chat — documented in the mod.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "storage",
+            "chat"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "rmotd.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/rmotd-0.1.0/rmotd.kmod",
+            "size": 19035,
+            "sha256": "9f3592c1ebb4e8dffe66527452e23689497572d9efec90a769c80bfab058249f"
+          }
+        }
+      ]
+    },
+    {
       "id": "smartf3",
       "kind": "mod",
       "name": "SmartF3",
@@ -1076,6 +1183,42 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/speedrun-timer-0.1.0/speedrun_timer.kmod",
             "size": 23899,
             "sha256": "0109be587ef26780cdebac98addbcf3a5c4aa9230103ff38b6c9d279a42fcbf6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stuck",
+      "kind": "mod",
+      "name": "Stuck?",
+      "summary": "A behaviour port of Stuck? by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12.",
+      "description": "A behaviour port of Stuck? by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12. Ported for Kestrel by NepThunder. /stuck and /escape search random columns near you for solid ground with two blocks of air above — skipping lava, fire, magma, cactus and the other hazards, and leaves and snow — and move you there; a player on the Nether's bedrock roof is brought back under it; a 30-second cooldown runs between uses, as the original's default config sets. The search reads the world through the SDK, so it works in single player; the move is the vanilla teleport command run as you, with your permissions, where the original is a server plugin that simply moves you (see the README's gap list). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/stuck",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/stuck",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Stuck? by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12: /stuck and /escape find safe ground nearby (hazards skipped, Nether-roof case handled) and teleport you there as yourself; 30-second cooldown, the original's default.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "command",
+            "game-read",
+            "world"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "stuck.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/stuck-0.1.0/stuck.kmod",
+            "size": 17967,
+            "sha256": "f4778be2ae26146378cfa19187444910184b64832510933a452223a8f62f5b9d"
           }
         }
       ]
