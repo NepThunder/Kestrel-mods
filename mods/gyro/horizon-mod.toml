@@ -1,0 +1,9 @@
+id = "gyro"
+name = "Gyro"
+version = "0.1.0"
+description = "A port of Gyro by CGRLabs, inspired by Do a Barrel Roll. Ported for Kestrel by NepThunder. While you glide, the camera banks and rolls with your look: move the mouse and the horizon tilts, up to a full barrel roll when you look right round; the view eases back to level when you stop gliding. Y toggles it (rebindable), /gyro shows the roll and speed, /gyro on and /gyro off set it. Camera only: the flight itself stays vanilla, so this port cannot steer the glide — while it is on, the mouse turns the camera, not you, and your glide holds its heading. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/gyro"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "input", "chat", "hud", "storage", "command"]
+experimental = ["render", "input"]
