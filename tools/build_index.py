@@ -76,6 +76,10 @@ ALLOW_IDS = {
     "keystrokes",
     "fps_overlay",
     "compass_bar",
+    "pvp_music",
+    "rmotd",
+    "killc",
+    "stuck",
 }
 
 

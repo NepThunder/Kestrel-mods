@@ -1,0 +1,9 @@
+id = "pvp_music"
+name = "PVP Music"
+version = "0.1.0"
+description = "A behaviour port of PvP Music by Countered (CC0-1.0), via the Horizon port by sparticle62ops. Ported for Kestrel by NepThunder. The original plays battle tracks during combat from a companion sound pack; this port keeps the original's combat detection — mutual combat remembered for 5 s, a wither within 30 blocks starts a fight — and reports the battle state with /pvpmusic, but the SDK cannot inject or switch music tracks, so no battle music plays in this port (see the README's gap list). Detection is single-player only in v1: the SDK's entity list is. /pvpmusic reports the state and the tracked fights. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/pvp_music"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "entity"]
+experimental = ["entity"]

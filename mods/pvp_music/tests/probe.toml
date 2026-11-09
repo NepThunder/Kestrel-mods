@@ -1,0 +1,10 @@
+# PVP Music: the mod loads and /pvpmusic reports the battle
+# state. The probe game runs no ticks with a player and mobs, so
+# nothing is tracked and the report is the resting one. The
+# detection maths (the mutual-combat window, the original's
+# radii) is covered by the unit tests in src/lib.rs.
+
+[[step]]
+command = "pvpmusic"
+[step.expect]
+feedback = "PVP Music: no battle (0 fights remembered)"
