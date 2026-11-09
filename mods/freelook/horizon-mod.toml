@@ -1,0 +1,9 @@
+id = "freelook"
+name = "Freelook"
+version = "0.1.0"
+description = "A port of Freelook by Krzysix17. Ported for Kestrel by NepThunder. Hold X (or /freelook) to look around freely while your character keeps walking and facing the way it was; let go and the camera snaps back. Options > Mods > Freelook switches hold and toggle. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freelook"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "input", "chat", "hud", "storage", "ui"]
+experimental = ["render", "input", "ui"]
