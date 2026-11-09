@@ -1,0 +1,27 @@
+# Fullbright: the command toggles the switch and answers with the
+# new state, and the mod idles cleanly over ticks.
+#
+# The script harness has no keys, so it cannot press G: the fade
+# maths and the key path are covered by the unit tests in
+# src/lib.rs (the eased fade and its reversal) and by the sandbox
+# load test in crates/horizon-mods/tests/sandbox.rs, which presses
+# keys through the real runtime and reads the gamma back.
+
+[[step]]
+frames = 5
+ticks = 1
+[step.expect]
+commands = ["fullbright_horizon"]
+chat = []
+
+[[step]]
+frames = 5
+command = "fullbright_horizon"
+[step.expect]
+feedback = "Fullbright on"
+
+[[step]]
+frames = 5
+command = "fullbright_horizon"
+[step.expect]
+feedback = "Fullbright off"

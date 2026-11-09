@@ -1,0 +1,9 @@
+id = "fullbright_horizon"
+name = "Fullbright"
+version = "0.1.0"
+description = "A behaviour port of Fullbright by CayMac (MIT), the registry's fullbright_horizon. Ported for Kestrel by NepThunder. Press G (or /fullbright_horizon) to toggle maximum brightness (1000% gamma) with a smooth fade; a notice on the HUD says which way it went. Options > Mods > Fullbright has the same switch. Client-side only: it changes your lightmap, nothing sent to a server. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fullbright_horizon"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "input", "hud", "storage", "ui"]
+experimental = ["render", "input", "ui"]
