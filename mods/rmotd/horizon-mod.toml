@@ -1,0 +1,9 @@
+id = "rmotd"
+name = "RMotd"
+version = "0.1.0"
+description = "A behaviour port of RMotd by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12. Ported for Kestrel by NepThunder. The original rotates the MOTD of a world opened to LAN every 10 seconds, managed in game with /randommotd and /motd, from the list in config/rmotd.json. This port keeps the list — one MOTD per line in the mod's storage file 'motds' — and the commands (/randommotd on/off, /motd, /motd create <name> <motd>, /motd reload), with the rotation running on the same 10-second beat and the current MOTD shown in chat as it changes; but the SDK has no LAN-server or MOTD surface, so nothing writes the server list's MOTD (see the README's gap list). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/rmotd"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["storage", "chat"]
+experimental = []

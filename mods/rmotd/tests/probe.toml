@@ -1,0 +1,25 @@
+# RMotd: the mod loads and its commands answer. Storage starts
+# empty in the probe game, so the list is empty and the toggle
+# flips from its on default. The command maths (rotation order,
+# list parsing, create splitting) is covered by the unit tests
+# in src/lib.rs.
+
+[[step]]
+command = "motd"
+[step.expect]
+feedback = "RMotd: the list is empty"
+
+[[step]]
+command = "randommotd"
+[step.expect]
+feedback = "RMotd: rotation off"
+
+[[step]]
+command = "motd create lobby Hello world"
+[step.expect]
+feedback = "RMotd: added, 1 MOTDs"
+
+[[step]]
+command = "motd"
+[step.expect]
+feedback = "RMotd: 1 of 1: Hello world"

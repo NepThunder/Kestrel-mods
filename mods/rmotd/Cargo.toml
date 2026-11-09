@@ -1,0 +1,16 @@
+[package]
+name = "rmotd"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "RMotd for Kestrel: the MOTD list and its /randommotd and /motd commands from adasjusk's RMotd (CC-BY-SA-4.0). A behaviour port; the LAN MOTD field itself is not reachable from the client SDK."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true
