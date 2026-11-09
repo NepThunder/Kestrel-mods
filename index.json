@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T18:32:12Z",
+  "generated": "2026-11-09T18:54:36Z",
   "projects": [
     {
       "id": "appleskin",
@@ -383,6 +383,41 @@
       ]
     },
     {
+      "id": "dynamic_fps_for_rust",
+      "kind": "mod",
+      "name": "Dynamic FPS",
+      "summary": "A behaviour port of Dynamic FPS for Rust by Lyvt (MIT).",
+      "description": "A behaviour port of Dynamic FPS for Rust by Lyvt (MIT). Ported for Kestrel by NepThunder. After 60 seconds without input it caps the frame rate at 20 FPS through the game's own limiter, and any input restores it at once — the original's idle tier, with its numbers, read from the game's own inactivity clock. The original's window-state caps (30 FPS hovered, 10 unfocused, 1 minimised), its battery cap and its background volume option have no SDK surface and are not in this port (see the README's gap list); its values are the original's defaults, fixed, and there is no settings screen, as in the original. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/dynamic_fps_for_rust",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/dynamic_fps_for_rust",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Dynamic FPS by Lyvt (MIT), on SDK API 19: after 60 seconds without input the frame rate caps at the original's idle tier of 20 FPS, lifting the moment you touch anything. The window-state and battery tiers are not expressible on Android/the SDK yet, as documented in the mod. Needs Kestrel build 32 or newer.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "input"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "dynamic_fps_for_rust.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/dynamic_fps_for_rust-0.1.0/dynamic_fps_for_rust.kmod",
+            "size": 10883,
+            "sha256": "2bbcebd47ce53612ceba618942402c1e38c7c641f61dcf0bca96f7040a417319"
+          }
+        }
+      ]
+    },
+    {
       "id": "fair_freecam",
       "kind": "mod",
       "name": "Fair Freecam",
@@ -566,6 +601,45 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/freecam_plus-0.1.0/freecam_plus.kmod",
             "size": 47948,
             "sha256": "ebafcac8a7995f00a07acc79c0a25ca5f340d1c82c1b04ea17068949d8ab44ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "freecam_yannis",
+      "kind": "mod",
+      "name": "FreeCam",
+      "summary": "A behaviour port of FreeCam by Yannis_ (MIT).",
+      "description": "A behaviour port of FreeCam by Yannis_ (MIT). Ported for Kestrel by NepThunder. F4 starts the free camera (fly it on I / comma / semicolon / apostrophe / equal / minus), F6 switches to a follow view parked behind and above you (distance 28, height 18 — settings) with the HUD hidden, F4 ends it. Hold F4 and press 1-9 to save the camera position as that tripod; press 1-9 with the camera off to start at a saved tripod — tripods are kept per world. Limits: the follow view is parked where F6 put it (it does not track a moving player, and the HUD hide is the whole HUD, where the original hides only the crosshair); the tripod keys are the mod's own bindings defaulting to the number row, and pressing one also selects its hotbar slot; tripods are keyed by dimension, the only world identity a client mod can read. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam_yannis",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam_yannis",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of FreeCam by Yannis_ (MIT): F4 free camera, F6 follow view (HUD hidden, as the original hides the crosshair — the SDK hides the whole HUD), and nine tripod positions on their own rebindable keys, saved per dimension. Needs Kestrel build 32 or newer.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "input",
+            "chat",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "freecam_yannis.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/freecam_yannis-0.1.0/freecam_yannis.kmod",
+            "size": 52936,
+            "sha256": "763079c842763a144f763b32a986abb6ac8c7525428e25c0640fe5cd8bf6aff2"
           }
         }
       ]
@@ -1594,6 +1668,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/zoom-0.1.0/zoom.kmod",
             "size": 19332,
             "sha256": "b139acda570883909e85084caa3f7ce178676da3b9c9bda20d1fcc2c70c525f4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "zoomify",
+      "kind": "mod",
+      "name": "Zoomify",
+      "summary": "A behaviour port of Zoomify by isXander (LGPL-3.0-or-later), ported to the Horizon registry by DeportedToHell.",
+      "description": "A behaviour port of Zoomify by isXander (LGPL-3.0-or-later), ported to the Horizon registry by DeportedToHell. Ported for Kestrel by NepThunder. C zooms (hold or toggle) with smooth transitions; scroll to zoom further, with no limit of its own (the game caps any mod zoom at 250x); F6 is a secondary zoom with a slow cinematic transition (10x/50x/200x, chosen on the settings page) that hides the HUD while active; sensitivity follows the zoom, the transitions ease cinematically, and the hand's FOV follows the view (multiply/add/keep; F7 toggles it). While you scope with a spyglass the zoom stands down and the spyglass view wins. Settings: Options > Mods > Zoomify. Not in this port: cycling the secondary level with the mouse buttons (mods get no mouse-button events, so the level lives on the settings page) and the original's spyglass-behaviour options — a mod cannot scope on a press or combine with the scope view. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/zoomify",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/zoomify",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Zoomify by isXander (LGPL-3.0-or-later), via the Horizon registry: hold or toggle C to zoom (4x primary, scroll to zoom up to the game's 250 cap), F6 secondary zoom (50x default, up to 200x) with the HUD hidden, hand-FOV follow in the original's multiply/add/keep modes, and the spyglass always wins while you scope. Needs Kestrel build 32 or newer.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "input",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "zoomify.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/zoomify-0.1.0/zoomify.kmod",
+            "size": 47282,
+            "sha256": "dc767e174cde68ba51862dfd5a95f7aa3975a833ab5b4cfe8df025f68b066d61"
           }
         }
       ]
