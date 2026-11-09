@@ -1,0 +1,9 @@
+id = "itemnew"
+name = "Item New"
+version = "0.1.0"
+description = "A behaviour port of Item New by d3grando (https://github.com/d3grando/itemnew), MIT, inspired by Item Highlighter. Ported for Kestrel by NepThunder. Items you just got — picked up, crafted, taken from a chest, given — glow in the hotbar and in inventory and container screens until you point at them or close the screen. Three styles (glow, glow with a star, by rarity colour), which screens show the marks, and when a mark clears are settings in Options > Mods > Item New; /itemnew hides or shows the marks, /itemnew clear forgets them. Newness is the port's own diffing of the inventory snapshots the SDK lends: a slot counts as new when its stack grew beyond what the player's inventory (or the open container) held a tick before, so moving items around marks nothing. Two differences from the original, both limits of the surface: a new item moved to another slot loses its mark (the diff cannot follow it), and the by-rarity style colours every stack of a newly gained item in its rarity's colour, because a stack's rarity lives in its item's defaults, which no SDK read exposes — the mark is a host-matched stack decoration, as the API 23 design prescribes. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/itemnew"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["command", "inventory", "render", "screen", "storage", "ui"]
+experimental = ["inventory", "render", "screen", "ui"]

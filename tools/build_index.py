@@ -100,6 +100,10 @@ ALLOW_IDS = {
     "context_tools",
     "betterf3",
     "modmenu",
+    "eatinganimation",
+    "itemnew",
+    "rarity_borders",
+    "fast_items",
 }
 
 

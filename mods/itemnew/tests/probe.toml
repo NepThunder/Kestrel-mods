@@ -1,0 +1,70 @@
+# Item New: the first snapshot is a baseline (nothing marks),
+# then a gained stack marks its slot; /itemnew hides and shows
+# the marks; pointing at the slot clears it; gaining on a
+# screen and closing the screen clears what is left. The diff
+# rules — moves, swaps and splits mark nothing — are pinned by
+# the unit tests in src/lib.rs.
+
+[[step]]
+ticks = 2
+[step.inventory]
+selected = 0
+slots = [{ slot = 9, id = "minecraft:dirt", count = 10 }]
+[step.expect]
+decorations = []
+
+[[step]]
+ticks = 2
+[step.inventory]
+selected = 0
+slots = [{ slot = 9, id = "minecraft:dirt", count = 10 }, { slot = 0, id = "minecraft:apple", count = 1 }]
+[step.expect]
+decorations = ["slot 0 @ hotbar,screens fill fff3b0"]
+
+[[step]]
+command = "itemnew"
+[step.expect]
+feedback = "Item New: marks hidden"
+
+[[step]]
+ticks = 1
+[step.expect]
+decorations = []
+
+[[step]]
+command = "itemnew"
+[step.expect]
+feedback = "Item New: marks shown"
+
+[[step]]
+ticks = 1
+[step.expect]
+decorations = ["slot 0 @ hotbar,screens fill fff3b0"]
+
+[[step]]
+ticks = 2
+[step.screen]
+id = "inventory"
+hovered-slot = 0
+[step.expect]
+decorations = []
+
+[[step]]
+ticks = 2
+[step.inventory]
+selected = 0
+slots = [{ slot = 9, id = "minecraft:dirt", count = 10 }, { slot = 1, id = "minecraft:apple", count = 2 }]
+[step.expect]
+decorations = ["slot 1 @ hotbar,screens fill fff3b0"]
+
+[[step]]
+ticks = 2
+[step.screen]
+id = "playing"
+[step.expect]
+decorations = []
+
+[[step]]
+command = "itemnew clear"
+[step.expect]
+feedback = "Item New: marks cleared"

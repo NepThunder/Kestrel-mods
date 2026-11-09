@@ -1,0 +1,16 @@
+[package]
+name = "rarity_borders"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Rarity Borders for Kestrel: clean, vanilla-style coloured borders on inventory items by rarity. A behaviour port of Rarity Borders by Xariami (maliferen)."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

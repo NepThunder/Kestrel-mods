@@ -1,0 +1,9 @@
+id = "rarity_borders"
+name = "Rarity Borders"
+version = "0.1.0"
+description = "A behaviour port of Rarity Borders by Xariami (https://github.com/maliferen/horizon-rarity-borders), MIT. Ported for Kestrel by NepThunder. Clean, vanilla-style coloured borders on inventory items by rarity: yellow for Uncommon, aqua for Rare, light purple for Epic — a square outline with a highlighted bottom edge, drawn by the game on inventory and container slots. Borders for Common items and for the hotbar are the original's two optional features, both off until you turn them on in Options > Mods > Rarity Borders. The rarity itself is matched by the game against each stack's full components, its item's defaults included: a mod cannot read a stack's rarity (the SDK's components string is only what a stack carries beyond its defaults), so the port declares one border per rarity and never learns any slot's rarity itself. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/rarity_borders"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "storage", "ui"]
+experimental = ["render", "ui"]

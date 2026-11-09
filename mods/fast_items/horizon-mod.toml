@@ -1,0 +1,9 @@
+id = "fast_items"
+name = "Fast Items"
+version = "0.1.0"
+description = "A behaviour port of Fast Items for Horizon by Lyvt (https://github.com/Lyvt-Dev/FastItems-for-Horizon), MIT, inspired by Noryea's Fast Items (independently written, as the original is; no code from it). Ported for Kestrel by NepThunder. Dropped flat items (potions, tools, food) lie as one flat face turned to face you — the sprite's edges and hidden back face are not drawn — and dropped block items keep their 3D model but face the camera instead of spinning, as in Lunar Client and Badlion. Item bobbing, stacks, pickup animation, culling and glow outlines work as before, and dropped items' blob shadows can be turned off. Only dropped items change: inventory icons, held items, item frames and servers stay as they are. The original keeps its settings in config/fast-items.json; the port's are on the standard settings page in Options > Mods > Fast Items — Flat Items, Block Items, Dropped Shadows — the compromise every port here makes. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fast_items"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "storage", "ui"]
+experimental = ["render", "ui"]

@@ -1,0 +1,15 @@
+# Rarity Borders: at load the mod declares its three borders —
+# one host-matched stack mark per rarity, screens only, the
+# defaults (Common and the hotbar are the optional features,
+# off). The matching itself is the game's, against each stack's
+# merged components; the unit tests in src/lib.rs pin the
+# declarations and the two options.
+
+[[step]]
+ticks = 1
+[step.expect]
+decorations = [
+  "stack * minecraft:rarity=uncommon @ screens border ffff55",
+  "stack * minecraft:rarity=rare @ screens border 55ffff",
+  "stack * minecraft:rarity=epic @ screens border ff55ff",
+]

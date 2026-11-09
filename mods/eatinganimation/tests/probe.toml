@@ -1,0 +1,54 @@
+# Eating Animation: at load the mod declares its one rule per
+# covered item — all 43, in the table's order, hand contexts
+# only. The frames themselves are resolver work against the
+# package's content definitions, which the unit tests in
+# src/lib.rs pin against the same table.
+
+[[step]]
+ticks = 1
+[step.expect]
+item-rules = [
+  "minecraft:apple -> eatinganimation:apple @ first-person,third-person",
+  "minecraft:golden_apple -> eatinganimation:golden_apple @ first-person,third-person",
+  "minecraft:enchanted_golden_apple -> eatinganimation:enchanted_golden_apple @ first-person,third-person",
+  "minecraft:melon_slice -> eatinganimation:melon_slice @ first-person,third-person",
+  "minecraft:sweet_berries -> eatinganimation:sweet_berries @ first-person,third-person",
+  "minecraft:glow_berries -> eatinganimation:glow_berries @ first-person,third-person",
+  "minecraft:chorus_fruit -> eatinganimation:chorus_fruit @ first-person,third-person",
+  "minecraft:carrot -> eatinganimation:carrot @ first-person,third-person",
+  "minecraft:golden_carrot -> eatinganimation:golden_carrot @ first-person,third-person",
+  "minecraft:potato -> eatinganimation:potato @ first-person,third-person",
+  "minecraft:baked_potato -> eatinganimation:baked_potato @ first-person,third-person",
+  "minecraft:poisonous_potato -> eatinganimation:poisonous_potato @ first-person,third-person",
+  "minecraft:beetroot -> eatinganimation:beetroot @ first-person,third-person",
+  "minecraft:dried_kelp -> eatinganimation:dried_kelp @ first-person,third-person",
+  "minecraft:beef -> eatinganimation:beef @ first-person,third-person",
+  "minecraft:cooked_beef -> eatinganimation:cooked_beef @ first-person,third-person",
+  "minecraft:porkchop -> eatinganimation:porkchop @ first-person,third-person",
+  "minecraft:cooked_porkchop -> eatinganimation:cooked_porkchop @ first-person,third-person",
+  "minecraft:mutton -> eatinganimation:mutton @ first-person,third-person",
+  "minecraft:cooked_mutton -> eatinganimation:cooked_mutton @ first-person,third-person",
+  "minecraft:chicken -> eatinganimation:chicken @ first-person,third-person",
+  "minecraft:cooked_chicken -> eatinganimation:cooked_chicken @ first-person,third-person",
+  "minecraft:rabbit -> eatinganimation:rabbit @ first-person,third-person",
+  "minecraft:cooked_rabbit -> eatinganimation:cooked_rabbit @ first-person,third-person",
+  "minecraft:cod -> eatinganimation:cod @ first-person,third-person",
+  "minecraft:cooked_cod -> eatinganimation:cooked_cod @ first-person,third-person",
+  "minecraft:salmon -> eatinganimation:salmon @ first-person,third-person",
+  "minecraft:cooked_salmon -> eatinganimation:cooked_salmon @ first-person,third-person",
+  "minecraft:tropical_fish -> eatinganimation:tropical_fish @ first-person,third-person",
+  "minecraft:pufferfish -> eatinganimation:pufferfish @ first-person,third-person",
+  "minecraft:bread -> eatinganimation:bread @ first-person,third-person",
+  "minecraft:cookie -> eatinganimation:cookie @ first-person,third-person",
+  "minecraft:pumpkin_pie -> eatinganimation:pumpkin_pie @ first-person,third-person",
+  "minecraft:rotten_flesh -> eatinganimation:rotten_flesh @ first-person,third-person",
+  "minecraft:spider_eye -> eatinganimation:spider_eye @ first-person,third-person",
+  "minecraft:mushroom_stew -> eatinganimation:mushroom_stew @ first-person,third-person",
+  "minecraft:rabbit_stew -> eatinganimation:rabbit_stew @ first-person,third-person",
+  "minecraft:beetroot_soup -> eatinganimation:beetroot_soup @ first-person,third-person",
+  "minecraft:suspicious_stew -> eatinganimation:suspicious_stew @ first-person,third-person",
+  "minecraft:milk_bucket -> eatinganimation:milk_bucket @ first-person,third-person",
+  "minecraft:honey_bottle -> eatinganimation:honey_bottle @ first-person,third-person",
+  "minecraft:ominous_bottle -> eatinganimation:ominous_bottle @ first-person,third-person",
+  "minecraft:potion -> eatinganimation:potion @ first-person,third-person",
+]

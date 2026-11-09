@@ -1,0 +1,10 @@
+# Fast Items: at load the mod sets the dropped-display policy
+# from its settings — the defaults are the original's described
+# behaviour: flat items as sprites, block items billboarded,
+# shadows on. The settings-to-record mapping is pinned by the
+# unit tests in src/lib.rs.
+
+[[step]]
+ticks = 1
+[step.expect]
+dropped-display = "flat sprite blocks billboard shadows on"

@@ -1,0 +1,9 @@
+id = "eatinganimation"
+name = "Eating Animation"
+version = "0.1.0"
+description = "A behaviour port of Eating Animation by Theoness1 (https://github.com/Theoness1/EatingAnimation), MIT, via soufied's Horizon port. Ported for Kestrel by NepThunder. While you eat food, or drink a potion or milk, the item in your hand shows its bitten frames as you go: the code registers one item-model rule per food and drink (43 of them), and the frame definitions ship in this same package as content (capability registries, api 0.2) — one .kmod, nothing else to install, no resource pack needed, exactly as the original's frames are built into it. Each definition asks the game's own resolver to step four frames on the use's elapsed ticks, so the bites land at the same fractions of every item's own eating or drinking time, in first and third person. The frame ART is this port's own, not the original's: each frame is a flat model sampling a cropped piece of the item's own vanilla texture — a bite out of the corner for food, the top emptied away for drinks — where the original draws its own bitten textures; no assets are copied and none are shipped. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/eatinganimation"
+authors = ["NepThunder"]
+api = "0.2"
+side = "client"
+capabilities = ["render", "registries"]
+experimental = ["render"]
