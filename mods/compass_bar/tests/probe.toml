@@ -1,0 +1,22 @@
+# Compass Bar: the mod loads and ticks (the test game has no
+# player until the script says so, so the bar stays off screen and
+# no chat appears), and with a player facing north the mod
+# registers its frame hook. The compass maths — headings, which
+# letters and ticks are visible at a facing, the bar's geometry,
+# the settings labels — are covered by the unit tests in
+# src/lib.rs. The original has no commands, so there is no
+# command step here.
+
+[[step]]
+ticks = 12
+[step.expect]
+chat = []
+
+[player]
+yaw = 180.0
+
+[[step]]
+ticks = 12
+[step.expect]
+chat = []
+commands = []

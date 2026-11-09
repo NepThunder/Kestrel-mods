@@ -75,6 +75,7 @@ ALLOW_IDS = {
     "punchy",
     "keystrokes",
     "fps_overlay",
+    "compass_bar",
 }
 
 
