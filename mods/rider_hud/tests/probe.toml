@@ -1,0 +1,28 @@
+# Rider HUD: the mod loads and ticks — on foot nothing is
+# drawn, and with the step's own mount fixture (API 18) the
+# hunger row is drawn above the mount's hearts. The row itself
+# is render shapes, which this harness does not assert; the
+# heart count, the row placement and the food icons are
+# covered by the unit tests in src/lib.rs. The original has
+# no commands, so there is no command step.
+
+[[step]]
+ticks = 2
+[step.expect]
+chat = []
+commands = []
+
+[[step]]
+ticks = 2
+[step.self-state.mount]
+id = 42
+kind = "minecraft:horse"
+health = 24.5
+max-health = 30.0
+[step.expect]
+chat = []
+
+[[step]]
+ticks = 2
+[step.expect]
+chat = []

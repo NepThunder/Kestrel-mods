@@ -1,0 +1,9 @@
+id = "rider_hud"
+name = "Rider HUD"
+version = "0.1.0"
+description = "A behaviour port of Rider HUD by Xariami (MIT, https://github.com/maliferen/horizon-rider-hud). Ported for Kestrel by NepThunder. While you ride a mount, vanilla hides your hunger behind the mount's health; this port puts the hunger row back — in the familiar vanilla style, with the game's own food sprites — in a row directly above the mount's heart rows, so hunger and mount health are on screen at the same time (the mount's hearts are the game's own, drawn where vanilla draws them). Options > Mods > Rider HUD holds the hunger toggle. Two pieces of the original are NOT in this port: the experience bar staying visible while riding, and the jump bar's dynamic switching with it — the SDK exposes no experience read and no jump-charge read, so neither bar can be drawn honestly; they arrive when the SDK gains those reads. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/rider_hud"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "storage", "ui"]
+experimental = ["render", "ui"]
