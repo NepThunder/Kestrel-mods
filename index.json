@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T18:54:36Z",
+  "generated": "2026-11-09T20:01:57Z",
   "projects": [
     {
       "id": "appleskin",
@@ -453,6 +453,80 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fair_freecam-0.1.0/fair_freecam.kmod",
             "size": 50305,
             "sha256": "9cff9ffc845fbd6cf713d1d98d365dc60b693a9a47f7f8d39644c757414d42b3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "first_person_body",
+      "kind": "mod",
+      "name": "First Person Body",
+      "summary": "A behaviour port of First Person Body by selfmonoraque5 (MIT; https://github.com/selfmonoraque5/first-person-body).",
+      "description": "A behaviour port of First Person Body by selfmonoraque5 (MIT; https://github.com/selfmonoraque5/first-person-body). Ported for Kestrel by NepThunder. See your own body in first person: look down and your torso, legs and feet are there, with your skin, armour and cape; the head and helmet stay hidden so the camera never looks out of your skull. The body sits a little behind the camera — a little more when you look down or crouch. Settings in Options > Mods > First Person Body, the original's own: on/off (on), arms (vanilla hand, or the model's own arms), body offset (None, Small, Normal, Large — Normal), while riding (on), lean back looking down (on), and reset. A toggle key is registered for it and starts unbound, as the original's does — bind it in Options > Controls. The mod steps aside while you swim, crawl, glide, or sleep; the original also steps aside for a Riptide spin and for spectators, which this port cannot read from the pose state, and with the model's own arms chosen the vanilla hand still draws (the SDK cannot hide it, where the original cancels it). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/first_person_body",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/first_person_body",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of First Person Body by selfmonoraque5 (MIT), on Kestrel SDK API 20 (entity-pose). Requires dev build 33 or later. See mods/first_person_body in this repo for the full fidelity notes.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "input",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "first_person_body.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/first_person_body-0.1.0/first_person_body.kmod",
+            "size": 21150,
+            "sha256": "07fcaea5cc69c38e468bd600fc0e9aad086ce29437dc47c46c83da4ca97e0273"
+          }
+        }
+      ]
+    },
+    {
+      "id": "firstpersonmodel",
+      "kind": "mod",
+      "name": "First-person Model",
+      "summary": "A behaviour port of First-person Model by tr7zw (MIT; https://github.com/tr7zw/FirstPersonModel), via its Horizon port by DeportedToHell (MIT).",
+      "description": "A behaviour port of First-person Model by tr7zw (MIT; https://github.com/tr7zw/FirstPersonModel), via its Horizon port by DeportedToHell (MIT). Ported for Kestrel by NepThunder. You see your own third-person body in first person — armour, cape, elytra, held items and all — the head hidden, drawn behind the camera with offsets for every pose: standing (0.25 blocks back), sneaking, sitting, crawling and swimming, the standing, sneaking and sitting offsets changeable in Options > Mods > First-person Model, alongside Vanilla Hands Mode (Off, Always, Always Both Hands, Item In Hand), Dynamic Mode, Disable Vanilla Hands while Swimming, and the Show Layers toggles the pose surface can reach (jacket, sleeves, pants, cape). F6 turns it on and off. Not in this port: the original's four-tab config screen with its searchable per-item lists (Auto Vanilla Hands and Disable Items — the SDK's settings page has no item lists), the layer toggles for armour, held items, arrows, ears, wings, parrots and stingers (those draws are not parts of the posed model, so the pose surface cannot hide them), and hiding the vanilla hands themselves in the Off modes (the SDK cannot hide the first-person hand — it can only lower it, which Dynamic Mode does). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/firstpersonmodel",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/firstpersonmodel",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of First-person Model by tr7zw (MIT), via its Horizon port by DeportedToHell (MIT), on Kestrel SDK API 20 (entity-pose). Requires dev build 33 or later. See mods/firstpersonmodel in this repo for the full fidelity notes.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "input",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "firstpersonmodel.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/firstpersonmodel-0.1.0/firstpersonmodel.kmod",
+            "size": 36092,
+            "sha256": "17fd76e5ec0c3b60dbfcc14ffab112fc24437e8426d87d7977560bfea9aabf22"
           }
         }
       ]
@@ -1111,6 +1185,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/light-overlay-0.1.0/light_overlay.kmod",
             "size": 45238,
             "sha256": "ab3dcc8517bb587f027082d5a5fc30879ccfacf7907e8692a98684fa3d197c2e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "livingmotion",
+      "kind": "mod",
+      "name": "Living Motion",
+      "summary": "A behaviour port of LivingMotion by bart (MIT; https://github.com/bartekchomik26-dotcom/Living-motion).",
+      "description": "A behaviour port of LivingMotion by bart (MIT; https://github.com/bartekchomik26-dotcom/Living-motion). Ported for Kestrel by NepThunder. Third-person players feel alive on top of the vanilla animation: each player gets springs, stepped once a frame — lean into runs, bank into turns, stride bounce, landing squash, a jump pose, a fuller arm swing, idle breathing, a steady head, elytra flight and swimming motion, item poses, and swings that follow through. Options > Mods > Living Motion: on/off, other players, steady head, every effect from 0% to 200%, and reset. Y toggles it, I inspects the held item, , and . twirl while gliding. Not in this port: the elytra contrails (they need a particle surface the SDK does not have yet), climbing poses (the pose state carries no climbing signal), and the first-person hand half (that is the hand district's domain — the catalog's Punchy covers it). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/livingmotion",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/livingmotion",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of LivingMotion by bart (MIT), on Kestrel SDK API 20 (entity-pose). Requires dev build 33 or later. See mods/livingmotion in this repo for the full fidelity notes.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "input",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "livingmotion.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/livingmotion-0.1.0/livingmotion.kmod",
+            "size": 33859,
+            "sha256": "d51a0abd6a0d79c2c2705e5494b9702cc170147e07d6acd37c25c73506a601d4"
           }
         }
       ]
