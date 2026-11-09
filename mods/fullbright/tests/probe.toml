@@ -1,0 +1,68 @@
+# Fullbright: J (or /fullbright) toggles 1000% gamma with a 20-tick fade,
+# and a "Fullbright on" notice shows top-left while it is on. The
+# harness cannot press keys, so the command drives the toggle here and
+# the fade's steps are covered by the unit tests in src/lib.rs; what
+# this script proves is the toggle answering, the notice showing and
+# clearing, the choice surviving a reload (on or off), and leaving the
+# world clearing the notice. The gamma value itself has no probe
+# expectation: the fade's steps are the unit tests' job, and the
+# brightness is the device test's job.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["fullbright"]
+chat = []
+panel = []
+
+[[step]]
+command = "fullbright"
+expect.feedback = "Fullbright on"
+
+# One tick in, the fade has started and the notice shows.
+[[step]]
+ticks = 1
+[step.expect]
+panel = ["Fullbright on"]
+
+# The fade runs 20 ticks; the notice stays up through it.
+[[step]]
+ticks = 19
+[step.expect]
+panel = ["Fullbright on"]
+
+[[step]]
+command = "fullbright"
+expect.feedback = "Fullbright off"
+
+# Toggling off clears the notice at once (the fade back still runs).
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+# A reload reads the stored choice back: still off, with no command.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "fullbright"
+expect.feedback = "Fullbright on"
+
+# Reload while on: still on after the reload, the fade restarts and the
+# notice shows again.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = ["Fullbright on"]
+
+# Leaving the world clears the notice.
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []
