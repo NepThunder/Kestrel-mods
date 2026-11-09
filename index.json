@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T08:44:56Z",
+  "generated": "2026-11-09T11:02:18Z",
   "projects": [
     {
       "id": "appleskin",
@@ -853,6 +853,44 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/smartf3-0.2.0/smartf3.kmod",
             "size": 42107,
             "sha256": "921327bf114660720b61ee1f85d7fc1086fac8b093aa3454e410532b6cb6bef9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sound_physics",
+      "kind": "mod",
+      "name": "Sound Physics",
+      "summary": "A behaviour port of Sound Physics Remastered by henkelmax (GPL-3.0).",
+      "description": "A behaviour port of Sound Physics Remastered by henkelmax (GPL-3.0). Ported for Kestrel by NepThunder. Sounds are quietened and muffled by the blocks between you and them, and caves and enclosed spaces give them reverb. Options > Mods > Sound Physics sets the reverb amount and the occlusion strength, and /soundphysics reports the enclosure estimate around you. Single-player only in v1: the SDK's world reads are. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/sound_physics",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/sound_physics",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Sounds are muffled and quietened by the blocks between the source and the listener, and enclosed spaces gain reverb. Clean-room behaviour port of Sound Physics Remastered (henkelmax, GPL-3.0). Requires a Kestrel build with SDK API 15 (audio). Defaults: Reverb 50, Occlusion 100; status via /soundphysics.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "world",
+            "audio",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "sound_physics.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/sound_physics-0.1.0/sound_physics.kmod",
+            "size": 21727,
+            "sha256": "6893a2b0bdc9cbffeb6bfecc0014c8a043b86d9b7cb106a661f7ed842da86a9e"
           }
         }
       ]
