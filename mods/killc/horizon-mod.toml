@@ -1,0 +1,9 @@
+id = "killc"
+name = "KillC"
+version = "0.1.0"
+description = "A behaviour port of KillC by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12. Ported for Kestrel by NepThunder. /killc and /suicide kill you; /killc <player> kills another player. Each is the vanilla kill command run as you, with your permissions — the original is a server plugin whose word is law, this port asks the server, so a server that denies you the kill denies the command (see the README's gap list). The original's random respawn near (0, 0) is on with the original's radius of 100, and follows the kill: you are teleported to a random surface spot right away, which is also where a denied kill leaves the feature (the teleport runs with the same permissions). /killc config on|off|random on|off and /killc radius <blocks> hold the original's config (config/killc.json's enabled, useRandomSpawn, randomSpawnRadius). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/killc"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["command", "game-read", "world", "storage"]
+experimental = ["world"]

@@ -1,0 +1,37 @@
+# KillC: the mod loads and the config commands answer without
+# running a kill — the probe asserts the config read and the two
+# toggles. The command maths (kill lines, name validation,
+# column picking, surface finding) is covered by the unit tests
+# in src/lib.rs. The kills themselves run the vanilla command
+# through the player in game; the harness has no world to kill
+# in, so they are not probed.
+
+[[step]]
+command = "killc config"
+[step.expect]
+feedback = "KillC: enabled, random respawn on, radius 100"
+
+[[step]]
+command = "killc config off"
+[step.expect]
+feedback = "KillC: disabled"
+
+[[step]]
+command = "killc"
+[step.expect]
+feedback = "KillC is disabled"
+
+[[step]]
+command = "killc config on"
+[step.expect]
+feedback = "KillC: enabled"
+
+[[step]]
+command = "killc radius 50"
+[step.expect]
+feedback = "KillC: radius 50"
+
+[[step]]
+command = "killc config"
+[step.expect]
+feedback = "KillC: enabled, random respawn on, radius 50"
