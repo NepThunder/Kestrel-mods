@@ -80,6 +80,10 @@ ALLOW_IDS = {
     "rmotd",
     "killc",
     "stuck",
+    "zoom",
+    "fair_freecam",
+    "freecam_plus",
+    "fullbright_horizon",
 }
 
 

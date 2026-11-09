@@ -1,0 +1,9 @@
+id = "zoom"
+name = "Zoom"
+version = "0.1.0"
+description = "A behaviour port of Zoom by Horizon (MIT), Horizon's own zoom, formerly an extra in Options > Horizon Extras. Ported for Kestrel by NepThunder. Hold Z to zoom in at the starting zoom (4x by default); while you hold it, the mouse wheel zooms further in or out (up to 10x) and the hotbar stays put. Settings: Options > Mods > Zoom (starting zoom 2x-10x, smooth zoom, slower turning). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/zoom"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "input", "storage", "ui"]
+experimental = ["render", "input", "ui"]

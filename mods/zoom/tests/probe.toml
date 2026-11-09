@@ -1,0 +1,16 @@
+# Zoom: the mod loads, owns no commands, and idles cleanly over
+# frames.
+#
+# The script harness has no key or wheel steps, so it cannot hold
+# Z or check the zoom level: the hold-key state, the starting zoom
+# and the wheel's steps are covered by the unit tests in
+# src/lib.rs (the zoom state machine and the settings), and by the
+# sandbox load test in crates/horizon-mods/tests/sandbox.rs, which
+# presses keys through the real runtime and reads the zoom back.
+
+[[step]]
+frames = 5
+ticks = 1
+[step.expect]
+commands = []
+chat = []
