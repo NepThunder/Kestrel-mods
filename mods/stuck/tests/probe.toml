@@ -1,0 +1,18 @@
+# Stuck?: the mod loads and /stuck answers. The probe game's
+# player stands in an empty test world, so the search runs,
+# finds no loaded columns and reports exactly that — and spends
+# the cooldown doing it, which the second step asserts (the
+# probe runs no ticks, so the full 30 s remains). The search
+# maths (landing rules, hazards, the roof rule, the cooldown
+# constant) is covered by the unit tests in src/lib.rs; a real
+# landing needs a world the harness does not script.
+
+[[step]]
+command = "stuck"
+[step.expect]
+feedback = "Stuck?: no safe spot found nearby (single player only in v1)"
+
+[[step]]
+command = "escape"
+[step.expect]
+feedback = "Stuck?: cooldown, 30s left"

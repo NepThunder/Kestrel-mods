@@ -1,0 +1,9 @@
+id = "stuck"
+name = "Stuck?"
+version = "0.1.0"
+description = "A behaviour port of Stuck? by adasjusk (CC-BY-SA-4.0), via the Horizon port by Vakarux12. Ported for Kestrel by NepThunder. /stuck and /escape search random columns near you for solid ground with two blocks of air above — skipping lava, fire, magma, cactus and the other hazards, and leaves and snow — and move you there; a player on the Nether's bedrock roof is brought back under it; a 30-second cooldown runs between uses, as the original's default config sets. The search reads the world through the SDK, so it works in single player; the move is the vanilla teleport command run as you, with your permissions, where the original is a server plugin that simply moves you (see the README's gap list). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/stuck"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["command", "game-read", "world"]
+experimental = ["world"]
