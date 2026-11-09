@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T15:12:03Z",
+  "generated": "2026-11-09T15:29:06Z",
   "projects": [
     {
       "id": "appleskin",
@@ -832,9 +832,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy",
       "versions": [
         {
-          "version": "0.1.0",
+          "version": "0.1.1",
           "published": "2026-11-09",
-          "changelog": "First-person hand feel for Kestrel: spring-lag look sway, attack follow-through and bob emphasis, built on SDK API 16 (hand). Clean-room behaviour port of Punchy! by PunchyDevGuy — no code or assets copied. Needs a Kestrel build with SDK API 16.",
+          "changelog": "Retuned from on-device testing of 0.1.0. Bob fix: the game reports bob strength on vanilla's 0..0.1 scale, but 0.1.0 weighted it as 0..1, so the bob emphasis ran ten times too weak to see — it now normalises the scale and uses stronger weights. Attacks: the follow-through is roughly doubled (0.30 blocks forward, 28° dip at full intensity) so it reads as a distinct thrust past the vanilla swing. Sway unchanged. Needs a Kestrel build with SDK API 16 (build 29+).",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -846,9 +846,9 @@
           "game": "26.3",
           "file": {
             "name": "punchy.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/punchy-0.1.0/punchy.kmod",
-            "size": 21402,
-            "sha256": "6eb32a5ffe7fd5432dc42c333de42813900f1dcf4e964340126f18551aa15b33"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/punchy-0.1.1/punchy.kmod",
+            "size": 21418,
+            "sha256": "7146d6365b1c98bd4a63d08ab8b6aba49c3a0e7c307d177f1fc004fd28c786f5"
           }
         }
       ]
