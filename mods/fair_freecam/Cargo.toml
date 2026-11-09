@@ -1,0 +1,16 @@
+[package]
+name = "fair_freecam"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Fair Freecam for Kestrel: fly the camera on F4 while the player stays put, with a fair play mode that stops the camera at blocks. A behaviour port of Fair Freecam by Lutziano888."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

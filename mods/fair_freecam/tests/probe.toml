@@ -1,0 +1,47 @@
+# Fair Freecam: F4 (or /fair_freecam) detaches the camera at the
+# player's eye; toggling again releases it. The player stands at
+# 0.5 64 0.5 facing south (+z), so the eye is 0.5 65.6 0.5, yaw 0,
+# pitch 0. The toggle answers in chat ("Fair Freecam on/off").
+#
+# The script harness cannot hold the player's movement keys, so
+# flying, the Ctrl boost, the wheel speeds and the Fair Play
+# block rule are covered by the unit tests in src/lib.rs; what
+# this script proves is the toggle itself through /fair_freecam,
+# the camera call behind it (the feedback carries the effective
+# pose), and the release on leaving the world.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["fair_freecam"]
+chat = []
+panel = []
+
+[[step]]
+command = "fair_freecam"
+[step.expect]
+feedback = "Fair Freecam on — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = []
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "fair_freecam"
+[step.expect]
+feedback = "Fair Freecam off — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = []
+
+[[step]]
+command = "fair_freecam"
+[step.expect]
+feedback = "Fair Freecam on — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = []
+
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []

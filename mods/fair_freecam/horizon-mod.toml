@@ -1,0 +1,9 @@
+id = "fair_freecam"
+name = "Fair Freecam"
+version = "0.1.0"
+description = "A behaviour port of Fair Freecam by Lutziano888 (MIT). Ported for Kestrel by NepThunder. Press F4 and fly the camera while the player stays put: WASD (your own Controls bindings) moves, Space up, Shift down, Ctrl boosts 2.5x, the mouse wheel steps the speed through 2/5/10/20/40/80 blocks/s. Fair Play mode (on by default) stops the camera at solid blocks in single player — glass, fences and doors block, small plants and flowers do not; on a server the game's own wall clamp is what bounds the camera. Settings: Options > Mods > Fair Freecam. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fair_freecam"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "input", "chat", "storage", "ui", "world"]
+experimental = ["render", "input", "ui"]
