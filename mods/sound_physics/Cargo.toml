@@ -1,0 +1,16 @@
+[package]
+name = "sound_physics"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Sound Physics for Kestrel: block occlusion and enclosure reverb for the game's sounds. A behaviour port of Sound Physics Remastered by henkelmax."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

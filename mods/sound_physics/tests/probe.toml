@@ -1,0 +1,16 @@
+# Sound Physics: the mod loads, ticks in the open (its enclosure
+# probe reads air in every direction, so the estimate stays 0 and
+# no reverb is set), and /soundphysics reports the estimate and
+# the settings. The occlusion and enclosure maths are covered by
+# the unit tests in src/lib.rs; a sound event itself cannot be
+# scripted by this harness.
+
+[[step]]
+ticks = 12
+[step.expect]
+chat = []
+
+[[step]]
+command = "soundphysics"
+[step.expect]
+feedback = "Sound Physics: enclosure 0%, reverb 50%, occlusion 100%"

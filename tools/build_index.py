@@ -71,6 +71,7 @@ ALLOW_IDS = {
     "freecam",
     "freelook",
     "gyro",
+    "sound_physics",
 }
 
 
