@@ -1,0 +1,13 @@
+# Dynamic FPS: the mod loads and its frame hook runs against
+# the probe game — reading the game's input clock each frame
+# and pushing the cap only on a transition. The probe asserts
+# the resting state: no idle minute passes in a script, so no
+# cap is set and nothing is shown, which the empty chat
+# expectation pins. The tier maths (the original's 60 s delay
+# and 20 FPS cap, the apply-once / lift-on-input transitions)
+# is covered by the unit tests in src/lib.rs.
+
+[[step]]
+frames = 30
+[step.expect]
+chat = []

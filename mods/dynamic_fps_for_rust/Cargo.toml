@@ -1,0 +1,16 @@
+[package]
+name = "dynamic_fps_for_rust"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Dynamic FPS for Kestrel: after a minute without input the frame rate is capped at 20, as in Lyvt's Dynamic FPS for Rust (MIT). A behaviour port."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

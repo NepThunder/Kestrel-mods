@@ -1,0 +1,9 @@
+id = "dynamic_fps_for_rust"
+name = "Dynamic FPS"
+version = "0.1.0"
+description = "A behaviour port of Dynamic FPS for Rust by Lyvt (MIT). Ported for Kestrel by NepThunder. After 60 seconds without input it caps the frame rate at 20 FPS through the game's own limiter, and any input restores it at once — the original's idle tier, with its numbers, read from the game's own inactivity clock. The original's window-state caps (30 FPS hovered, 10 unfocused, 1 minimised), its battery cap and its background volume option have no SDK surface and are not in this port (see the README's gap list); its values are the original's defaults, fixed, and there is no settings screen, as in the original. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/dynamic_fps_for_rust"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "input"]
+experimental = ["render", "input"]
