@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T01:27:36Z",
+  "generated": "2026-11-09T05:46:22Z",
   "projects": [
     {
       "id": "appleskin",
@@ -346,6 +346,86 @@
       ]
     },
     {
+      "id": "freecam",
+      "kind": "mod",
+      "name": "Freecam",
+      "summary": "A port of Freecam by hakergeniusz (a rewrite of Freecam by the Freecam authors).",
+      "description": "A port of Freecam by hakergeniusz (a rewrite of Freecam by the Freecam authors). Ported for Kestrel by NepThunder. Press Y (or /freecam) to detach the camera: fly it on dedicated keys — I forward, comma back, semicolon left, apostrophe right, equal up, minus down — while your player stays where they were, and the mouse looks around. Options > Mods > Freecam has the same switch plus the fly-speed switch (2, 5, 10, 20 or 40 blocks/s); the game keeps the speed. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Freecam 0.1.0 — a port of Freecam by hakergeniusz (a rewrite of Freecam by the Freecam authors).\n\nPress Y (or /freecam) to detach the camera and fly it on dedicated keys — I forward, comma back, semicolon left, apostrophe right, equal up, minus down — while your player stays where they were, and the mouse looks around. Options > Mods > Freecam has the same switch plus the fly-speed switch (2, 5, 10, 20 or 40 blocks/s); the game keeps the speed.\n\nRequires Kestrel build 24 or newer (camera API, level 14). Works in singleplayer and multiplayer.\n\nNotes: the camera stops at walls and at 64 blocks from the player — no wall-clip in this version. WASD still walks your player while the camera is detached; only the dedicated keys fly the camera.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "input",
+            "chat",
+            "hud",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "freecam.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/freecam-0.1.0/freecam.kmod",
+            "size": 48155,
+            "sha256": "d691c8b54511ec791fa164ec4f1d458a7b91bf75933c9609e79c25bf5214cbf0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "freelook",
+      "kind": "mod",
+      "name": "Freelook",
+      "summary": "A port of Freelook by Krzysix17.",
+      "description": "A port of Freelook by Krzysix17. Ported for Kestrel by NepThunder. Hold X (or /freelook) to look around freely while your character keeps walking and facing the way it was; let go and the camera snaps back. Options > Mods > Freelook switches hold and toggle. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freelook",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freelook",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Freelook 0.1.0 — a port of Freelook by Krzysix17.\n\nHold X (or /freelook) to look around freely while your character keeps walking and facing the way it was; let go and the camera snaps back. Options > Mods > Freelook switches hold and toggle.\n\nRequires Kestrel build 24 or newer (camera API, level 14). Works in singleplayer and multiplayer.\n\nNote: this port keeps the camera at the eye and only decouples the look — the original's third-person orbit (camera pulled out behind the player) is not in this version.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "input",
+            "chat",
+            "hud",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "freelook.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/freelook-0.1.0/freelook.kmod",
+            "size": 15138,
+            "sha256": "572dd93070ed7da5a55a17aaa45f1d89edc13eec58cd75e347b759dc8cd3f055"
+          }
+        }
+      ]
+    },
+    {
       "id": "fullbright",
       "kind": "mod",
       "name": "Fullbright",
@@ -421,6 +501,46 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fullbright-nofog-0.1.0/fullbright_nofog.kmod",
             "size": 43201,
             "sha256": "d7a7d599b5bad4c6e50fa7204dc9384730b055f14d47862d8331b73809e938fc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gyro",
+      "kind": "mod",
+      "name": "Gyro",
+      "summary": "A port of Gyro by CGRLabs, inspired by Do a Barrel Roll.",
+      "description": "A port of Gyro by CGRLabs, inspired by Do a Barrel Roll. Ported for Kestrel by NepThunder. While you glide, the camera banks and rolls with your look: move the mouse and the horizon tilts, up to a full barrel roll when you look right round; the view eases back to level when you stop gliding. Y toggles it (rebindable), /gyro shows the roll and speed, /gyro on and /gyro off set it. Camera only: the flight itself stays vanilla, so this port cannot steer the glide — while it is on, the mouse turns the camera, not you, and your glide holds its heading. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/gyro",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/gyro",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Gyro 0.1.0 — a port of Gyro by CGRLabs, inspired by Do a Barrel Roll.\n\nWhile you glide, the camera banks and rolls with your look: move the mouse and the horizon tilts, up to a full barrel roll when you look right round; the view eases back to level when you stop gliding. Y toggles it (rebindable), /gyro shows the roll and speed, /gyro on and /gyro off set it.\n\nRequires Kestrel build 24 or newer (camera API, level 14). Works in singleplayer and multiplayer.\n\nNote: camera only — the flight itself stays vanilla, so this port cannot steer the glide. While it is on, the mouse turns the camera, not you, and your glide holds its heading.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "input",
+            "chat",
+            "hud",
+            "storage",
+            "command"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "gyro.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/gyro-0.1.0/gyro.kmod",
+            "size": 28852,
+            "sha256": "36db0e5d84e3e4f75d33ffda233f2dce9120ae0fc951ec954af18c25bfe1a326"
           }
         }
       ]
@@ -780,8 +900,8 @@
       "id": "waypoints",
       "kind": "mod",
       "name": "Waypoints",
-      "summary": "Place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world.",
-      "description": "Place waypoints with N, manage them with M, and see their distance on the HUD and a box and beam at each one in the world. N creates a waypoint where you stand (auto-named, coloured from the palette); M lists them with All / Overworld / Nether / End filters, Hide/Show, colour cycling, Move here and Delete; /wp renames, moves, recolours and deletes. Dying can leave a red Death waypoint where it happened. A port of Waypoints by Nirokx. Ported for Kestrel by NepThunder. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints",
+      "summary": "Place waypoints with N, manage them with M, and see their distance on the HUD, a box and beam at each one in the world, and an in-world label with its name and distance at its position..",
+      "description": "Place waypoints with N, manage them with M, and see their distance on the HUD, a box and beam at each one in the world, and an in-world label with its name and distance at its position. N creates a waypoint where you stand (auto-named, coloured from the palette); M lists them with All / Overworld / Nether / End filters, Hide/Show, colour cycling, Move here and Delete; /wp renames, moves, recolours and deletes. Dying can leave a red Death waypoint where it happened. A port of Waypoints by Nirokx. Ported for Kestrel by NepThunder. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints",
       "authors": [
         "NepThunder"
       ],
@@ -792,9 +912,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waypoints",
       "versions": [
         {
-          "version": "0.1.1",
-          "published": "2026-11-08",
-          "changelog": "The command is now /wp. Vanilla owns /waypoint, so the engine refused the mod's command and /waypoint add failed; /wp add, /wp list, /wp rename and the rest now work. N creates a waypoint where you stand, M lists them. Needs Kestrel build 17+ (API level 11).",
+          "version": "0.2.0",
+          "published": "2026-11-09",
+          "changelog": "Waypoints 0.2.0 — in-world name/distance labels, on top of the 0.1.1 waypoint mod by Nirokx.\n\nEach waypoint now shows its name and distance floating just above its box in the world, in the waypoint's colour (for example \"Home · 21 m\"). The label vanishes when the waypoint is behind the camera, and hides with the markers switch and with the HUD.\n\nRequires Kestrel build 24 or newer (camera API, level 14). Works in singleplayer and multiplayer. Everything from 0.1.1 is unchanged: N creates a waypoint, M opens the list, /wp commands, death waypoints, settings.\n\nNote: labels show through walls by design (same as the panel distance).",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -809,9 +929,9 @@
           "game": "26.3",
           "file": {
             "name": "waypoints.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/waypoints-0.1.1/waypoints.kmod",
-            "size": 50795,
-            "sha256": "b630f17a0ed87f854694d4e445b5435b3b339aa6d957a8a323fb9ed5877ae213"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/waypoints-0.2.0/waypoints.kmod",
+            "size": 52668,
+            "sha256": "804d7896b8bd5528819c1ecc562608163189743b70793417fb769dceaf61f456"
           }
         }
       ]
