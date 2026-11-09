@@ -72,6 +72,7 @@ ALLOW_IDS = {
     "freelook",
     "gyro",
     "sound_physics",
+    "punchy",
 }
 
 

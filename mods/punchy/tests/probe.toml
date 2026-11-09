@@ -1,0 +1,16 @@
+# Punchy: the mod loads, runs frames (the test game pushes no
+# hand state, so the springs read stillness and the offset it sets
+# is the rest transform), and /punchy reports the settings. The
+# sway, follow-through and bob maths are covered by the unit
+# tests in src/lib.rs; a real hand state cannot be scripted by
+# this harness.
+
+[[step]]
+frames = 30
+[step.expect]
+chat = []
+
+[[step]]
+command = "punchy"
+[step.expect]
+feedback = "Punchy: intensity 75%, sway on, attacks on, bob on"
