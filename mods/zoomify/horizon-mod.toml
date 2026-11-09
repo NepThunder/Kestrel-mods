@@ -1,0 +1,9 @@
+id = "zoomify"
+name = "Zoomify"
+version = "0.1.0"
+description = "A behaviour port of Zoomify by isXander (LGPL-3.0-or-later), ported to the Horizon registry by DeportedToHell. Ported for Kestrel by NepThunder. C zooms (hold or toggle) with smooth transitions; scroll to zoom further, with no limit of its own (the game caps any mod zoom at 250x); F6 is a secondary zoom with a slow cinematic transition (10x/50x/200x, chosen on the settings page) that hides the HUD while active; sensitivity follows the zoom, the transitions ease cinematically, and the hand's FOV follows the view (multiply/add/keep; F7 toggles it). While you scope with a spyglass the zoom stands down and the spyglass view wins. Settings: Options > Mods > Zoomify. Not in this port: cycling the secondary level with the mouse buttons (mods get no mouse-button events, so the level lives on the settings page) and the original's spyglass-behaviour options — a mod cannot scope on a press or combine with the scope view. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/zoomify"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "input", "storage", "ui"]
+experimental = ["render", "input", "ui"]

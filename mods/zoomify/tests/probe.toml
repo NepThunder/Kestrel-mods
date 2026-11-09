@@ -1,0 +1,18 @@
+# Zoomify: the mod loads, owns no commands, and idles cleanly
+# over frames with no zoom engaged. Init also pushes the hand
+# FOV setting, and every frame reads the zoom truth (can-zoom
+# and the spyglass state) the stand-down logic runs on.
+#
+# The script harness has no key or wheel steps, so it cannot
+# press C or F6 or check the zoom level: the engage/release
+# state machine, the easing and the settings are covered by the
+# unit tests in src/lib.rs, and by the sandbox load test in
+# crates/horizon-mods/tests/sandbox.rs, which presses keys
+# through the real runtime and reads the zoom back.
+
+[[step]]
+frames = 5
+ticks = 1
+[step.expect]
+commands = []
+chat = []

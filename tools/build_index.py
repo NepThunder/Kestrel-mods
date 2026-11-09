@@ -89,6 +89,9 @@ ALLOW_IDS = {
     "toggle_sprint",
     "rider_hud",
     "flesh_to_leather",
+    "zoomify",
+    "freecam_yannis",
+    "dynamic_fps_for_rust",
 }
 
 
