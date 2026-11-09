@@ -1,0 +1,9 @@
+id = "accurate_block_placement"
+name = "Accurate Block Placement"
+version = "0.1.0"
+description = "A behaviour port of Accurate Block Placement: Reborn (MIT) by Clayborn, Flourick, schwar and KadTheHunter, via Lutziano888's Horizon port (https://github.com/Lutziano888/horizon-accurate-block-placement). Ported for Kestrel by NepThunder. Hold right click with a block and every new spot you look at gets a block at once, instead of vanilla's one every four ticks: no spot skipped however fast you move, and staring at one spot adds nothing. A single click stays a single block (it waits out vanilla's four ticks, unless you turn the view by 10 degrees), and building backwards re-arms a placed block once you have stepped a full block back. Blocks that react to a click (doors, chests, buttons, levers, scaffolding...) get vanilla's click alone. Settings (Options > Mods > Accurate Block Placement): Accurate placement on/off and Allowed on servers, both on by default, plus a toggle key, unbound by default. Some servers see fast, accurate placing as a cheat: check their rules. Two things differ from the original, both limits of the client SDK: it cannot switch vanilla's own held-repeat off, so holding still on one spot keeps vanilla's four-tick cadence instead of the original's full stop; and it cannot ask the game whether the held item is a block item, so it learns from the first click of a hold — once the game has placed one, the rest of the hold is accelerated. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/accurate_block_placement"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "input", "world", "actions", "storage", "ui", "chat"]
+experimental = ["input", "actions", "ui"]

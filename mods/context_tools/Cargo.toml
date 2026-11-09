@@ -1,0 +1,16 @@
+[package]
+name = "context_tools"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "Context Tool Swap for Kestrel: middle click, or starting to break a block, swaps the right tool from your hotbar into your hand. A behaviour port of Context Tool Swap (MIT) by TTCjonasTTC and Qwen."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

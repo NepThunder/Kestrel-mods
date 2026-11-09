@@ -95,6 +95,9 @@ ALLOW_IDS = {
     "livingmotion",
     "firstpersonmodel",
     "first_person_body",
+    "accurate_block_placement",
+    "right_click_crops",
+    "context_tools",
 }
 
 

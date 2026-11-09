@@ -1,0 +1,38 @@
+# Accurate Block Placement: the mod loads and ticks. The test
+# harness cannot hold the use button (input mappings read as
+# never-down there), so the mod stays idle throughout: no
+# actions, no chat, with and without a player, a block item in
+# hand and a block under the crosshair. The placement rules —
+# freshness, the four-tick wait, the turn, building backwards —
+# are pinned by the unit tests in src/lib.rs, which follow the
+# original's own test cases.
+
+[[step]]
+ticks = 4
+[step.expect]
+chat = []
+actions = []
+
+[player]
+x = 0.5
+y = 64.0
+z = 0.5
+pitch = 60.0
+
+[[step]]
+ticks = 4
+[step.inventory]
+selected = 0
+slots = [{ slot = 0, id = "minecraft:stone", count = 64 }]
+[step.target]
+block = { x = 0, y = 63, z = 0, block = "minecraft:grass_block", face = "up", cursor = [0.5, 1.0, 0.5] }
+[step.expect]
+chat = []
+actions = []
+
+[[step]]
+title-screen = true
+ticks = 4
+[step.expect]
+chat = []
+actions = []

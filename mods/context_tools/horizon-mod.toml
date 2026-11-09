@@ -1,0 +1,9 @@
+id = "context_tools"
+name = "Context Tool Swap"
+version = "0.1.0"
+description = "A behaviour port of Context Tool Swap (MIT) by TTCjonasTTC and Qwen (https://github.com/TTCjonasTTC/context_toolswap). Ported for Kestrel by NepThunder. Press middle click with a tool in hand, looking at a block — or simply start breaking a block — and the right tool for it is swapped out of your hotbar into your hand: the best one you carry there, correct for the block's drops first, then fastest, as the original picks. /toolswap turns it on or off (on by default), as in the original. PARTIAL, as the roadmap flagged: the swap reaches the hotbar only — a tool that is only in your bag cannot be moved into your hand until the SDK gains an inventory-actions district (B6), where the original reaches the whole inventory. Also: the original skips creative and spectator, which a client mod cannot detect (the SDK shows no game mode), and the middle click keeps its vanilla pick-block as well, because a registered key does not consume the button. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/context_tools"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["input", "inventory", "actions", "storage"]
+experimental = ["input", "inventory", "actions"]

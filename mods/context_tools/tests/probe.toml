@@ -1,0 +1,59 @@
+# Context Tool Swap: the /toolswap command answers as the
+# original's does, and the mod ticks calmly over the fixtures.
+# The test harness cannot press the middle-click key (key
+# events can't be injected) and input mappings read as
+# never-down there, so neither swap trigger can fire: no
+# actions anywhere. The triggers' gates, the tool table and
+# the choice are pinned by the unit tests in src/lib.rs.
+
+[[step]]
+ticks = 2
+command = "toolswap"
+[step.expect]
+chat = []
+actions = []
+feedback = "Tool Swap: on"
+commands = ["toolswap"]
+
+[[step]]
+ticks = 2
+command = "toolswap off"
+[step.expect]
+chat = []
+actions = []
+feedback = "Tool Swap: off"
+commands = ["toolswap"]
+
+[[step]]
+ticks = 2
+command = "toolswap"
+[step.expect]
+chat = []
+actions = []
+feedback = "Tool Swap: off"
+commands = ["toolswap"]
+
+[[step]]
+ticks = 2
+command = "toolswap on"
+[step.expect]
+chat = []
+actions = []
+feedback = "Tool Swap: on"
+commands = ["toolswap"]
+
+[[step]]
+ticks = 4
+[step.inventory]
+selected = 0
+slots = [{ slot = 0, id = "minecraft:wooden_pickaxe", count = 1, max-damage = 59 }, { slot = 1, id = "minecraft:diamond_pickaxe", count = 1, max-damage = 1561 }]
+[step.target]
+block = { x = 0, y = 64, z = 0, block = "minecraft:stone", face = "up", cursor = [0.5, 1.0, 0.5] }
+[step.expect]
+chat = []
+actions = []
+
+[player]
+x = 0.5
+y = 64.0
+z = 0.5

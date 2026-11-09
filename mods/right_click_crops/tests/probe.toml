@@ -1,0 +1,53 @@
+# Right-Click Crops: the mod loads and ticks across the
+# fixtures — a player, plants under the crosshair (mature,
+# immature and unmanaged), a crouching player. The test harness
+# cannot hold the use button (input mappings read as never-down
+# there), so no harvest is ever armed: no actions, no chat. The
+# decision logic — the family table and its ages, the gates, the
+# leave-alone rules, the payment search, the replant targets —
+# is pinned by the unit tests in src/lib.rs.
+
+[[step]]
+ticks = 4
+[step.expect]
+chat = []
+actions = []
+
+[player]
+x = 0.5
+y = 64.0
+z = 0.5
+
+[[step]]
+ticks = 4
+[step.inventory]
+selected = 0
+slots = [{ slot = 0, id = "minecraft:wheat_seeds", count = 12 }]
+[step.target]
+block = { x = 0, y = 64, z = 0, block = "minecraft:wheat[age=7]", face = "up", cursor = [0.5, 1.0, 0.5] }
+[[step.blocks]]
+x = 0
+y = 63
+z = 0
+state = "minecraft:farmland"
+[step.expect]
+chat = []
+actions = []
+
+[[step]]
+ticks = 4
+[step.target]
+block = { x = 0, y = 64, z = 0, block = "minecraft:wheat[age=3]", face = "up", cursor = [0.5, 1.0, 0.5] }
+[step.expect]
+chat = []
+actions = []
+
+[[step]]
+ticks = 4
+[step.self-state]
+sneaking = true
+[step.target]
+block = { x = 0, y = 64, z = 0, block = "minecraft:sweet_berry_bush[age=3]", face = "up", cursor = [0.5, 1.0, 0.5] }
+[step.expect]
+chat = []
+actions = []
