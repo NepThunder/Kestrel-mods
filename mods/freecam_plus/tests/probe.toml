@@ -1,0 +1,60 @@
+# Freecam+: U (or /freecam_plus) detaches the camera at the
+# player's eye, looking where they look; toggling again releases
+# it back to the player. The player stands at 0.5 64 0.5 facing
+# south (+z), so the eye is 0.5 65.6 0.5, yaw 0, pitch 0. The
+# toggle answers in chat only ("Freecam+ on" / "Freecam+ off").
+#
+# The script harness cannot press keys or hold them, so the U
+# toggle and the six fly keys are covered by the unit tests in
+# src/lib.rs (the held-key state machine and the fly math); what
+# this script proves is the toggle itself through /freecam_plus,
+# the camera call behind it (the feedback carries the effective
+# pose), and the release on reload and on leaving the world.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["freecam_plus"]
+chat = []
+panel = []
+
+[[step]]
+command = "freecam_plus"
+[step.expect]
+feedback = "Freecam+ on — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = []
+
+[[step]]
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "freecam_plus"
+[step.expect]
+feedback = "Freecam+ off — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = []
+
+[[step]]
+command = "freecam_plus"
+[step.expect]
+feedback = "Freecam+ on — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = []
+
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+panel = []
+
+[[step]]
+command = "freecam_plus"
+[step.expect]
+feedback = "Freecam+ on — camera x=0.5 y=65.6 z=0.5 yaw=0.0 pitch=0.0"
+panel = []
+
+[[step]]
+title-screen = true
+ticks = 1
+[step.expect]
+panel = []

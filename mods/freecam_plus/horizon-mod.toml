@@ -1,0 +1,9 @@
+id = "freecam_plus"
+name = "Freecam+"
+version = "0.1.0"
+description = "A behaviour port of Freecam+ by _idom_ (MIT). Ported for Kestrel by NepThunder. Press U (or /freecam_plus) and the camera detaches: fly it on dedicated keys — I forward, comma back, semicolon left, apostrophe right, equal up, minus down — while the player stays where they were, and the mouse looks around. Options > Mods > Freecam+ has the same switch plus the fly-speed switch (2, 5, 10, 20, 30, 40 or 60 blocks/s); the game keeps the speed. One honest limit: the detach freezes the player's look, but held movement keys still walk the player — this SDK cannot claim them. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam_plus"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "input", "chat", "storage", "ui"]
+experimental = ["render", "input", "ui"]
