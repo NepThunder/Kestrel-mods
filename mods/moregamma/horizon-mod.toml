@@ -1,0 +1,9 @@
+id = "moregamma"
+name = "MoreGamma"
+version = "0.1.0"
+description = "A port of MoreGamma by bezi5kt. Ported for Kestrel by NepThunder. Set the brightness (gamma) far past the video settings' 100% \"Bright\" limit with /gamma <value> — 1 is vanilla's \"Bright\", 10 is fullbright, the brightest the SDK allows — or toggle full brightness with /fullbright; /gamma on its own shows the gamma in effect, /gamma reset (or off) goes back to your Brightness setting, and /gamma on turns your last custom gamma on again. Your Brightness setting and options.txt are never changed. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/moregamma"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["command", "render"]
+experimental = ["render"]

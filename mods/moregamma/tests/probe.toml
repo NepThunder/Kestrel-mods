@@ -1,0 +1,102 @@
+# MoreGamma: `/gamma` prints the gamma in effect (the player's own
+# Brightness setting, 0.5, at rest), `/gamma <value>` sets this mod's
+# gamma (clamped host-side to 0.0..=10.0), `/gamma reset` (or `off`)
+# goes back to that setting, `/gamma on` turns the last custom gamma
+# on again, and `/fullbright` toggles the 10.0 fullbright gamma.
+# Reloading the mod unloads it, so its gamma leaves the aggregate and
+# the stored setting applies again — and the last gamma is forgotten
+# with it, so `/gamma on` then has nothing to turn on.
+#
+# What this script does not prove: the clamp and restore on a real
+# device (the sandbox's stored gamma is 0.5 and its lightmap is not
+# rendered), and the Options > Mods page and toggle key, which this
+# port does not have — see README.md.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = ["gamma", "fullbright"]
+chat = []
+panel = []
+world-lines = []
+
+# Bare `/gamma` reads the gamma in effect: the stored setting at rest.
+[[step]]
+command = "gamma"
+expect.feedback = "gamma 0.5"
+
+# In-between values pass through unchanged.
+[[step]]
+command = "gamma 1.5"
+expect.feedback = "gamma 1.5"
+
+[[step]]
+command = "gamma 3"
+expect.feedback = "gamma 3"
+
+# The original's fullbright value, 15, clamps to the SDK's 10.0.
+[[step]]
+command = "gamma 15"
+expect.feedback = "gamma 10"
+
+# Percentages read against vanilla's "Bright": 1500% is 15, clamped to 10.
+[[step]]
+command = "gamma 1500%"
+expect.feedback = "gamma 10"
+
+# Reset goes back to the Brightness setting the mod first saw.
+[[step]]
+command = "gamma reset"
+expect.feedback = "gamma 0.5"
+
+# `/gamma on` turns the last custom gamma (10, the clamped 1500%) on again.
+[[step]]
+command = "gamma on"
+expect.feedback = "gamma 10"
+
+# `off` is the same reset as `reset`.
+[[step]]
+command = "gamma off"
+expect.feedback = "gamma 0.5"
+
+# Below zero clamps to the darkest the lightmap goes.
+[[step]]
+command = "gamma -1"
+expect.feedback = "gamma 0"
+
+# Back to the stored setting by value, not by reset.
+[[step]]
+command = "gamma 0.5"
+expect.feedback = "gamma 0.5"
+
+# `/fullbright` toggles the 10.0 gamma on, then back to the setting.
+[[step]]
+command = "fullbright"
+expect.feedback = "fullbright on: gamma 10"
+
+[[step]]
+command = "fullbright"
+expect.feedback = "fullbright off: gamma 0.5"
+
+# Not a number, not a word the command knows.
+[[step]]
+command = "gamma frobnicate"
+expect.error = "gamma: give a number"
+
+# Reloading the mod restores the stored setting and forgets the last gamma.
+[[step]]
+reload = true
+ticks = 1
+[step.expect]
+commands = ["gamma", "fullbright"]
+chat = []
+panel = []
+world-lines = []
+
+[[step]]
+command = "gamma"
+expect.feedback = "gamma 0.5"
+
+[[step]]
+command = "gamma on"
+expect.error = "gamma: no custom gamma set yet — use /gamma <value> first"
