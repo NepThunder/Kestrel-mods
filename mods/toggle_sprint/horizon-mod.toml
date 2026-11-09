@@ -1,0 +1,9 @@
+id = "toggle_sprint"
+name = "Toggle Sprint"
+version = "0.1.0"
+description = "A behaviour port of Toggle Sprint by CayMac (MIT, https://github.com/CayMac97/toggle-sprint), itself a port of Better Sprinting and the Lunar/Badlion ToggleSprint HUD. Ported for Kestrel by NepThunder. Sprint and sneak toggle instead of holding the key down: the port drives the game's own Toggle Sprint and Toggle Crouch options (API 18's set-movement-toggles — the settings-grade write, saved to options.txt as the options page saves it), flipped by the V and C keys or from Options > Mods > Toggle Sprint, so the toggled sneak pauses inside inventory and chest screens exactly as the game's own option handles screens. The classic status HUD shows [Sprinting (Toggled)], [Sprinting (Key Held)], [Sneaking (Toggled)], [Sneaking (Key Held)], [Flying], [Gliding (Elytra)] and [Riding] in the bottom-left corner. Two pieces of the original are NOT in this port: the Creative Fly Speed Boost (the SDK has no fly-speed write, so its multiplier setting and the HUD's (Nx Boost) suffix are omitted rather than shown doing nothing) and the [Swimming] line (the self read has no in-water state). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/toggle_sprint"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "hud", "input", "ui"]
+experimental = ["input", "ui"]

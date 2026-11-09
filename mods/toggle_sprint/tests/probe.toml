@@ -1,0 +1,64 @@
+# Toggle Sprint: the HUD against the step's own self-state
+# fixtures (API 18) — each state line the original names, in
+# order, and nothing while standing. The toggle write itself
+# (V / C keys, the settings buttons) lands in the game's
+# options, which this harness does not read back; the flip
+# logic is covered by the unit tests in src/lib.rs. The
+# original has no commands, so there is no command step.
+
+[[step]]
+ticks = 1
+[step.expect]
+commands = []
+chat = []
+panel = []
+
+[[step]]
+ticks = 1
+[step.self-state]
+sprinting = true
+sprint-toggled = true
+[step.expect]
+panel = ["[Sprinting (Toggled)]"]
+
+[[step]]
+ticks = 1
+[step.self-state]
+sprinting = true
+[step.expect]
+panel = ["[Sprinting (Key Held)]"]
+
+[[step]]
+ticks = 1
+[step.self-state]
+sneaking = true
+sneak-toggled = true
+[step.expect]
+panel = ["[Sneaking (Toggled)]"]
+
+[[step]]
+ticks = 1
+[step.self-state]
+flying = true
+[step.expect]
+panel = ["[Flying]"]
+
+[[step]]
+ticks = 1
+[step.self-state]
+gliding = true
+[step.expect]
+panel = ["[Gliding (Elytra)]"]
+
+[[step]]
+ticks = 1
+[step.self-state]
+sprinting = true
+sprint-toggled = true
+[step.self-state.mount]
+id = 42
+kind = "minecraft:horse"
+health = 24.5
+max-health = 30.0
+[step.expect]
+panel = ["[Sprinting (Toggled)]", "[Riding]"]
