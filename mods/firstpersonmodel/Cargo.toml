@@ -1,0 +1,16 @@
+[package]
+name = "firstpersonmodel"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "First-person Model for Kestrel: see your own body in first person, with offsets for every pose and the original's settings. A behaviour port of First-person Model by tr7zw, via its Horizon port by DeportedToHell."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

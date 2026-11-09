@@ -92,6 +92,9 @@ ALLOW_IDS = {
     "zoomify",
     "freecam_yannis",
     "dynamic_fps_for_rust",
+    "livingmotion",
+    "firstpersonmodel",
+    "first_person_body",
 }
 
 

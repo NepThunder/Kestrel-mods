@@ -1,0 +1,9 @@
+id = "first_person_body"
+name = "First Person Body"
+version = "0.1.0"
+description = "A behaviour port of First Person Body by selfmonoraque5 (MIT; https://github.com/selfmonoraque5/first-person-body). Ported for Kestrel by NepThunder. See your own body in first person: look down and your torso, legs and feet are there, with your skin, armour and cape; the head and helmet stay hidden so the camera never looks out of your skull. The body sits a little behind the camera — a little more when you look down or crouch. Settings in Options > Mods > First Person Body, the original's own: on/off (on), arms (vanilla hand, or the model's own arms), body offset (None, Small, Normal, Large — Normal), while riding (on), lean back looking down (on), and reset. A toggle key is registered for it and starts unbound, as the original's does — bind it in Options > Controls. The mod steps aside while you swim, crawl, glide, or sleep; the original also steps aside for a Riptide spin and for spectators, which this port cannot read from the pose state, and with the model's own arms chosen the vanilla hand still draws (the SDK cannot hide it, where the original cancels it). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/first_person_body"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "input", "storage", "ui"]
+experimental = ["render", "input", "ui"]

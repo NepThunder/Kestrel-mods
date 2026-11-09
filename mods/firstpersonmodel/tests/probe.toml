@@ -1,0 +1,73 @@
+# First-person Model: the mod loads and runs its frame over the
+# pose fixtures — standing, sneaking, swimming, and the gliding
+# step-aside — silently: the original has no chat output and no
+# commands, so none appear. Whether the body shows, and with
+# what offset and hidden parts, is decided by the pure functions
+# the unit tests in src/lib.rs pin (the harness cannot see pose
+# writes). The spyglass step is last: the harness's spyglass
+# fixture, once set, stays set.
+
+[[step]]
+frames = 2
+[step.expect]
+chat = []
+
+[[step]]
+frames = 4
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+on-ground = true
+[step.expect]
+chat = []
+commands = []
+
+[[step]]
+frames = 4
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+crouching = true
+on-ground = true
+[step.expect]
+chat = []
+
+[[step]]
+frames = 4
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+swim-amount = 1.0
+head-pitch = 35.0
+[step.expect]
+chat = []
+
+[[step]]
+frames = 3
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+gliding = true
+[step.expect]
+chat = []
+
+[[step]]
+frames = 2
+poses = []
+[step.expect]
+chat = []
+
+[[step]]
+frames = 3
+spyglass = 10.0
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+on-ground = true
+[step.expect]
+chat = []

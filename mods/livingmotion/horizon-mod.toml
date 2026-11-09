@@ -1,0 +1,9 @@
+id = "livingmotion"
+name = "Living Motion"
+version = "0.1.0"
+description = "A behaviour port of LivingMotion by bart (MIT; https://github.com/bartekchomik26-dotcom/Living-motion). Ported for Kestrel by NepThunder. Third-person players feel alive on top of the vanilla animation: each player gets springs, stepped once a frame — lean into runs, bank into turns, stride bounce, landing squash, a jump pose, a fuller arm swing, idle breathing, a steady head, elytra flight and swimming motion, item poses, and swings that follow through. Options > Mods > Living Motion: on/off, other players, steady head, every effect from 0% to 200%, and reset. Y toggles it, I inspects the held item, , and . twirl while gliding. Not in this port: the elytra contrails (they need a particle surface the SDK does not have yet), climbing poses (the pose state carries no climbing signal), and the first-person hand half (that is the hand district's domain — the catalog's Punchy covers it). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/livingmotion"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "input", "storage", "ui"]
+experimental = ["render", "input", "ui"]

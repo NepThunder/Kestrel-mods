@@ -1,0 +1,58 @@
+# Living Motion: the mod loads, steps its springs over the pose
+# fixtures (a walk, a swing, a glide with another player nearby),
+# and fades on riding — all silently: the original has no chat
+# output and no commands, so none appear. The curve and spring
+# maths — lean, bank, squash, the item classification, the
+# twirl's wrap — are covered by the unit tests in src/lib.rs.
+
+[[step]]
+frames = 2
+[step.expect]
+chat = []
+
+[[step]]
+frames = 6
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+walk-pos = 2.0
+walk-speed = 0.8
+on-ground = true
+[step.expect]
+chat = []
+commands = []
+
+[[step]]
+frames = 6
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+swing-progress = 0.5
+swing-anim = "whack"
+main-hand = "minecraft:iron_sword"
+on-ground = true
+[[step.poses]]
+id = 42
+kind = "minecraft:player"
+gliding = true
+head-pitch = 40.0
+[step.expect]
+chat = []
+
+[[step]]
+frames = 4
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+riding = true
+[step.expect]
+chat = []
+
+[[step]]
+frames = 2
+poses = []
+[step.expect]
+chat = []

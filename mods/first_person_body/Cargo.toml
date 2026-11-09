@@ -1,0 +1,16 @@
+[package]
+name = "first_person_body"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "First Person Body for Kestrel: see your own body in first person — look down to see your legs and feet. A behaviour port of First Person Body by selfmonoraque5."
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+horizon-mod-sdk = { path = "../.." }
+
+[lints]
+workspace = true

@@ -1,0 +1,9 @@
+id = "firstpersonmodel"
+name = "First-person Model"
+version = "0.1.0"
+description = "A behaviour port of First-person Model by tr7zw (MIT; https://github.com/tr7zw/FirstPersonModel), via its Horizon port by DeportedToHell (MIT). Ported for Kestrel by NepThunder. You see your own third-person body in first person — armour, cape, elytra, held items and all — the head hidden, drawn behind the camera with offsets for every pose: standing (0.25 blocks back), sneaking, sitting, crawling and swimming, the standing, sneaking and sitting offsets changeable in Options > Mods > First-person Model, alongside Vanilla Hands Mode (Off, Always, Always Both Hands, Item In Hand), Dynamic Mode, Disable Vanilla Hands while Swimming, and the Show Layers toggles the pose surface can reach (jacket, sleeves, pants, cape). F6 turns it on and off. Not in this port: the original's four-tab config screen with its searchable per-item lists (Auto Vanilla Hands and Disable Items — the SDK's settings page has no item lists), the layer toggles for armour, held items, arrows, ears, wings, parrots and stingers (those draws are not parts of the posed model, so the pose surface cannot hide them), and hiding the vanilla hands themselves in the Off modes (the SDK cannot hide the first-person hand — it can only lower it, which Dynamic Mode does). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/firstpersonmodel"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["render", "input", "storage", "ui"]
+experimental = ["render", "input", "ui"]

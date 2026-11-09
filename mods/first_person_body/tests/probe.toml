@@ -1,0 +1,61 @@
+# First Person Body: the mod loads and runs its frame over the
+# pose fixtures — standing, crouching, riding, and the swimming
+# and sleeping step-asides — silently: the original has no chat
+# output and no commands, so none appear. Whether the body
+# shows, and how far back it sits, is decided by the pure
+# functions the unit tests in src/lib.rs pin (the harness cannot
+# see pose writes).
+
+[[step]]
+frames = 2
+[step.expect]
+chat = []
+
+[[step]]
+frames = 4
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+on-ground = true
+[step.expect]
+chat = []
+commands = []
+
+[[step]]
+frames = 4
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+crouching = true
+head-pitch = 55.0
+on-ground = true
+[step.expect]
+chat = []
+
+[[step]]
+frames = 3
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+riding = true
+[step.expect]
+chat = []
+
+[[step]]
+frames = 3
+[[step.poses]]
+id = 1
+kind = "minecraft:player"
+self = true
+swim-amount = 1.0
+[step.expect]
+chat = []
+
+[[step]]
+frames = 2
+poses = []
+[step.expect]
+chat = []
