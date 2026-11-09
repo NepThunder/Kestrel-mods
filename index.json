@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T17:38:49Z",
+  "generated": "2026-11-09T17:42:13Z",
   "projects": [
     {
       "id": "appleskin",
@@ -383,6 +383,46 @@
       ]
     },
     {
+      "id": "fair_freecam",
+      "kind": "mod",
+      "name": "Fair Freecam",
+      "summary": "A behaviour port of Fair Freecam by Lutziano888 (MIT).",
+      "description": "A behaviour port of Fair Freecam by Lutziano888 (MIT). Ported for Kestrel by NepThunder. Press F4 and fly the camera while the player stays put: WASD (your own Controls bindings) moves, Space up, Shift down, Ctrl boosts 2.5x, the mouse wheel steps the speed through 2/5/10/20/40/80 blocks/s. Fair Play mode (on by default) stops the camera at solid blocks in single player — glass, fences and doors block, small plants and flowers do not; on a server the game's own wall clamp is what bounds the camera. Settings: Options > Mods > Fair Freecam. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fair_freecam",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fair_freecam",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Fair Freecam by Lutziano888 (MIT): freecam on F4 flown with your own movement bindings, wheel-stepped speeds, and Fair Play mode (on by default) bounding the camera with block reads — on servers only the host's wall clamp and 64-block cap apply, as documented in the mod.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "input",
+            "chat",
+            "storage",
+            "ui",
+            "world"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "fair_freecam.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fair_freecam-0.1.0/fair_freecam.kmod",
+            "size": 50305,
+            "sha256": "9cff9ffc845fbd6cf713d1d98d365dc60b693a9a47f7f8d39644c757414d42b3"
+          }
+        }
+      ]
+    },
+    {
       "id": "fps_overlay",
       "kind": "mod",
       "name": "FPS Counter",
@@ -453,6 +493,45 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/freecam-0.1.1/freecam.kmod",
             "size": 47565,
             "sha256": "75a931d5f72e939b1b1629420b03e6655ce95332f24cdff3443ca813ffe349d5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "freecam_plus",
+      "kind": "mod",
+      "name": "Freecam+",
+      "summary": "A behaviour port of Freecam+ by _idom_ (MIT).",
+      "description": "A behaviour port of Freecam+ by _idom_ (MIT). Ported for Kestrel by NepThunder. Press U (or /freecam_plus) and the camera detaches: fly it on dedicated keys — I forward, comma back, semicolon left, apostrophe right, equal up, minus down — while the player stays where they were, and the mouse looks around. Options > Mods > Freecam+ has the same switch plus the fly-speed switch (2, 5, 10, 20, 30, 40 or 60 blocks/s); the game keeps the speed. One honest limit: the detach freezes the player's look, but held movement keys still walk the player — this SDK cannot claim them. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam_plus",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/freecam_plus",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Freecam+ by _idom_ (MIT): freecam on U. Detaching freezes your look (the camera takes the mouse); the original's perfectly-still body is only partly expressible — held movement keys still walk the player, as documented in the mod.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "input",
+            "chat",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "freecam_plus.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/freecam_plus-0.1.0/freecam_plus.kmod",
+            "size": 47948,
+            "sha256": "ebafcac8a7995f00a07acc79c0a25ca5f340d1c82c1b04ea17068949d8ab44ea"
           }
         }
       ]
@@ -533,6 +612,45 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fullbright-0.1.0/fullbright.kmod",
             "size": 15645,
             "sha256": "aa15829c157d3bae458799255d54b60cca119b13643d081ff9522107f91c33f2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fullbright_horizon",
+      "kind": "mod",
+      "name": "Fullbright",
+      "summary": "A behaviour port of Fullbright by CayMac (MIT), the registry's fullbright_horizon.",
+      "description": "A behaviour port of Fullbright by CayMac (MIT), the registry's fullbright_horizon. Ported for Kestrel by NepThunder. Press G (or /fullbright_horizon) to toggle maximum brightness (1000% gamma) with a smooth fade; a notice on the HUD says which way it went. Options > Mods > Fullbright has the same switch. Client-side only: it changes your lightmap, nothing sent to a server. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fullbright_horizon",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fullbright_horizon",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of the Horizon registry's Fullbright by CayMac (MIT): G toggles 1000% gamma with the original's smooth 250 ms fade and HUD notice — the fade variant alongside the catalog's existing gamma mods.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "render",
+            "input",
+            "hud",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "fullbright_horizon.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fullbright_horizon-0.1.0/fullbright_horizon.kmod",
+            "size": 16381,
+            "sha256": "e2c275fc64f97fc888cedc9522c9e4f08343f14732e0560b7b95a669a18dcee9"
           }
         }
       ]
@@ -1259,6 +1377,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/waypoints-0.2.0/waypoints.kmod",
             "size": 52668,
             "sha256": "804d7896b8bd5528819c1ecc562608163189743b70793417fb769dceaf61f456"
+          }
+        }
+      ]
+    },
+    {
+      "id": "zoom",
+      "kind": "mod",
+      "name": "Zoom",
+      "summary": "A behaviour port of Zoom by Horizon (MIT), Horizon's own zoom, formerly an extra in Options > Horizon Extras.",
+      "description": "A behaviour port of Zoom by Horizon (MIT), Horizon's own zoom, formerly an extra in Options > Horizon Extras. Ported for Kestrel by NepThunder. Hold Z to zoom in at the starting zoom (4x by default); while you hold it, the mouse wheel zooms further in or out (up to 10x) and the hotbar stays put. Settings: Options > Mods > Zoom (starting zoom 2x-10x, smooth zoom, slower turning). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/zoom",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/zoom",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Horizon's own Zoom (MIT), from its source: hold Z to zoom, starting levels 2/3/4/6/8/10x (default 4x), wheel steps while held, smooth zoom and slower turning, the original's settings and storage keys.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "input",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "zoom.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/zoom-0.1.0/zoom.kmod",
+            "size": 19332,
+            "sha256": "b139acda570883909e85084caa3f7ce178676da3b9c9bda20d1fcc2c70c525f4"
           }
         }
       ]
