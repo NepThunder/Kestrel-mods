@@ -1,7 +1,9 @@
 # The Basic HUD: the full panel on the first tick, durability from the
 # inventory snapshot, recent pickups aggregated and expiring, speed as a
 # one-second average, crafting suppressed as a pickup, then the panel
-# hides with /basichud and stays hidden across a reload.
+# hides with /basichud and stays hidden across a reload. The last step
+# is 0.1.1's effect widget: the step's own effects (API 18 fixtures)
+# with their real levels and durations.
 #
 # The player stands at 0.5 64 0.5 facing south (+z), full health and food,
 # at the first tick of a new world's first morning, already holding a
@@ -216,6 +218,33 @@ panel = [
   "Speed 0.0 b/s",
   "CPS 0 | 0",
   "Health 20.0/20.0",
+  "Diamond Sword 1461/1561",
+  "Diamond Helmet 353/363",
+  "Diamond Boots 429/429",
+]
+
+# The effect widget (0.1.1): Speed II with 1:01 left of its 1234
+# ticks and a permanent Regeneration, after the Health line.
+[[step]]
+ticks = 1
+[[step.effects]]
+id = "minecraft:speed"
+amplifier = 1
+duration = 1234
+[[step.effects]]
+id = "minecraft:regeneration"
+duration = -1
+[step.expect]
+chat = []
+panel = [
+  "0 fps  min 0  1% 0",
+  "XYZ 1.5 / 64.0 / 0.5",
+  "Day 1, 06:06",
+  "Speed 0.0 b/s",
+  "CPS 0 | 0",
+  "Health 20.0/20.0",
+  "Speed II 1:01",
+  "Regeneration inf",
   "Diamond Sword 1461/1561",
   "Diamond Helmet 353/363",
   "Diamond Boots 429/429",

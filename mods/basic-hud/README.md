@@ -1,7 +1,8 @@
 # The Basic HUD
 
 A corner HUD panel: coordinates, FPS, the world clock, speed, CPS,
-player health, held-item and armour durability, and recent pickups. A
+player health, effect timers, held-item and armour durability, and
+recent pickups. A
 port of [The Basic HUD](https://github.com/repositorykreml1n/the-basic-hud)
 by repositorykreml1n (MIT), ported for Kestrel by NepThunder.
 
@@ -20,6 +21,12 @@ default), in the top-left corner:
 - **CPS** — `CPS 7 | 2`: attack clicks, then use clicks, in the last
   second, from `input.clicks-per-second`.
 - **Health** — `Health 20.0/20.0`: the player's own health.
+- **Effects** — `Speed II 1:01`: one line per active effect, in the
+  game's own order — the name, the Roman numeral level past I, and
+  the time left as m:ss from the effect's real remaining ticks
+  (`game.get-effects`); a permanent effect reads `inf`. New in
+  0.1.1: 0.1.0 left this widget out because no SDK interface
+  exposed an effect list; API 18's self reads do.
 - **Durability** — `Diamond Sword 1461/1561`: the held item's remaining
   over maximum durability, from the `%inventory` snapshot; nothing when
   the held item cannot wear out. Coloured the Java way, as Armor Status
@@ -40,10 +47,11 @@ seconds); the game keeps the choices in the mod's storage.
 
 ## Requirements
 
-Needs a Kestrel build with the SDK inventory interface (API level 9,
-build 9+). The inventory snapshot is level 9; the newest function this
-mod imports. Everything else it reads — the player and clock, frame
-stats, clicks per second, item names — is level 5 or below.
+Needs a Kestrel build with the SDK self reads (API level 18). The
+effect list is level 18, the newest function this mod imports; the
+inventory snapshot is level 9, and everything else it reads — the
+player and clock, frame stats, clicks per second, item names — is
+level 5 or below.
 
 ## How pickups are found
 
@@ -67,11 +75,9 @@ edges the original does not:
 
 ## What is missing, and why
 
-The original is a visual HUD editor with 14 movable widgets. Nine of
+The original is a visual HUD editor with 14 movable widgets. Ten of
 them are in this port. The rest cannot be built on the SDK as it stands:
 
-- **Effect timers** — status effects are not exposed by any SDK
-  interface: no effect list, no durations.
 - **Item cooldowns** — server-plugin-only in the original, and no
   cooldown state is exposed to a client mod.
 - **Ping** — no client player list is exposed, so there is no server

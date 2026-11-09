@@ -1,22 +1,26 @@
 //! The Basic HUD for Kestrel: a corner panel with coordinates, FPS, the
-//! world clock, speed, CPS, player health, held-item and armour durability
-//! and recent pickups. `/basichud` hides or shows the panel, and Options >
-//! Mods > The Basic HUD has a switch per widget, the corner, and how long
-//! pickups stay up; the game keeps the choices in the mod's storage.
+//! world clock, speed, CPS, player health, effect timers, held-item and
+//! armour durability and recent pickups. `/basichud` hides or shows the
+//! panel, and Options > Mods > The Basic HUD has a switch per widget, the
+//! corner, and how long pickups stay up; the game keeps the choices in
+//! the mod's storage.
 //!
 //! Behaviour reimplemented from The Basic HUD by repositorykreml1n, MIT,
 //! source <https://github.com/repositorykreml1n/the-basic-hud>; this file
 //! shares no code with the original. The original is a visual HUD editor
-//! with 14 movable widgets; this port keeps the 9 the SDK can feed —
+//! with 14 movable widgets; this port keeps the 10 the SDK can feed —
 //! coordinates and clock from `game-read`, FPS from
 //! `render.frame-stats`, CPS from `input.clicks-per-second`, health from
-//! `game-read`, durability from the `%inventory` snapshot and pickups from
-//! diffing that snapshot once per tick — and lists the rest as missing in
-//! the README, with the reason each one is out of reach. This port's home
+//! `game-read`, effect timers from `game.get-effects` (API 18's self
+//! reads: the real durations and amplifiers, where 0.1.0 had to leave
+//! the widget out for want of an effect read), durability from the
+//! `%inventory` snapshot and pickups from diffing that snapshot once per
+//! tick — and lists the rest as missing in the README, with the reason
+//! each one is out of reach. This port's home
 //! is <https://github.com/NepThunder/Kestrel-mods/tree/main/mods/basic-hud>.
 use horizon_mod_sdk::{
     Mod, Registration,
-    game::{self, Clock, Player},
+    game::{self, Clock, Effect, Player},
     hud::{self, Corner, Line},
     input,
     inventory::{self, InvStack, PlayerInventory},
@@ -28,11 +32,12 @@ use horizon_mod_sdk::{
 use std::collections::{BTreeMap, VecDeque};
 
 /// The newest API level this mod needs, asserted in the tests below:
-/// `inventory.inventory` is level 9, the newest function it imports
-/// (`input.clicks-per-second` and `render.frame-stats` are level 0,
-/// `recipes.items` level 5; `crates/horizon-mods/src/api_level.rs`).
+/// `game.get-effects` is level 18, the newest function it imports
+/// (`inventory.inventory` is level 9, `input.clicks-per-second` and
+/// `render.frame-stats` are level 0, `recipes.items` level 5;
+/// `crates/horizon-mods/src/api_level.rs`).
 #[cfg(test)]
-const API_LEVEL: u32 = 9;
+const API_LEVEL: u32 = 18;
 
 /// Ticks per second: a pickup shown for N seconds expires N * 20 ticks
 /// after it was last refreshed.
@@ -76,6 +81,7 @@ const CLOCK_KEY: &str = "widget_clock";
 const SPEED_KEY: &str = "widget_speed";
 const CPS_KEY: &str = "widget_cps";
 const HEALTH_KEY: &str = "widget_health";
+const EFFECTS_KEY: &str = "widget_effects";
 const DURABILITY_KEY: &str = "widget_durability";
 const ARMOUR_KEY: &str = "widget_armour";
 const PICKUPS_KEY: &str = "widget_pickups";
@@ -94,6 +100,9 @@ const DURABILITY_BUTTON: u32 = 8;
 const ARMOUR_BUTTON: u32 = 9;
 const PICKUPS_BUTTON: u32 = 10;
 const PICKUP_SECS_BUTTON: u32 = 11;
+/// The effect widget's button, after the shipped page's twelve:
+/// the buttons the shipped mod had keep their ids.
+const EFFECTS_BUTTON: u32 = 12;
 
 /// Which widgets the panel shows, and where it sits.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -107,6 +116,7 @@ struct Settings {
     speed: bool,
     cps: bool,
     health: bool,
+    effects: bool,
     durability: bool,
     armour: bool,
     pickups: bool,
@@ -125,6 +135,7 @@ impl Default for Settings {
             speed: true,
             cps: true,
             health: true,
+            effects: true,
             durability: true,
             armour: true,
             pickups: true,
@@ -153,6 +164,7 @@ impl Settings {
             speed: flag(SPEED_KEY, true),
             cps: flag(CPS_KEY, true),
             health: flag(HEALTH_KEY, true),
+            effects: flag(EFFECTS_KEY, true),
             durability: flag(DURABILITY_KEY, true),
             armour: flag(ARMOUR_KEY, true),
             pickups: flag(PICKUPS_KEY, true),
@@ -188,6 +200,7 @@ impl Settings {
             format!("Armour: {}", on(self.armour)),
             format!("Pickups: {}", on(self.pickups)),
             format!("Pickup time: {}s", self.pickup_seconds()),
+            format!("Effects: {}", on(self.effects)),
         ]
     }
 }
@@ -271,6 +284,64 @@ fn speed_line(speed: f64) -> String {
     format!("Speed {speed:.1} b/s")
 }
 
+/// A level in Roman numerals: 1 is I, 2 is II, 4 is IV, 9 is IX.
+/// The effect widget prints levels past I; 0 (and anything past
+/// 3999, no real amplifier) prints nothing.
+fn roman(mut n: u32) -> String {
+    if n == 0 || n > 3999 {
+        return String::new();
+    }
+    const TABLE: &[(u32, &str)] = &[
+        (1000, "M"),
+        (900, "CM"),
+        (500, "D"),
+        (400, "CD"),
+        (100, "C"),
+        (90, "XC"),
+        (50, "L"),
+        (40, "XL"),
+        (10, "X"),
+        (9, "IX"),
+        (5, "V"),
+        (4, "IV"),
+        (1, "I"),
+    ];
+    let mut out = String::new();
+    for (value, glyph) in TABLE {
+        while n >= *value {
+            out.push_str(glyph);
+            n -= value;
+        }
+    }
+    out
+}
+
+/// The effect widget's line for one active effect — `Speed II 1:01`:
+/// the name (the id's words, as the panel names items it has no
+/// table entry for), the Roman numeral level past I, and the time
+/// left as m:ss from the real remaining ticks `game.get-effects`
+/// reports, or `inf` for a permanent effect (duration -1).
+fn effect_line(effect: &Effect) -> String {
+    let name = pretty_id(&effect.id);
+    let level = if effect.amplifier == 0 {
+        String::new()
+    } else {
+        format!(" {}", roman(effect.amplifier + 1))
+    };
+    let time = if effect.duration < 0 {
+        "inf".to_string()
+    } else {
+        let seconds = effect.duration / 20;
+        format!("{}:{:02}", seconds / 60, seconds % 60)
+    };
+    format!("{name}{level} {time}")
+}
+
+/// The effect widget's lines, in the game's own order.
+fn effect_lines(effects: &[Effect]) -> Vec<String> {
+    effects.iter().map(effect_line).collect()
+}
+
 /// The durability colour for the fraction remaining, as Armor Status
 /// colours it.
 fn durability_color(remaining: u32, max: u32) -> u32 {
@@ -336,6 +407,11 @@ fn name_for(names: &[(String, String)], id: &str) -> String {
         .unwrap_or_else(|| pretty_id(id))
 }
 
+/// The panel's line cap: the game's HUD panel holds at most 16
+/// lines, so the built panel is cut there — the widgets at the
+/// end of the order are the ones that give way.
+const PANEL_MAX_LINES: usize = 16;
+
 /// The panel's lines for one tick's readings, in widget order. Durability
 /// and pickup lines are built by the caller, which knows the item names.
 #[allow(clippy::too_many_arguments)]
@@ -345,6 +421,7 @@ fn build_lines(
     frame: &FrameRate,
     cps: (u32, u32),
     speed: f64,
+    effects: &[String],
     durability: &[Line],
     armour: &[Line],
     pickups: &[String],
@@ -380,6 +457,11 @@ fn build_lines(
     if settings.health {
         push(&mut lines, format!("Health {:.1}/20.0", player.health));
     }
+    if settings.effects {
+        for text in effects {
+            push(&mut lines, text.clone());
+        }
+    }
     if settings.durability {
         lines.extend(durability.iter().cloned());
     }
@@ -391,6 +473,7 @@ fn build_lines(
             push(&mut lines, text.clone());
         }
     }
+    lines.truncate(PANEL_MAX_LINES);
     lines
 }
 
@@ -509,6 +592,7 @@ impl BasicHud {
             SPEED_KEY => self.settings.speed = on,
             CPS_KEY => self.settings.cps = on,
             HEALTH_KEY => self.settings.health = on,
+            EFFECTS_KEY => self.settings.effects = on,
             DURABILITY_KEY => self.settings.durability = on,
             ARMOUR_KEY => self.settings.armour = on,
             PICKUPS_KEY => self.settings.pickups = on,
@@ -620,12 +704,18 @@ impl Mod for BasicHud {
         let empty_names: Vec<(String, String)> = Vec::new();
         let names = self.names.as_ref().unwrap_or(&empty_names);
         let pickups = pickup_lines(&self.pickups, names);
+        let effects = if self.settings.effects {
+            effect_lines(&game::get_effects())
+        } else {
+            Vec::new()
+        };
         let now = build_lines(
             &p,
             game::get_clock().as_ref(),
             &render::frame_stats(),
             input::clicks_per_second(),
             self.speed(),
+            &effects,
             &durability,
             &armour,
             &pickups,
@@ -667,6 +757,7 @@ impl Mod for BasicHud {
             SPEED_BUTTON => self.set_widget(SPEED_KEY, !self.settings.speed),
             CPS_BUTTON => self.set_widget(CPS_KEY, !self.settings.cps),
             HEALTH_BUTTON => self.set_widget(HEALTH_KEY, !self.settings.health),
+            EFFECTS_BUTTON => self.set_widget(EFFECTS_KEY, !self.settings.effects),
             DURABILITY_BUTTON => self.set_widget(DURABILITY_KEY, !self.settings.durability),
             ARMOUR_BUTTON => self.set_widget(ARMOUR_KEY, !self.settings.armour),
             PICKUPS_BUTTON => self.set_widget(PICKUPS_KEY, !self.settings.pickups),
@@ -745,11 +836,12 @@ mod tests {
     }
 
     #[test]
-    fn api_level_is_nine() {
-        // Newest imported function is `inventory.inventory` (level 9);
-        // `recipes.items` is level 5, `input.clicks-per-second` and
+    fn api_level_is_eighteen() {
+        // Newest imported function is `game.get-effects` (level 18);
+        // `inventory.inventory` is level 9, `recipes.items` is
+        // level 5, `input.clicks-per-second` and
         // `render.frame-stats` level 0, the rest level 0.
-        assert_eq!(API_LEVEL, 9);
+        assert_eq!(API_LEVEL, 18);
     }
 
     #[test]
@@ -1041,6 +1133,7 @@ mod tests {
             &frame(),
             (7, 2),
             4.3,
+            &[],
             &held,
             &armour,
             &pickups,
@@ -1080,6 +1173,7 @@ mod tests {
             speed: false,
             cps: false,
             health: false,
+            effects: false,
             durability: false,
             armour: false,
             pickups: false,
@@ -1098,6 +1192,7 @@ mod tests {
                 &frame(),
                 (7, 2),
                 4.3,
+                &["Speed II 1:01".to_string()],
                 &held,
                 &[],
                 &["+6 Torch".to_string()],
@@ -1118,10 +1213,104 @@ mod tests {
                 &[],
                 &[],
                 &[],
+                &[],
                 clock_only,
             )
             .is_empty()
         );
+    }
+
+    fn effect(id: &str, amplifier: u32, duration: i32) -> Effect {
+        Effect {
+            id: id.into(),
+            amplifier,
+            duration,
+            ambient: false,
+            show_particles: true,
+            show_icon: true,
+        }
+    }
+
+    #[test]
+    fn effect_lines_carry_the_real_level_and_time_left() {
+        assert_eq!(effect_line(&effect("minecraft:speed", 0, 400)), "Speed 0:20");
+        assert_eq!(
+            effect_line(&effect("minecraft:speed", 1, 1234)),
+            "Speed II 1:01"
+        );
+        assert_eq!(
+            effect_line(&effect("minecraft:fire_resistance", 0, 20 * 90 * 60)),
+            "Fire Resistance 90:00"
+        );
+        // A permanent effect reads inf, at any level.
+        assert_eq!(
+            effect_line(&effect("minecraft:regeneration", 0, -1)),
+            "Regeneration inf"
+        );
+        assert_eq!(
+            effect_line(&effect("minecraft:strength", 3, -1)),
+            "Strength IV inf"
+        );
+        // The widget keeps the game's order.
+        assert_eq!(
+            effect_lines(&[
+                effect("minecraft:poison", 0, 100),
+                effect("minecraft:speed", 1, 1234),
+            ]),
+            ["Poison 0:05", "Speed II 1:01"]
+        );
+    }
+
+    #[test]
+    fn effect_lines_sit_after_health_and_the_panel_caps_at_sixteen() {
+        let effects = effect_lines(&[
+            effect("minecraft:speed", 1, 1234),
+            effect("minecraft:regeneration", 0, -1),
+        ]);
+        let lines = build_lines(
+            &player(),
+            Some(&clock(0)),
+            &frame(),
+            (7, 2),
+            4.3,
+            &effects,
+            &[],
+            &[],
+            &[],
+            Settings::default(),
+        );
+        assert_eq!(
+            texts(&lines),
+            [
+                "120 fps  min 41  1% 52",
+                "XYZ 0.5 / 64.0 / 0.5",
+                "Day 1, 06:00",
+                "Speed 4.3 b/s",
+                "CPS 7 | 2",
+                "Health 20.0/20.0",
+                "Speed II 1:01",
+                "Regeneration inf",
+            ]
+        );
+        // With every widget fed at once the panel stops at the
+        // game's 16-line cap instead of running past it.
+        let many: Vec<String> = (0..10)
+            .map(|i| format!("Effect {i} 1:00"))
+            .collect();
+        let lines = build_lines(
+            &player(),
+            Some(&clock(0)),
+            &frame(),
+            (7, 2),
+            4.3,
+            &many,
+            &[],
+            &[],
+            &["+6 Torch".to_string()],
+            Settings::default(),
+        );
+        assert_eq!(lines.len(), PANEL_MAX_LINES);
+        assert_eq!(texts(&lines)[6], "Effect 0 1:00");
     }
 
     #[test]
@@ -1171,6 +1360,7 @@ mod tests {
                 "Armour: ON",
                 "Pickups: ON",
                 "Pickup time: 5s",
+                "Effects: ON",
             ]
         );
     }
