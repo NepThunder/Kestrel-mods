@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T13:54:04Z",
+  "generated": "2026-11-09T15:12:03Z",
   "projects": [
     {
       "id": "appleskin",
@@ -910,9 +910,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/sound_physics",
       "versions": [
         {
-          "version": "0.1.0",
+          "version": "0.1.1",
           "published": "2026-11-09",
-          "changelog": "Sounds are muffled and quietened by the blocks between the source and the listener, and enclosed spaces gain reverb. Clean-room behaviour port of Sound Physics Remastered (henkelmax, GPL-3.0). Requires a Kestrel build with SDK API 15 (audio). Defaults: Reverb 50, Occlusion 100; status via /soundphysics.",
+          "changelog": "Fix: the enclosure probe no longer counts the ground. It cast in 26 directions including straight down, so the earth under you always counted as enclosure — open ground read about 35% and reverb followed you outdoors. The probe now casts only the 17 directions at or above eye level: walls and ceilings enclose a sound, the floor does not. Open sky now reads about 0%; caves and rooms read as before or higher. No other change; works on the same builds as 0.1.0 (SDK API 15).",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -925,9 +925,9 @@
           "game": "26.3",
           "file": {
             "name": "sound_physics.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/sound_physics-0.1.0/sound_physics.kmod",
-            "size": 21727,
-            "sha256": "6893a2b0bdc9cbffeb6bfecc0014c8a043b86d9b7cb106a661f7ed842da86a9e"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/sound_physics-0.1.1/sound_physics.kmod",
+            "size": 21686,
+            "sha256": "e0ca8c274fb367415768853b2ca7bf4066f8572a446acc43206ddb014b5a1266"
           }
         }
       ]
