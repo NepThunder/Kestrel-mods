@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T15:29:06Z",
+  "generated": "2026-11-09T16:37:06Z",
   "projects": [
     {
       "id": "appleskin",
@@ -820,8 +820,8 @@
       "id": "punchy",
       "kind": "mod",
       "name": "Punchy",
-      "summary": "A behaviour port of Punchy! by PunchyDevGuy (All Rights Reserved; no code or assets copied — the feel reimplemented against the Kestrel SDK, API 16).",
-      "description": "A behaviour port of Punchy! by PunchyDevGuy (All Rights Reserved; no code or assets copied — the feel reimplemented against the Kestrel SDK, API 16). The first-person hand lags behind your look on a spring, follows through on your attacks, and bobs with more weight. Options > Mods > Punchy sets the intensity and which parts run, and /punchy reports them. First-person only in v1; the original's resource pack and third-person changes are out of scope. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy",
+      "summary": "A behaviour port of Punchy! by PunchyDevGuy (All Rights Reserved; no code or assets copied — the feel reimplemented against the Kestrel SDK).",
+      "description": "A behaviour port of Punchy! by PunchyDevGuy (All Rights Reserved; no code or assets copied — the feel reimplemented against the Kestrel SDK). The first-person hand lags behind your look on a spring, attacks with authored animations — a sword slash and a spear jab replace the vanilla swing, and other swings keep part of it with a follow-through on top — and bobs with more weight. Options > Mods > Punchy sets the intensity and which parts run, and /punchy reports them. First-person only; the original's resource pack and third-person changes are out of scope. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy",
       "authors": [
         "NepThunder"
       ],
@@ -832,9 +832,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/punchy",
       "versions": [
         {
-          "version": "0.1.1",
+          "version": "0.2.0",
           "published": "2026-11-09",
-          "changelog": "Retuned from on-device testing of 0.1.0. Bob fix: the game reports bob strength on vanilla's 0..0.1 scale, but 0.1.0 weighted it as 0..1, so the bob emphasis ran ten times too weak to see — it now normalises the scale and uses stronger weights. Attacks: the follow-through is roughly doubled (0.30 blocks forward, 28° dip at full intensity) so it reads as a distinct thrust past the vanilla swing. Sway unchanged. Needs a Kestrel build with SDK API 16 (build 29+).",
+          "changelog": "Authored attack animations, on the new SDK API 17 swing controls. Swords: the vanilla swing is switched off and replaced with a dedicated slash — wind-up, a fast sweep across with a forward thrust, smooth recovery. Spears: an authored jab. Other tools: a third of the vanilla swing plus the follow-through from 0.1.1. Sway and bob unchanged from 0.1.1. Needs a Kestrel dev build with SDK API 17 (build 30+); the slash curve is a first tune and may get a feel pass after on-device testing.",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -846,9 +846,9 @@
           "game": "26.3",
           "file": {
             "name": "punchy.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/punchy-0.1.1/punchy.kmod",
-            "size": 21418,
-            "sha256": "7146d6365b1c98bd4a63d08ab8b6aba49c3a0e7c307d177f1fc004fd28c786f5"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/punchy-0.2.0/punchy.kmod",
+            "size": 22108,
+            "sha256": "ec13e31b8a56dc26738a964f9be932c9809c6d55c24841d3e93c2b2b2afd89c7"
           }
         }
       ]
