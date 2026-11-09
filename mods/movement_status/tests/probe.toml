@@ -1,0 +1,28 @@
+# Movement Status: the mod loads and ticks against the step's
+# own self-state fixtures (API 18) — standing, sprinting held
+# and toggled, gliding. The corner box itself is render shapes,
+# which this harness does not assert; the exact labels and
+# their order are covered by the unit tests in src/lib.rs. The
+# original has no commands, so there is no command step.
+
+[[step]]
+ticks = 2
+[step.expect]
+chat = []
+commands = []
+
+[[step]]
+ticks = 2
+[step.self-state]
+sprinting = true
+sprint-toggled = true
+[step.expect]
+chat = []
+
+[[step]]
+ticks = 2
+[step.self-state]
+sneaking = true
+gliding = true
+[step.expect]
+chat = []

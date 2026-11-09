@@ -1,0 +1,9 @@
+id = "movement_status"
+name = "Movement Status"
+version = "0.1.0"
+description = "A behaviour port of Movement Status by UniDex101 (MIT, https://github.com/UniDex101/movement-status). Ported for Kestrel by NepThunder. Your current movement state in the bottom-left corner, read live from the player: Sprint [Held] / Sprint [Toggled], Sneak [Held] / Sneak [Toggled], Flying [Creative] / Flying [Elytra] — several at once when several apply. It respects the game's own Toggle Sprint and Toggle Crouch options: with an option on, the state it latches reads [Toggled]. Options > Mods > Movement Status holds the original's one setting, the semi-transparent background box. This is a status display only: it changes no movement, keybinds or gameplay. One label is coarser than the original's: the SDK exposes the toggle options and the movement state but not the physical key, so with a toggle option on the label reads [Toggled] even while the key is also held, where the original could tell the two apart. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/movement_status"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "render", "storage", "ui"]
+experimental = ["render", "ui"]
