@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T17:22:58Z",
+  "generated": "2026-11-09T17:32:46Z",
   "projects": [
     {
       "id": "appleskin",
@@ -341,6 +341,42 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/beautiful-day-counter-0.1.0/customhud.kmod",
             "size": 24891,
             "sha256": "fa175f1eeb31bfbacba718154d32a66d16ac8ec9f7121ee320e5a9d8f3b6352d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fps_overlay",
+      "kind": "mod",
+      "name": "FPS Counter",
+      "summary": "A port of Horizon's own FPS Counter (MIT), formerly a built-in extra, for Kestrel by NepThunder.",
+      "description": "A port of Horizon's own FPS Counter (MIT), formerly a built-in extra, for Kestrel by NepThunder. Frames per second in a small box in a corner of the screen, with the slowest frame and the 1% low of the last 5 seconds if you turn them on. Options > Mods > FPS Counter sets the corner and the minimum and 1% low — the original's two settings, with its defaults (top left, minimum and 1% low off). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fps_overlay",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fps_overlay",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Horizon's FPS Counter (MIT): current FPS in a corner, with the original's combined min / 1% low toggle (off by default) and its exact text format.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "ui",
+            "storage"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "fps_overlay.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fps_overlay-0.1.0/fps_overlay.kmod",
+            "size": 17677,
+            "sha256": "6333e22e37372c878bb2126c6c30da85f90034614a9716b9531c0640b473d282"
           }
         }
       ]
@@ -697,6 +733,43 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/jei-0.1.1/jei.kmod",
             "size": 65345,
             "sha256": "8e2df4652abd746dda5805b6574028af08308776ef6fdda82adf9d0509420970"
+          }
+        }
+      ]
+    },
+    {
+      "id": "keystrokes",
+      "kind": "mod",
+      "name": "Keystrokes",
+      "summary": "A port of Horizon's own Keystrokes overlay (MIT), formerly a built-in extra, for Kestrel by NepThunder.",
+      "description": "A port of Horizon's own Keystrokes overlay (MIT), formerly a built-in extra, for Kestrel by NepThunder. Your movement keys as you bound them, the two mouse buttons and the space bar in a corner, lit while held, with clicks per second under each mouse button. Options > Mods > Keystrokes sets the corner and turns clicks per second off or on — the original's two settings, with its defaults (top left, clicks per second on). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/keystrokes",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/keystrokes",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-09",
+          "changelog": "Behaviour port of Horizon's Keystrokes overlay (MIT): movement keys, mouse buttons and space bar light while held, with clicks-per-second under each mouse button. Settings: corner and CPS toggle, same as the original.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "render",
+            "input",
+            "ui",
+            "storage"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "keystrokes.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/keystrokes-0.1.0/keystrokes.kmod",
+            "size": 20148,
+            "sha256": "4478e1af33a26ba2cba267145771b795ef3aa5f4fafdf936c1e42f65908ff54f"
           }
         }
       ]
