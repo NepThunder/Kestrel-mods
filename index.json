@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-10T00:33:46Z",
+  "generated": "2026-11-10T02:22:48Z",
   "projects": [
     {
       "id": "accurate_block_placement",
@@ -153,6 +153,49 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/armor-hud-0.1.0/armorhud.kmod",
             "size": 20925,
             "sha256": "a7dfdafdf271a7b0835f5ab3a74190a1aa360473e85e4e3a5e850fc47e49fe18"
+          }
+        }
+      ]
+    },
+    {
+      "id": "atlas",
+      "kind": "mod",
+      "name": "Atlas",
+      "summary": "A behaviour port of Atlas by MrCloudy2, MIT (https://github.com/MrCloudy2/horizon-atlas).",
+      "description": "A behaviour port of Atlas by MrCloudy2, MIT (https://github.com/MrCloudy2/horizon-atlas). Ported for Kestrel by NepThunder. A clone of Xaero's Minimap and World Map: a minimap that turns with you, with entity dots, and a full-screen world map (M) of everywhere you have been, drawn from the game's own map tiles and kept in the mod's storage per world, server and dimension. Waypoints with sets (U list, B new, H toggles the in-world labels), deathpoints, temporary waypoints, Share and Teleport, the chunk-grid and slime-chunk overlays (/atlas seed), and settings on Y and in Options > Mods > Atlas; /atlas set changes a setting by name. It sends something only when you click Teleport (a /tp command) or Share (a chat message with the waypoint). Not included: mob and player faces and item icons on the minimap (the SDK exposes no skin or dropped-item read), the light overlay and per-column block light at night (the game's tiles carry no light), and waypoint editing in a text field (names are set with /atlas rename). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/atlas",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/atlas",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release atlas-0.1.0 (SDK API 25).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "chat",
+            "command",
+            "entity",
+            "input",
+            "map",
+            "render",
+            "storage",
+            "ui",
+            "world"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "atlas.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/atlas-0.1.0/atlas.kmod",
+            "size": 93510,
+            "sha256": "cd0d4dfca6aae69ba80a9bd65527bd9ad833b91f8415d71d9dd3c4e3646cca46"
           }
         }
       ]
@@ -358,7 +401,7 @@
       "kind": "mod",
       "name": "Compass Bar",
       "summary": "A behaviour port of Compass Enhanced by Isaac (Fernandes585), MIT (https://github.com/Fernandes585/Compass-Enhanced).",
-      "description": "A behaviour port of Compass Enhanced by Isaac (Fernandes585), MIT (https://github.com/Fernandes585/Compass-Enhanced). Ported for Kestrel by NepThunder. A compass bar across the top of the screen: the eight compass letters (N, NE, E, SE, S, SW, W, NW) in one colour and a degree scale, sliding smoothly as you turn. Options > Mods > Compass Bar holds the original's settings: the bar on/off, the background box, the size (75% to 150%) and the letter colour. The original's death points are NOT included: the client SDK exposes no death event, so there is nothing to hang a death marker on yet — they arrive when the SDK gains one, and the death-point settings go with them. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/compass_bar",
+      "description": "A behaviour port of Compass Enhanced by Isaac (Fernandes585), MIT (https://github.com/Fernandes585/Compass-Enhanced). Ported for Kestrel by NepThunder. A compass bar across the top of the screen: the eight compass letters (N, NE, E, SE, S, SW, W, NW) in one colour and a degree scale, sliding smoothly as you turn — and death points: where you died, marked on the bar at its bearing with its distance, an arrow at the bar's edge when the point is out of view, the marker turning into an X when you arrive and going after the X time, and a key (X, rebindable) to dismiss the point you are looking at. Death points are not saved — they vanish when the game closes. Options > Mods > Compass Bar holds the settings: the bar on/off, the background box, the size (75% to 150%), the letter colour, and the death points' arrival distance, X time, and how many are kept. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/compass_bar",
       "authors": [
         "NepThunder"
       ],
@@ -369,13 +412,15 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/compass_bar",
       "versions": [
         {
-          "version": "0.1.0",
-          "published": "2026-11-09",
-          "changelog": "Behaviour port of Compass Enhanced by Isaac (MIT): a compass bar across the top of the screen with coloured direction letters and a degree scale, with the original's settings (bar on/off, background, size, letter colour). Death points are not included: the client SDK exposes no death event yet.",
+          "version": "0.2.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release compass_bar-0.2.0 (SDK API 25).",
           "api": "0.1",
           "side": "client",
           "capabilities": [
             "game-read",
+            "input",
+            "map",
             "render",
             "storage",
             "ui"
@@ -383,9 +428,9 @@
           "game": "26.3",
           "file": {
             "name": "compass_bar.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/compass_bar-0.1.0/compass_bar.kmod",
-            "size": 25139,
-            "sha256": "4f073dfc08d56582f923ca6eda159d650163bffeebf08a1e4f7f8e4a25b742db"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/compass_bar-0.2.0/compass_bar.kmod",
+            "size": 41968,
+            "sha256": "d3955362bf8e72af9b651b200fd2abdbee482bf8106d5a1316456e9eecee10f0"
           }
         }
       ]
@@ -2249,6 +2294,47 @@
       ]
     },
     {
+      "id": "waymap",
+      "kind": "mod",
+      "name": "Waymap",
+      "summary": "A behaviour port of Waymap by Aron (Lauch2), MIT (https://github.com/Lauch2/horizon-waymap-mod).",
+      "description": "A behaviour port of Waymap by Aron (Lauch2), MIT (https://github.com/Lauch2/horizon-waymap-mod). Ported for Kestrel by NepThunder. Waypoints with a rotating minimap: the map north follows you, with your waypoints as dots and a red X for a death. Waypoints are kept per world or server (up to 512), each with its own dimension and colour; the list filters by dimension and by deaths; markers float in the world with name and distance; a HUD panel in the bottom-left lists the nearest with distances; a death waypoint is left where you died (Death 1, Death 2, ...). Create with N, the list with B or M; the editor sets position (with a Use My Position button), dimension, one of sixteen colours, and visibility. Keys rebind on the mod's page in Options > Mods, where the three settings also live: Markers, Labels, HUD Panel. Commands: /wp add, del, list, rename, color (a colour name or #rrggbb), clear, edit (shows a waypoint), hide, show, help. Not included: minimap size and position settings (the minimap is fixed at 100 in the top-right corner), opening the list or editor with the keyboard path the original uses (its list and editor are its own screens; the port's are the standard ones the platform gives mods — names are changed with /wp rename, since mods get no text field), and the original's own file format (waypoints live in the mod's storage, in the same per-world shape). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waymap",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waymap",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release waymap-0.1.0 (SDK API 25).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "chat",
+            "hud",
+            "input",
+            "map",
+            "render",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "waymap.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/waymap-0.1.0/waymap.kmod",
+            "size": 88155,
+            "sha256": "d738171c53ff287e2f2169fb76fd4eeb362ff0f2ccb3d436c852ae57b851dc78"
+          }
+        }
+      ]
+    },
+    {
       "id": "waypoints",
       "kind": "mod",
       "name": "Waypoints",
@@ -2284,6 +2370,48 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/waypoints-0.2.0/waypoints.kmod",
             "size": 52668,
             "sha256": "804d7896b8bd5528819c1ecc562608163189743b70793417fb769dceaf61f456"
+          }
+        }
+      ]
+    },
+    {
+      "id": "worldmap",
+      "kind": "mod",
+      "name": "World Map",
+      "summary": "A behaviour port of World Map by Px228-Da-Da, MIT (https://github.com/Px228-Da-Da/horizon-worldmap).",
+      "description": "A behaviour port of World Map by Px228-Da-Da, MIT (https://github.com/Px228-Da-Da/horizon-worldmap). Ported for Kestrel by NepThunder. A full-screen, self-writing world map (M) with a minimap: the terrain you have seen stays on the map after you leave, per world, dimension and cave layer, in the vanilla map colours, by day and by night, drawn from the game's own map tiles and kept in the mod's storage. The minimap (N toggles it, Z changes its scale) can turn with you, with the compass letters, waypoints and cave floors at your head height. Waypoints: a right-click menu on the map (add, teleport, the list, the dimensions button), groups with hide, markers in the world with name and distance, a waypoint where you die, share through chat or /wp share, import and export of waypoint text (also Xaero's format), and the /wp commands — add, del, rename, list, clear, share. It sends /tp when you choose Teleport, and a chat line or a private message only when you choose to share. Not included: cave layers at a Top Y you never stood at, glowing blocks staying lit at night (the game's tiles carry no light), other players on the minimap, PNG export and waypoint files (export prints its text in chat), and the Russian interface. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/worldmap",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/worldmap",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release worldmap-0.1.0 (SDK API 25).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "chat",
+            "command",
+            "input",
+            "map",
+            "render",
+            "storage",
+            "ui",
+            "world"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "worldmap.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/worldmap-0.1.0/worldmap.kmod",
+            "size": 98733,
+            "sha256": "01d3a4bfb66c4098e0b51595bbb760e86ccc1a906d72be0834c665ba1f2c7c73"
           }
         }
       ]
