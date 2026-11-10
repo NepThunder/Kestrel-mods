@@ -1,0 +1,9 @@
+id = "blood_particles"
+name = "Blood Particles"
+version = "0.1.0"
+description = "A behaviour port of Blood Particles 1.2.0 by Bogdan_Tokarev, MIT (https://github.com/bogdan1tokarev1/Blood-Particles-Rust). Ported for Kestrel by NepThunder. When a mob is hit, it bleeds: droplets that are crumbs of a block, a mist that dries darker, and a cloud of spray on a heavy blow — three times as much on the blow that kills, and sized by the damage when damage scaling is on. Every mob bleeds its own kind: slimes spray slime, blazes fire, ender-things the violet of the End, and the bony undead shed pale chips. Everything is configurable, on the page in Options > Mods > Blood Particles and with /bloodparticles (or /bp): droplets, mist and clouds a hit, damage scaling (off/soft/full), the killing blow's multiplier, spread, arc, per-mob colours, block-crumb droplets, reach, wounds a tick and particles a tick. The blood is drawn from the health the client itself is told, so it is a single-player effect in the SDK's first version: on a server the client is not given mob health, and the mod stays quiet rather than guessing. The bursts are the SDK's own burst shape — a cloud around the wound — where the original throws each droplet on its own arc away from the blow. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/blood_particles"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "chat", "entity", "render", "storage", "ui"]
+experimental = ["entity", "render", "ui"]

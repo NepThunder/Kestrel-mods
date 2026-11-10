@@ -1,0 +1,9 @@
+id = "visuality_horizon"
+name = "Visuality"
+version = "0.1.0"
+description = "A behaviour port of Visuality 1.0.2 by BenjiSyS, MIT (https://github.com/BenjiSyS/visuality-horizon), itself an original implementation of PinkGoosik's Visuality. Ported for Kestrel by NepThunder, with its own pixel art in place of the original's sprites. Pretty particles for the world's small moments: bones and feathers burst from mobs when you hit them, slime blobs scatter where a slime lands (small, medium and large), wisps rise from soul sand and soul soil and trail you sprinting over them, amethyst clusters twinkle, and exposed gold, diamond and emerald ores glint in their own colours. The settings are the original's four pages in Options > Mods > Visuality — quality presets (Low, Balanced, High), a particle amount and effect distance, a page per effect family with its own amount, and advanced limits — with the original's defaults: the Low preset. Three of the original's eight families cannot run yet and are not approximated: charged creeper sparks (the SDK has no read for a creeper's charged state), armor glints (no read for what a mob is wearing) and rain ripples (no weather read); their pages and toggles are kept, and the README names what each one waits on. The hit fragments key off the health the client is told, so like that data they are a single-player effect in the SDK's first version. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/visuality_horizon"
+authors = ["NepThunder"]
+api = "0.2"
+side = "client"
+capabilities = ["game-read", "entity", "render", "registries", "storage", "ui", "world"]
+experimental = ["entity", "render", "ui", "world"]

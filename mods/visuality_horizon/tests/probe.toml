@@ -1,0 +1,48 @@
+# Visuality walked through its deterministic life. The script
+# starts with a player at 0.5, 64, 0.5 in the Overworld facing
+# south. The rng-shaped effects (hit fragments, slime blobs,
+# sparkles, sprint wisps) are pinned by the host unit tests in
+# src/lib.rs instead; what a script can pin exactly is the
+# soul-wisp emitter the world scan lends the engine.
+
+# --- A quiet world: nothing spawns, no emitters are lent.
+[[step]]
+ticks = 2
+
+[step.expect]
+particles = []
+emitters = []
+chat = []
+
+# --- A soul sand block under the player's feet, with air
+# above it: the scan (every 10 ticks) finds the patch and
+# lends one position-anchored emitter — a wisp stream at the
+# block's top, at the family's rate (0.4 a second at the
+# default scale of 1).
+[[step]]
+ticks = 12
+
+[[step.blocks]]
+x = 0
+y = 63
+z = 0
+state = "minecraft:soul_sand"
+
+[step.expect]
+particles = []
+emitters = ["at 0.5 64.1 0.5 visuality_horizon:soul_ambient x0 @0.4/s offset 0 0 0"]
+
+# --- The block goes away: the next scan withdraws the
+# emitter.
+[[step]]
+ticks = 12
+
+[[step.blocks]]
+x = 0
+y = 63
+z = 0
+state = "minecraft:air"
+
+[step.expect]
+particles = []
+emitters = []

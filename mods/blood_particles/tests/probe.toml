@@ -1,0 +1,71 @@
+# Blood Particles walked through its life. The script starts
+# with a player at 0.5, 64, 0.5 in the Overworld facing south.
+
+# --- /bloodparticles with no arguments: the three describe
+# lines and the help pointer, each prefixed with the mod's
+# name and the original's version.
+[[step]]
+command = "bloodparticles"
+
+[step.expect]
+chat = [
+    "Blood Particles 1.2.0: Droplets a hit: 8, Mist a hit: 6, Clouds a hit: 2, Damage sizes the burst: full",
+    "Blood Particles 1.2.0: The killing blow throws: x3, Spread: normal, Arc: normal, Each mob's own colour: on",
+    "Blood Particles 1.2.0: Droplets are block crumbs: on, Drawn within: 40 blocks, Wounds a tick: 8, Particles a tick: 112",
+    "Blood Particles 1.2.0: /bloodparticles help lists the settings.",
+]
+
+# --- A zombie appears at full health: the first sighting only
+# seeds the watch, nothing bleeds.
+[[step]]
+ticks = 1
+entities = [{ id = 7, kind = "minecraft:zombie", x = 2.5, y = 64.0, z = 0.5, health = 20.0, "max-health" = 20.0, width = 0.6, height = 2.0 }]
+
+[step.expect]
+particles = []
+chat = []
+
+# --- The zombie is hit for 6 damage — the reference damage, so
+# under Full scaling the burst is the configured one: 8
+# droplets (6 dark crumbs, every fourth a bright one), 6 mist,
+# 2 cloud, at the wound point (feet + 0.62 of its height).
+[[step]]
+ticks = 1
+entities = [{ id = 7, kind = "minecraft:zombie", x = 2.5, y = 64.0, z = 0.5, health = 14.0, "max-health" = 20.0, width = 0.6, height = 2.0 }]
+
+[step.expect]
+particles = [
+    "minecraft:block 6 at 2.5 65.24 0.5",
+    "minecraft:block 2 at 2.5 65.24 0.5",
+    "minecraft:dust_color_transition 6 at 2.5 65.24 0.5",
+    "minecraft:dust 2 at 2.5 65.24 0.5",
+]
+
+# --- Four quiet ticks (past the three-tick dedupe window),
+# then the killing blow: the counts times three.
+[[step]]
+ticks = 4
+entities = [{ id = 7, kind = "minecraft:zombie", x = 2.5, y = 64.0, z = 0.5, health = 14.0, "max-health" = 20.0, width = 0.6, height = 2.0 }]
+
+[step.expect]
+particles = []
+
+[[step]]
+ticks = 1
+entities = [{ id = 7, kind = "minecraft:zombie", x = 2.5, y = 64.0, z = 0.5, health = 0.0, "max-health" = 20.0, width = 0.6, height = 2.0 }]
+
+[step.expect]
+particles = [
+    "minecraft:block 18 at 2.5 65.24 0.5",
+    "minecraft:block 6 at 2.5 65.24 0.5",
+    "minecraft:dust_color_transition 18 at 2.5 65.24 0.5",
+    "minecraft:dust 6 at 2.5 65.24 0.5",
+]
+
+# --- A setting from the command line snaps and answers with
+# its page label.
+[[step]]
+command = "bloodparticles droplets 16"
+
+[step.expect]
+chat = ["Blood Particles 1.2.0: Droplets a hit: 16"]

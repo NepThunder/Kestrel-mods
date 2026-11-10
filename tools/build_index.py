@@ -112,6 +112,8 @@ ALLOW_IDS = {
     "atlas",
     "worldmap",
     "waymap",
+    "blood_particles",
+    "visuality_horizon",
 }
 
 
