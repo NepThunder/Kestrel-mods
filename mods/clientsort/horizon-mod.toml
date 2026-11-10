@@ -1,0 +1,9 @@
+id = "clientsort"
+name = "ClientSort"
+version = "0.1.0"
+description = "A behaviour port of ClientSort by TerminalMC (https://github.com/TerminalMC/ClientSort), Apache-2.0, Horizon port by DeportedToHell. Ported for Kestrel by NepThunder. Buttons beside the container and beside your inventory sort that side, restock it (moves in the items that side already holds) or transfer into it (moves as much as fits); the game's own sort buttons step aside while ClientSort's are shown. Middle-clicking an inventory sorts the part under the pointer. Sort order is the creative inventory's order by default; hold Shift while triggering for quantity, Ctrl for name (A-Z). The order, the click speed, hotbar-as-its-own-group, restock-by-item-type and the buttons themselves are settings in Options > Mods > ClientSort, and there are keys for sort, restock, transfer and fill stacks. Every action is an ordinary container click, so it works the same on servers. Three differences from the original, all limits of the surface: the creative inventory's exact order crosses no SDK read, so the default order sorts by the game's item registry order, which follows it closely (the quantity, name and ID orders are exact); the Alt-for-item-ID modifier has no key mapping to read, so the ID order is picked as the default order in the settings instead; and the trigger keys only fire while playing with no screen open, so in a screen the operations live on the buttons, and fill stacks tops the hotbar up from the main inventory. Button tooltips are not ported: a sandbox button carries a label only. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/clientsort"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["input", "inventory", "inventory-actions", "recipes", "screen", "storage", "ui"]
+experimental = ["input", "inventory", "inventory-actions", "recipes", "screen", "ui"]

@@ -2,7 +2,8 @@
 # fixtures — a player, plants under the crosshair (mature,
 # immature and unmanaged), a crouching player. The test harness
 # cannot hold the use button (input mappings read as never-down
-# there), so no harvest is ever armed: no actions, no chat. The
+# there), so no harvest is ever armed: no actions, no slot
+# moves, no chat. The
 # decision logic — the family table and its ages, the gates, the
 # leave-alone rules, the payment search, the replant targets —
 # is pinned by the unit tests in src/lib.rs.
@@ -12,6 +13,7 @@ ticks = 4
 [step.expect]
 chat = []
 actions = []
+slot-moves = []
 
 [player]
 x = 0.5
@@ -33,6 +35,7 @@ state = "minecraft:farmland"
 [step.expect]
 chat = []
 actions = []
+slot-moves = []
 
 [[step]]
 ticks = 4
@@ -41,6 +44,7 @@ block = { x = 0, y = 64, z = 0, block = "minecraft:wheat[age=3]", face = "up", c
 [step.expect]
 chat = []
 actions = []
+slot-moves = []
 
 [[step]]
 ticks = 4
@@ -51,3 +55,4 @@ block = { x = 0, y = 64, z = 0, block = "minecraft:sweet_berry_bush[age=3]", fac
 [step.expect]
 chat = []
 actions = []
+slot-moves = []

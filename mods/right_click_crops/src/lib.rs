@@ -29,33 +29,39 @@
 //! harvest's own loot first as it lands in the inventory, then
 //! the inventory itself. What it can reach is the hand, the
 //! hotbar (chosen with `select-slot`, and the player's own slot
-//! chosen back afterwards) and the offhand.
+//! chosen back afterwards), the offhand, and the bag — a stack
+//! there is brought into the hand with one Swap click
+//! (`inventory-actions`, API 24), trading places with the
+//! stack in the selected slot.
 //!
 //! Where the SDK cannot carry the original, the port says so
-//! rather than imitating (see the README): paying from the bag
-//! needs the inventory-actions district's slot move; the
+//! rather than imitating (see the README): the
 //! original's survival-only gate needs a game-mode read the
 //! client SDK does not have; and the checks that read the
 //! world's blocks (a tall plant's base, the torchflower's
 //! farmland, a fruit's attached stem) work where client world
 //! reads answer — single player in v1 — and hold those families
-//! back where they don't.
+//! back where they don't. (Paying from the bag was on this
+//! list until 0.2.0: the inventory-actions district's Swap
+//! click — B6, API 24 — closed it.)
 
 use horizon_mod_sdk::{
-    ActionHand, ActionTarget, BlockTarget, Face, Mod, Registration, actions, game, input,
+    ActionHand, ActionTarget, BlockTarget, ClickKind, Face, Mod, Registration, actions, game,
+    input,
     inventory::{self, InvStack},
-    storage,
+    inventory_actions, storage,
     ui::{self, ButtonWidget, Widget},
     world,
 };
 
 /// The newest API level this mod needs, asserted in the tests
-/// below: `actions.target`, `actions.attack`, `actions.use-on-
-/// block` and `actions.select-slot` are level 21
-/// (`crates/horizon-mods/src/api_level.rs`); everything else
+/// below: `inventory-actions.click` is level 24
+/// (`crates/horizon-mods/src/api_level.rs`); `actions.target`,
+/// `actions.attack`, `actions.use-on-block` and
+/// `actions.select-slot` are level 21, and everything else
 /// here is older.
 #[cfg(test)]
-const API_LEVEL: u32 = 21;
+const API_LEVEL: u32 = 24;
 
 /// Ticks to wait for a queued dig to show before giving the
 /// harvest up (the world refused it: adventure restrictions,
@@ -498,15 +504,16 @@ fn replant_target(
 /// then the inventory — the loot lands in the inventory, so the
 /// port looks at the hand the player is already holding (where
 /// loot stacks onto a matching pile), the rest of the hotbar,
-/// and the offhand. A stack deeper in the bag is seen but
-/// cannot be reached: moving it to the hand is the
-/// inventory-actions district's verb, so it is its own answer.
+/// the offhand, and last the bag (9–35): a stack there is
+/// brought into the hand with one Swap click, the
+/// inventory-actions district's verb (API 24), so its slot
+/// rides along.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum Payment {
     Selected,
     Hotbar(u32),
     Offhand,
-    BagOnly,
+    Bag(u32),
     None,
 }
 
@@ -523,11 +530,10 @@ fn find_payment(slots: &[InvStack], selected: u32, item: &str) -> Payment {
     if has(504) {
         return Payment::Offhand;
     }
-    if slots
-        .iter()
-        .any(|s| (9..36).contains(&s.slot) && s.id == item)
-    {
-        return Payment::BagOnly;
+    for slot in 9..36u32 {
+        if has(slot) {
+            return Payment::Bag(slot);
+        }
     }
     Payment::None
 }
@@ -560,6 +566,12 @@ struct Pending {
     ticks: u32,
     /// Ticks since the crop was first seen gone.
     gone_ticks: Option<u32>,
+    /// A bag payment's Swap click has been queued: it performs
+    /// a tick later, so the payment search must not queue a
+    /// second one — a swap is symmetric, and a second click on
+    /// the same slot would trade the item straight back into
+    /// the bag.
+    bag_swap_queued: bool,
 }
 
 struct RightClickCrops {
@@ -668,7 +680,25 @@ impl RightClickCrops {
                 let _ = actions::use_on_block(&replant.target, ActionHand::Main);
                 self.restore = Some((inv.selected, slot));
             }
-            Payment::BagOnly | Payment::None => {
+            Payment::Bag(slot) => {
+                // The bag pays last: one Swap click trades the
+                // planting item's stack with the selected
+                // slot's, into the hand; once it lands there,
+                // the Selected arm above replants with it on a
+                // following tick. Queued once — until it lands,
+                // the search keeps finding the item in the bag.
+                if !pending.bag_swap_queued {
+                    let _ = inventory_actions::click(Some(slot), inv.selected, ClickKind::Swap);
+                    pending.bag_swap_queued = true;
+                }
+                if gone <= ITEM_LIMIT {
+                    self.pending = Some(pending);
+                }
+                // Past the window with the click unlanded (the
+                // game dropped it — another screen in the way):
+                // harvested, not replanted.
+            }
+            Payment::None => {
                 if gone <= ITEM_LIMIT {
                     // The harvest's drops may still be on their
                     // way into the inventory: keep looking.
@@ -676,7 +706,7 @@ impl RightClickCrops {
                 }
                 // Past the window: harvested, not replanted —
                 // the original's answer when no planting item
-                // can be had (here: none reachable).
+                // can be had.
             }
         }
     }
@@ -760,6 +790,7 @@ impl RightClickCrops {
             fired: false,
             ticks: 0,
             gone_ticks: None,
+            bag_swap_queued: false,
         });
     }
 }
@@ -829,8 +860,8 @@ mod tests {
     use super::*;
 
     #[test]
-    fn api_level_is_21() {
-        assert_eq!(API_LEVEL, 21);
+    fn api_level_is_24() {
+        assert_eq!(API_LEVEL, 24);
     }
 
     fn stack(slot: u32, id: &str) -> InvStack {
@@ -1079,7 +1110,7 @@ mod tests {
     }
 
     #[test]
-    fn payment_looks_at_the_hand_the_bar_and_the_offhand() {
+    fn payment_looks_at_the_hand_the_bar_the_offhand_then_the_bag() {
         let item = "minecraft:wheat_seeds";
         // Already in hand.
         assert_eq!(find_payment(&[stack(2, item)], 2, item), Payment::Selected);
@@ -1090,9 +1121,23 @@ mod tests {
         );
         // In the offhand.
         assert_eq!(find_payment(&[stack(504, item)], 0, item), Payment::Offhand);
-        // Only in the bag: seen, but out of this district's
-        // reach.
-        assert_eq!(find_payment(&[stack(20, item)], 0, item), Payment::BagOnly);
+        // Only in the bag: paid last, with its slot (0.2.0) —
+        // the first stack of it, in slot order.
+        assert_eq!(find_payment(&[stack(20, item)], 0, item), Payment::Bag(20));
+        assert_eq!(
+            find_payment(&[stack(30, item), stack(12, item)], 0, item),
+            Payment::Bag(12)
+        );
+        // The offhand still outranks the bag, and the bar
+        // outranks both.
+        assert_eq!(
+            find_payment(&[stack(504, item), stack(20, item)], 0, item),
+            Payment::Offhand
+        );
+        assert_eq!(
+            find_payment(&[stack(5, item), stack(20, item)], 0, item),
+            Payment::Hotbar(5)
+        );
         assert_eq!(
             find_payment(&[stack(0, "minecraft:dirt")], 0, item),
             Payment::None

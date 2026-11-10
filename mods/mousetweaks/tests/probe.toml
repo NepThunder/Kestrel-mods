@@ -1,0 +1,30 @@
+# Mouse Tweaks: the wheel tweak. A downward turn over the chest
+# slot pushes one dirt into the inventory (pickup, one-slot right
+# drag into the matching stack, the rest back); an upward turn
+# over the inventory slot pulls one back the same way. The drag
+# gestures need held mouse buttons, which the harness cannot
+# simulate — they are covered by the unit tests of the gesture
+# logic's planner instead. Expects are per-step outputs.
+
+[[step]]
+ticks = 1
+[step.screen]
+id = "inventory"
+menu = "minecraft:generic_9x3"
+[step.inventory]
+slots = [{ slot = 9, id = "minecraft:dirt", count = 30 }]
+[step.container]
+kind = "minecraft:chest"
+slots = [{ slot = 300, id = "minecraft:dirt", count = 10 }]
+
+[[step]]
+ticks = 1
+wheel = [{ slot = 300, steps = 1 }]
+[step.expect]
+slot-moves = ["click 300 0 pickup", "drag right 9", "drag left 300"]
+
+[[step]]
+ticks = 1
+wheel = [{ slot = 9, steps = -1 }]
+[step.expect]
+slot-moves = ["click 300 0 pickup", "drag right 9", "drag left 300"]

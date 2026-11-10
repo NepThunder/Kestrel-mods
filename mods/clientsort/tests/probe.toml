@@ -1,0 +1,26 @@
+# ClientSort: the inventory Sort button merges the two partial dirt
+# stacks with the planned clicks, played as ordinary pickups in the
+# press step's own ticks. The default order stands on the item
+# registry, which the harness leaves empty, so the rank falls back
+# to item ids — dirt before stone, as the fixture needs.
+
+[[step]]
+ticks = 1
+[step.inventory]
+slots = [
+  { slot = 9, id = "minecraft:dirt", count = 30 },
+  { slot = 10, id = "minecraft:stone", count = 5 },
+  { slot = 11, id = "minecraft:dirt", count = 20 },
+]
+[step.container]
+kind = "minecraft:chest"
+slots = [{ slot = 300, id = "minecraft:apple", count = 5 }]
+[step.screen]
+id = "inventory"
+menu = "minecraft:generic_9x3"
+
+[[step]]
+ticks = 1
+press-button = 4
+[step.expect]
+slot-moves = ["click 11 0 pickup", "click 9 0 pickup"]

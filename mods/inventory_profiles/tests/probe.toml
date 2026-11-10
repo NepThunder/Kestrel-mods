@@ -1,0 +1,65 @@
+# Inventory Profiles: auto-refill swaps a fresh stack in when the
+# hand stack runs out; tool break protection swaps the pickaxe at
+# one use left for the fresh one; the Quick-Stack button moves the
+# dirt the chest already holds. Swap clicks name the bag slot with
+# the selected hotbar slot as the button. Expects are per-step.
+
+[[step]]
+ticks = 1
+[step.screen]
+id = "playing"
+[step.inventory]
+selected = 0
+slots = [
+  { slot = 0, id = "minecraft:stone", count = 1 },
+  { slot = 9, id = "minecraft:stone", count = 30 },
+]
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+slots = [{ slot = 9, id = "minecraft:stone", count = 30 }]
+[step.expect]
+slot-moves = ["click 9 0 swap"]
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+slots = [
+  { slot = 0, id = "minecraft:iron_pickaxe", count = 1, damage = 248, max-damage = 250 },
+  { slot = 10, id = "minecraft:iron_pickaxe", count = 1, damage = 0, max-damage = 250 },
+]
+
+[[step]]
+ticks = 1
+[step.inventory]
+selected = 0
+slots = [
+  { slot = 0, id = "minecraft:iron_pickaxe", count = 1, damage = 249, max-damage = 250 },
+  { slot = 10, id = "minecraft:iron_pickaxe", count = 1, damage = 0, max-damage = 250 },
+]
+[step.expect]
+slot-moves = ["click 10 0 swap"]
+
+[[step]]
+ticks = 1
+[step.screen]
+id = "inventory"
+menu = "minecraft:generic_9x3"
+[step.inventory]
+selected = 0
+slots = [
+  { slot = 9, id = "minecraft:dirt", count = 20 },
+  { slot = 10, id = "minecraft:stone", count = 5 },
+]
+[step.container]
+kind = "minecraft:chest"
+slots = [{ slot = 300, id = "minecraft:dirt", count = 10 }]
+
+[[step]]
+ticks = 1
+press-button = 5
+[step.expect]
+slot-moves = ["click 9 0 quick-move"]

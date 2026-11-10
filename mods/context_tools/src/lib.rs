@@ -1,7 +1,7 @@
 //! Context Tool Swap for Kestrel: press middle click with a
 //! tool in hand, or start breaking a block, and the right tool
 //! for the block under the crosshair is swapped out of your
-//! hotbar into your hand.
+//! inventory into your hand.
 //!
 //! A behaviour port of Context Tool Swap (MIT) by TTCjonasTTC
 //! and Qwen. Its registry entry gives the classic trigger —
@@ -19,16 +19,18 @@
 //! instant-break blocks and broken tools; and `/toolswap`
 //! switches it on and off, on by default. This port implements
 //! both triggers and that selection, against the Kestrel SDK
-//! (the `actions` capability, API 21): the swap itself is one
-//! `select-slot`. This port's home is
+//! (the `actions` capability, API 21, and `inventory-actions`,
+//! API 24): on the hotbar the swap is one `select-slot`; from
+//! the bag it is one Swap click, which trades the tool's stack
+//! with the selected slot's. This port's home is
 //! <https://github.com/NepThunder/Kestrel-mods/tree/main/mods/context_tools>.
 //!
-//! PARTIAL, as the ports roadmap flagged from the start: the
-//! swap reaches the hotbar only. The original moves a tool out
-//! of the whole inventory; moving a stack from the bag into the
-//! hand is the inventory-actions district's (B6) verb, which
-//! the SDK does not have yet — a tool that is only in the bag
-//! is left there, and the README says so.
+//! The swap reaches the whole inventory, as the original's
+//! does. 0.1.0 reached the hotbar only — the split the ports
+//! roadmap flagged from the start, because moving a stack
+//! from the bag into the hand was the inventory-actions
+//! district's (B6) verb, which the SDK did not have yet;
+//! 0.2.0 is the completion, now that it does.
 //!
 //! Two more honest limits. The original asks the game for the
 //! block's tool data — which class mines it, what drops need,
@@ -44,17 +46,18 @@
 //! wins.
 
 use horizon_mod_sdk::{
-    ActionTarget, Mod, Registration, actions, input,
+    ActionTarget, ClickKind, Mod, Registration, actions, input,
     inventory::{self, InvStack},
-    storage,
+    inventory_actions, storage,
 };
 
 /// The newest API level this mod needs, asserted in the tests
-/// below: `actions.target` and `actions.select-slot` are level
-/// 21 (`crates/horizon-mods/src/api_level.rs`); everything else
+/// below: `inventory-actions.click` is level 24
+/// (`crates/horizon-mods/src/api_level.rs`); `actions.target`
+/// and `actions.select-slot` are level 21, and everything else
 /// here is older.
 #[cfg(test)]
-const API_LEVEL: u32 = 21;
+const API_LEVEL: u32 = 24;
 
 /// The swap key: the original's middle click, and the name it
 /// is registered under.
@@ -475,14 +478,16 @@ fn better(a: Score, b: Score) -> bool {
     (a.correct, a.speed) > (b.correct, b.speed)
 }
 
-/// The hotbar slot to swap to for `rule`'s block, or none:
-/// the best candidate carried on the bar, with ties keeping
-/// the current slot — including when the best is already in
-/// hand.
+/// The slot to swap to for `rule`'s block, or none: the best
+/// candidate carried in the inventory — the hotbar (slots
+/// 0–8) or the bag (9–35) — with ties keeping the current
+/// slot, including when the best is already in hand. The
+/// armour and the off hand are not candidates, as they never
+/// were.
 fn choose(slots: &[InvStack], selected: u32, rule: &Rule) -> Option<u32> {
     let mut best: Option<(u32, Score)> = None;
     let mut current: Option<Score> = None;
-    for stack in slots.iter().filter(|s| s.slot < 9) {
+    for stack in slots.iter().filter(|s| s.slot < 36) {
         let score = score_of(stack, rule);
         if stack.slot == selected {
             current = score;
@@ -498,6 +503,28 @@ fn choose(slots: &[InvStack], selected: u32, rule: &Rule) -> Option<u32> {
         return None;
     }
     Some(slot)
+}
+
+/// How the chosen slot is brought to hand: a hotbar slot is
+/// simply selected; a bag slot trades places with the
+/// selected slot through one Swap click — the player's own
+/// number-key press over the slot, made by the game
+/// (`inventory-actions`, API 24).
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+enum SwapVerb {
+    Select(u32),
+    BagSwap { slot: u32, button: u32 },
+}
+
+fn swap_verb(slot: u32, selected: u32) -> SwapVerb {
+    if slot < 9 {
+        SwapVerb::Select(slot)
+    } else {
+        SwapVerb::BagSwap {
+            slot,
+            button: selected,
+        }
+    }
 }
 
 /// Which trigger is asking for a swap.
@@ -559,7 +586,14 @@ impl ContextTools {
         }
         let inv = inventory::inventory();
         if let Some(slot) = choose(&inv.slots, inv.selected, &rule) {
-            let _ = actions::select_slot(slot);
+            match swap_verb(slot, inv.selected) {
+                SwapVerb::Select(slot) => {
+                    let _ = actions::select_slot(slot);
+                }
+                SwapVerb::BagSwap { slot, button } => {
+                    let _ = inventory_actions::click(Some(slot), button, ClickKind::Swap);
+                }
+            }
         }
     }
 }
@@ -626,8 +660,8 @@ mod tests {
     use super::*;
 
     #[test]
-    fn api_level_is_21() {
-        assert_eq!(API_LEVEL, 21);
+    fn api_level_is_24() {
+        assert_eq!(API_LEVEL, 24);
     }
 
     fn stack(slot: u32, id: &str) -> InvStack {
@@ -795,12 +829,48 @@ mod tests {
             tool(1, "minecraft:shears", 238),
         ];
         assert_eq!(choose(&bar, 0, &leaves), Some(1));
-        // A tool in the bag is out of reach (the port's known
-        // limit): no swap.
+        // A tool in the bag is chosen too (0.2.0): the choice
+        // reaches the whole inventory.
         let bag_only = [
             stack(0, "minecraft:dirt"),
             tool(20, "minecraft:diamond_pickaxe", 1561),
         ];
-        assert_eq!(choose(&bag_only, 0, &stone), None);
+        assert_eq!(choose(&bag_only, 0, &stone), Some(20));
+        // The best tool wins wherever it sits: a diamond
+        // pickaxe in the bag beats the wooden one in hand,
+        // and a diamond on the bar beats an iron in the bag.
+        let mixed = [
+            tool(0, "minecraft:wooden_pickaxe", 59),
+            tool(20, "minecraft:diamond_pickaxe", 1561),
+        ];
+        assert_eq!(choose(&mixed, 0, &stone), Some(20));
+        let mixed = [
+            tool(0, "minecraft:wooden_pickaxe", 59),
+            tool(1, "minecraft:diamond_pickaxe", 1561),
+            tool(20, "minecraft:iron_pickaxe", 250),
+        ];
+        assert_eq!(choose(&mixed, 0, &stone), Some(1));
+        // A bag tool that only ties the one in hand is left
+        // where it is.
+        let tied = [
+            tool(0, "minecraft:iron_pickaxe", 250),
+            tool(20, "minecraft:iron_pickaxe", 250),
+        ];
+        assert_eq!(choose(&tied, 0, &stone), None);
+    }
+
+    #[test]
+    fn the_verb_follows_where_the_tool_sits() {
+        // On the bar: select it.
+        assert_eq!(swap_verb(3, 0), SwapVerb::Select(3));
+        // In the bag: one Swap click against the selected
+        // slot brings it to hand.
+        assert_eq!(
+            swap_verb(20, 2),
+            SwapVerb::BagSwap {
+                slot: 20,
+                button: 2
+            }
+        );
     }
 }

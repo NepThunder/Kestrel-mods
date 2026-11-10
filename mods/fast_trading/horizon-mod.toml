@@ -1,0 +1,9 @@
+id = "fast_trading"
+name = "FastTrading"
+version = "0.1.0"
+description = "A behaviour port of FastTrading by bendy1234 (https://github.com/bendy1234/FastTrading), MIT, Horizon port by sparticle62ops. Ported for Kestrel by NepThunder. A Speed Trade button on the merchant screen repeats the selected trade as fast as the speed setting allows: each round picks the trade for you (which stages the payments and the result, as your own click on the trade list would) and takes the result out of the merchant's result slot with one quick-move click, until the trade locks, the payments run out, the result has nowhere to go, or you press the button again. The repeat speed is a setting in Options > Mods > FastTrading, and /fasttrading opens the same controls in game. One difference from the original, a limit of the surface: the loop runs on the game's ticks, not on frames, so the fastest cadence is one staged trade per two ticks — pick on one tick, take on the next — where the original could repeat within a frame. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fast_trading"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["command", "inventory", "inventory-actions", "screen", "storage", "ui"]
+experimental = ["inventory", "inventory-actions", "screen", "ui"]

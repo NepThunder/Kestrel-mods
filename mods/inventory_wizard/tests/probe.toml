@@ -1,0 +1,40 @@
+# Inventory Wizard: /iwiz inventory queues the Default-mode sort
+# of the main inventory — the two partial dirt stacks merge, then
+# stone (the stone category) permutes ahead of the dirt (earth) —
+# and the plan plays out as ordinary pickups on the next tick.
+# Expects are per-step outputs, so the clicks land in the tick
+# step after the command step.
+
+[[step]]
+ticks = 1
+[step.screen]
+id = "playing"
+[step.inventory]
+slots = [
+  { slot = 9, id = "minecraft:dirt", count = 20 },
+  { slot = 10, id = "minecraft:dirt", count = 10 },
+  { slot = 11, id = "minecraft:stone", count = 5 },
+]
+
+[[step]]
+command = "iwiz inventory"
+[step.expect]
+feedback = "Inventory Wizard: sorting inventory"
+
+[[step]]
+ticks = 1
+[step.expect]
+slot-moves = [
+  "click 10 0 pickup",
+  "click 9 0 pickup",
+  "click 11 0 pickup",
+  "click 9 0 pickup",
+  "click 11 0 pickup",
+  "click 11 0 pickup",
+  "click 10 0 pickup",
+]
+
+[[step]]
+command = "iwiz mode"
+[step.expect]
+feedback = "Inventory Wizard: mode Alphabetical"

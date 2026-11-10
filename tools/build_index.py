@@ -104,6 +104,11 @@ ALLOW_IDS = {
     "itemnew",
     "rarity_borders",
     "fast_items",
+    "clientsort",
+    "fast_trading",
+    "inventory_wizard",
+    "inventory_profiles",
+    "mousetweaks",
 }
 
 

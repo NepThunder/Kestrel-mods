@@ -1,0 +1,9 @@
+id = "inventory_profiles"
+name = "Inventory Profiles"
+version = "0.1.0"
+description = "A behaviour port of Inventory Profiles Next and its Inventory Sorter companion mod, ported to Horizon by CayMac (MIT). Ported for Kestrel by NepThunder. Press R or click the sort buttons to merge partial stacks and sort a chest or your inventory in four selectable modes — Category (Creative Tab), Alphabetical (A-Z), Stack Count (High-Low) and Item ID. Auto-Refill replaces a hand stack the moment it runs out, from your inventory; Tool Break Protection swaps a tool that is about to break for a healthier one (or parks it in a free slot) before the fatal use; and the G key or the Quick-Stack button moves every stack the open container already holds into it. The mode, auto-refill and tool protection are settings in Options > Mods > Inventory Profiles. Two differences from the original, limits of the surface: the Creative Tab mode's exact tab order crosses no SDK read, so it sorts by the game's item registry order, which follows the tabs closely (the other three modes are exact); and the R and G keys fire only while playing with no screen open, so in a screen the sort lives on the buttons and quick-stack on its button, and auto-refill and tool protection watch only while you play, not while a screen is open. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/inventory_profiles"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["input", "inventory", "inventory-actions", "recipes", "screen", "storage", "ui"]
+experimental = ["input", "inventory", "inventory-actions", "recipes", "screen", "ui"]

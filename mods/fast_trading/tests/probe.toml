@@ -1,0 +1,50 @@
+# FastTrading: the Speed Trade button starts the loop; the pick is
+# a select-trade in the press step, the take is one quick-move on
+# the merchant result slot (650) once the staged result shows in
+# the container read, and at the fastest speed the next round picks
+# again on the following tick. Expects are per-step outputs.
+
+[[step]]
+ticks = 1
+[step.inventory]
+slots = [{ slot = 9, id = "minecraft:emerald", count = 5 }]
+[step.container]
+kind = "minecraft:merchant"
+slots = []
+[step.screen]
+id = "inventory"
+menu = "minecraft:merchant"
+[step.screen.trades]
+selected = 0
+offers = [
+  { cost-a = { item = "minecraft:emerald", count = 1 }, result = { item = "minecraft:bread", count = 1 }, uses = 0, max-uses = 12, available = true },
+]
+
+[[step]]
+ticks = 1
+press-button = 1
+[step.expect]
+select-trades = [0]
+
+[[step]]
+ticks = 1
+[step.container]
+kind = "minecraft:merchant"
+slots = [
+  { slot = 600, id = "minecraft:emerald", count = 1 },
+  { slot = 650, id = "minecraft:bread", count = 1 },
+]
+[step.expect]
+slot-moves = ["click 650 0 quick-move"]
+
+[[step]]
+ticks = 1
+[step.container]
+kind = "minecraft:merchant"
+slots = []
+[step.expect]
+select-trades = [0]
+
+[[step]]
+ticks = 1
+press-button = 1

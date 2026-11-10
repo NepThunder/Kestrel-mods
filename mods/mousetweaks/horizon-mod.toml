@@ -1,0 +1,9 @@
+id = "mousetweaks"
+name = "Mouse Tweaks"
+version = "0.1.0"
+description = "A behaviour port of Mouse Tweaks by YaLTeR (Ivan Molodetskikh) (https://github.com/YaLTeR/MouseTweaks), BSD-3-Clause, Horizon port by DeportedToHell. Ported for Kestrel by NepThunder. Hold the right button with a stack and drag to drop one item into each slot you pass; hold the left button with a stack and drag to gather the same items into your hand — with Shift, quick-move every slot you pass instead, and the same with an empty hand; turn the wheel over a slot to move items one at a time between the inventory and the container, crafting results included. Search order, scroll direction (normal, inverted, position-aware) and item scaling are settings in Options > Mods > Mouse Tweaks, with the three tweaks themselves, as in the original; while it is on it takes the place of the game's built-in Mouse Tweaks extra, which the player turns off in Extras. Three frictions, all limits of the sandbox: the drags have no preview (the game's own drag ghost is drawn for its drag, not a mod's); hovered slots are read once a tick, so a fast flick can skip a slot; and the game's own quick-craft drag still runs underneath — a mod cannot consume the player's press — so on release the game also distributes what is left in your hand over the slots it tracked, which can add an item to a slot the tweak already served. The creative inventory screen is not served: its slots run on a different protocol. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/mousetweaks"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["input", "inventory", "inventory-actions", "screen", "storage", "ui"]
+experimental = ["input", "inventory", "inventory-actions", "screen", "ui"]

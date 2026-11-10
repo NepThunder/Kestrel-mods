@@ -3,8 +3,9 @@
 # The test harness cannot press the middle-click key (key
 # events can't be injected) and input mappings read as
 # never-down there, so neither swap trigger can fire: no
-# actions anywhere. The triggers' gates, the tool table and
-# the choice are pinned by the unit tests in src/lib.rs.
+# actions and no slot moves anywhere. The triggers' gates,
+# the tool table and the choice are pinned by the unit tests
+# in src/lib.rs.
 
 [[step]]
 ticks = 2
@@ -12,6 +13,7 @@ command = "toolswap"
 [step.expect]
 chat = []
 actions = []
+slot-moves = []
 feedback = "Tool Swap: on"
 commands = ["toolswap"]
 
@@ -21,6 +23,7 @@ command = "toolswap off"
 [step.expect]
 chat = []
 actions = []
+slot-moves = []
 feedback = "Tool Swap: off"
 commands = ["toolswap"]
 
@@ -30,6 +33,7 @@ command = "toolswap"
 [step.expect]
 chat = []
 actions = []
+slot-moves = []
 feedback = "Tool Swap: off"
 commands = ["toolswap"]
 
@@ -39,6 +43,7 @@ command = "toolswap on"
 [step.expect]
 chat = []
 actions = []
+slot-moves = []
 feedback = "Tool Swap: on"
 commands = ["toolswap"]
 
@@ -52,6 +57,7 @@ block = { x = 0, y = 64, z = 0, block = "minecraft:stone", face = "up", cursor =
 [step.expect]
 chat = []
 actions = []
+slot-moves = []
 
 [player]
 x = 0.5
