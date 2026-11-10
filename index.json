@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-10T02:22:48Z",
+  "generated": "2026-11-10T03:02:08Z",
   "projects": [
     {
       "id": "accurate_block_placement",
@@ -317,6 +317,45 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/blockscope-0.1.1/blockscope.kmod",
             "size": 53780,
             "sha256": "565faa54f824a9c00435ae2c387e17eb2fb57e4b5452cb39c274a19ef9908551"
+          }
+        }
+      ]
+    },
+    {
+      "id": "blood_particles",
+      "kind": "mod",
+      "name": "Blood Particles",
+      "summary": "A behaviour port of Blood Particles 1.2.0 by Bogdan_Tokarev, MIT (https://github.com/bogdan1tokarev1/Blood-Particles-Rust).",
+      "description": "A behaviour port of Blood Particles 1.2.0 by Bogdan_Tokarev, MIT (https://github.com/bogdan1tokarev1/Blood-Particles-Rust). Ported for Kestrel by NepThunder. When a mob is hit, it bleeds: droplets that are crumbs of a block, a mist that dries darker, and a cloud of spray on a heavy blow — three times as much on the blow that kills, and sized by the damage when damage scaling is on. Every mob bleeds its own kind: slimes spray slime, blazes fire, ender-things the violet of the End, and the bony undead shed pale chips. Everything is configurable, on the page in Options > Mods > Blood Particles and with /bloodparticles (or /bp): droplets, mist and clouds a hit, damage scaling (off/soft/full), the killing blow's multiplier, spread, arc, per-mob colours, block-crumb droplets, reach, wounds a tick and particles a tick. The blood is drawn from the health the client itself is told, so it is a single-player effect in the SDK's first version: on a server the client is not given mob health, and the mod stays quiet rather than guessing. The bursts are the SDK's own burst shape — a cloud around the wound — where the original throws each droplet on its own arc away from the blow. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/blood_particles",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/blood_particles",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port of Blood Particles 1.2.0 by Bogdan_Tokarev (MIT), on SDK API 26 (particles). Requires Kestrel build 39 or later.",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "chat",
+            "entity",
+            "render",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "blood_particles.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/blood_particles-0.1.0/blood_particles.kmod",
+            "size": 59149,
+            "sha256": "5543149f3d003f9e978b3b04b78a95ae5ca67c041bb2abe26ccdbbf86dd9cdf4"
           }
         }
       ]
@@ -2289,6 +2328,46 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/toggle_sprint-0.1.0/toggle_sprint.kmod",
             "size": 16610,
             "sha256": "f00ea36e376ed696765b522bfa793b533a33334a957b3a1c33fcf77a32445f35"
+          }
+        }
+      ]
+    },
+    {
+      "id": "visuality_horizon",
+      "kind": "mod",
+      "name": "Visuality",
+      "summary": "A behaviour port of Visuality 1.0.2 by BenjiSyS, MIT (https.",
+      "description": "A behaviour port of Visuality 1.0.2 by BenjiSyS, MIT (https://github.com/BenjiSyS/visuality-horizon), itself an original implementation of PinkGoosik's Visuality. Ported for Kestrel by NepThunder, with its own pixel art in place of the original's sprites. Pretty particles for the world's small moments: bones and feathers burst from mobs when you hit them, slime blobs scatter where a slime lands (small, medium and large), wisps rise from soul sand and soul soil and trail you sprinting over them, amethyst clusters twinkle, and exposed gold, diamond and emerald ores glint in their own colours. The settings are the original's four pages in Options > Mods > Visuality — quality presets (Low, Balanced, High), a particle amount and effect distance, a page per effect family with its own amount, and advanced limits — with the original's defaults: the Low preset. Three of the original's eight families cannot run yet and are not approximated: charged creeper sparks (the SDK has no read for a creeper's charged state), armor glints (no read for what a mob is wearing) and rain ripples (no weather read); their pages and toggles are kept, and the README names what each one waits on. The hit fragments key off the health the client is told, so like that data they are a single-player effect in the SDK's first version. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/visuality_horizon",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/visuality_horizon",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port of Visuality 1.0.2 by BenjiSyS (MIT), itself an original implementation of PinkGoosik's Visuality. Code + content package (api 0.2) with its own sprite sets, on SDK API 26 (particles). Requires Kestrel build 39 or later.",
+          "api": "0.2",
+          "side": "client",
+          "capabilities": [
+            "game-read",
+            "entity",
+            "render",
+            "registries",
+            "storage",
+            "ui",
+            "world"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "visuality_horizon.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/visuality_horizon-0.1.0/visuality_horizon.kmod",
+            "size": 131821,
+            "sha256": "8d1e838509ef726a7c01672820147e6286297c2501ad08918d65226cae340ae6"
           }
         }
       ]
