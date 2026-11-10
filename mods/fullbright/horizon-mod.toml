@@ -1,9 +1,0 @@
-id = "fullbright"
-name = "Fullbright"
-version = "0.1.0"
-description = "A port of Fullbright by CayMac. Ported for Kestrel by NepThunder. Press J (or /fullbright) to toggle maximum brightness (1000% gamma) with a one-second fade; Options > Mods > Fullbright has the same switch and the fade switch. The game keeps your choices. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fullbright"
-authors = ["NepThunder"]
-api = "0.1"
-side = "client"
-capabilities = ["game-read", "render", "input", "chat", "hud", "storage", "ui"]
-experimental = ["render", "input", "ui"]

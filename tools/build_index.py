@@ -65,7 +65,6 @@ ALLOW_IDS = {
     "waypoints",
     "hitbox_plus",
     "light_overlay",
-    "fullbright",
     "moregamma",
     "fullbright_nofog",
     "freecam",
