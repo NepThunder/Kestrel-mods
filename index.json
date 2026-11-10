@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-10T03:02:08Z",
+  "generated": "2026-11-10T11:46:44Z",
   "projects": [
     {
       "id": "accurate_block_placement",
@@ -1107,46 +1107,6 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/freelook-0.1.0/freelook.kmod",
             "size": 15138,
             "sha256": "572dd93070ed7da5a55a17aaa45f1d89edc13eec58cd75e347b759dc8cd3f055"
-          }
-        }
-      ]
-    },
-    {
-      "id": "fullbright",
-      "kind": "mod",
-      "name": "Fullbright",
-      "summary": "A port of Fullbright by CayMac.",
-      "description": "A port of Fullbright by CayMac. Ported for Kestrel by NepThunder. Press J (or /fullbright) to toggle maximum brightness (1000% gamma) with a one-second fade; Options > Mods > Fullbright has the same switch and the fade switch. The game keeps your choices. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fullbright",
-      "authors": [
-        "NepThunder"
-      ],
-      "owners": [
-        "NepThunder"
-      ],
-      "license": "MIT",
-      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fullbright",
-      "versions": [
-        {
-          "version": "0.1.0",
-          "published": "2026-11-09",
-          "changelog": "Fullbright 0.1.0 — a port of Fullbright by CayMac.\n\nPress J (or /fullbright) to toggle maximum brightness (1000% gamma) with a one-second fade. Options > Mods > Fullbright has the same switch plus a fade switch; your choices are kept.\n\nRequires Kestrel build 19 or newer (gamma API, level 13). Works in singleplayer and multiplayer.\n\nNotes: the fade steps once per tick, not per frame. Gamma 10.0 saturates toward white, so colours wash out a little compared with the Extras fullbright switch. While this mod is loaded it holds your Brightness value, so the Options Brightness slider looks dead until the mod is disabled — disabling it restores your setting right away.",
-          "api": "0.1",
-          "side": "client",
-          "capabilities": [
-            "game-read",
-            "render",
-            "input",
-            "chat",
-            "hud",
-            "storage",
-            "ui"
-          ],
-          "game": "26.3",
-          "file": {
-            "name": "fullbright.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fullbright-0.1.0/fullbright.kmod",
-            "size": 15645,
-            "sha256": "aa15829c157d3bae458799255d54b60cca119b13643d081ff9522107f91c33f2"
           }
         }
       ]
