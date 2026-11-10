@@ -1,0 +1,41 @@
+# Atlas: with a player in a world (the harness's context
+# fixture) and the game's tiles fixtured around them, the mod
+# accumulates the tiles, puts its own minimap up (its picture
+# at the default 128 size in the top-right corner), and
+# answers /atlas: the seed flow for the slime overlay. The
+# shading, codec, store and waypoint maths are covered by the
+# unit tests in src/lib.rs; the harness cannot press the M, U,
+# B, H or Y keys, so the screens ride on those unit tests.
+
+[[step]]
+map-context = { dimension = "minecraft:overworld", world = "Probe World" }
+tiles = [
+  { cx = 0, cz = 0, colors = [7, 7, 7, 7] },
+  { cx = -1, cz = 0, colors = [12, 12] },
+  { cx = 0, cz = -1, layer = "cave", cut = 40, version = 2 },
+]
+ticks = 12
+[step.expect]
+chat = []
+minimap-image = "top-right 128 128x128"
+map-screen = "none"
+
+[[step]]
+command = "atlas seed"
+[step.expect]
+feedback = "Atlas: no seed set for this world — /atlas seed <seed>"
+
+[[step]]
+command = "atlas seed 12345"
+[step.expect]
+feedback = "Atlas: seed set to 12345 for this world"
+
+[[step]]
+command = "atlas seed"
+[step.expect]
+feedback = "Atlas: seed 12345 for this world"
+
+[[step]]
+command = "atlas set mode Cave"
+[step.expect]
+feedback = "Atlas: Map Mode: Cave"

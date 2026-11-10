@@ -1,0 +1,9 @@
+id = "worldmap"
+name = "World Map"
+version = "0.1.0"
+description = "A behaviour port of World Map by Px228-Da-Da, MIT (https://github.com/Px228-Da-Da/horizon-worldmap). Ported for Kestrel by NepThunder. A full-screen, self-writing world map (M) with a minimap: the terrain you have seen stays on the map after you leave, per world, dimension and cave layer, in the vanilla map colours, by day and by night, drawn from the game's own map tiles and kept in the mod's storage. The minimap (N toggles it, Z changes its scale) can turn with you, with the compass letters, waypoints and cave floors at your head height. Waypoints: a right-click menu on the map (add, teleport, the list, the dimensions button), groups with hide, markers in the world with name and distance, a waypoint where you die, share through chat or /wp share, import and export of waypoint text (also Xaero's format), and the /wp commands — add, del, rename, list, clear, share. It sends /tp when you choose Teleport, and a chat line or a private message only when you choose to share. Not included: cave layers at a Top Y you never stood at, glowing blocks staying lit at night (the game's tiles carry no light), other players on the minimap, PNG export and waypoint files (export prints its text in chat), and the Russian interface. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/worldmap"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "chat", "command", "input", "map", "render", "storage", "ui", "world"]
+experimental = ["input", "map", "render", "ui"]

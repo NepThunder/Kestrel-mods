@@ -1,9 +1,9 @@
 id = "compass_bar"
 name = "Compass Bar"
-version = "0.1.0"
-description = "A behaviour port of Compass Enhanced by Isaac (Fernandes585), MIT (https://github.com/Fernandes585/Compass-Enhanced). Ported for Kestrel by NepThunder. A compass bar across the top of the screen: the eight compass letters (N, NE, E, SE, S, SW, W, NW) in one colour and a degree scale, sliding smoothly as you turn. Options > Mods > Compass Bar holds the original's settings: the bar on/off, the background box, the size (75% to 150%) and the letter colour. The original's death points are NOT included: the client SDK exposes no death event, so there is nothing to hang a death marker on yet — they arrive when the SDK gains one, and the death-point settings go with them. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/compass_bar"
+version = "0.2.0"
+description = "A behaviour port of Compass Enhanced by Isaac (Fernandes585), MIT (https://github.com/Fernandes585/Compass-Enhanced). Ported for Kestrel by NepThunder. A compass bar across the top of the screen: the eight compass letters (N, NE, E, SE, S, SW, W, NW) in one colour and a degree scale, sliding smoothly as you turn — and death points: where you died, marked on the bar at its bearing with its distance, an arrow at the bar's edge when the point is out of view, the marker turning into an X when you arrive and going after the X time, and a key (X, rebindable) to dismiss the point you are looking at. Death points are not saved — they vanish when the game closes. Options > Mods > Compass Bar holds the settings: the bar on/off, the background box, the size (75% to 150%), the letter colour, and the death points' arrival distance, X time, and how many are kept. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/compass_bar"
 authors = ["NepThunder"]
 api = "0.1"
 side = "client"
-capabilities = ["game-read", "render", "storage", "ui"]
-experimental = ["render", "ui"]
+capabilities = ["game-read", "input", "map", "render", "storage", "ui"]
+experimental = ["input", "map", "render", "ui"]

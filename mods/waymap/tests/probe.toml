@@ -1,0 +1,41 @@
+# Waymap: in a fixtured world the mod keeps its live tiles
+# and puts the rotating minimap up (100 in the top-right);
+# the /wp suite answers (add at the player, list, colour),
+# and a fixtured death leaves Death 1 behind. The shading,
+# store, colour and cap maths are covered by the unit tests
+# in src/lib.rs; the harness cannot press N, B or M, so the
+# list and editor ride on those unit tests.
+
+[[step]]
+map-context = { dimension = "minecraft:overworld", world = "Probe World" }
+tiles = [
+  { cx = 0, cz = 0, colors = [7, 7, 7, 7] },
+]
+ticks = 12
+[step.expect]
+chat = []
+minimap-image = "top-right 100 100x100"
+
+[[step]]
+command = "wp add Home"
+[step.expect]
+feedback = "Waymap: added 'Home' at 0, 64, 0"
+
+[[step]]
+command = "wp list"
+[step.expect]
+feedback = "1. Home (0, 64, 0) [overworld] — 0m"
+
+[[step]]
+command = "wp color Home Dark Blue"
+[step.expect]
+feedback = "Waymap: 'Home' is now #0000AA"
+
+[[step]]
+died-at = { dimension = "minecraft:overworld", x = 30, y = 64, z = -12 }
+ticks = 2
+command = "wp list"
+[step.expect]
+feedback = """
+1. Home (0, 64, 0) [overworld] — 0m
+2. Death 1 (30, 64, -12) [overworld] — 32m ✕"""

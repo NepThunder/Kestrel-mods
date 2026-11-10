@@ -1,0 +1,9 @@
+id = "waymap"
+name = "Waymap"
+version = "0.1.0"
+description = "A behaviour port of Waymap by Aron (Lauch2), MIT (https://github.com/Lauch2/horizon-waymap-mod). Ported for Kestrel by NepThunder. Waypoints with a rotating minimap: the map north follows you, with your waypoints as dots and a red X for a death. Waypoints are kept per world or server (up to 512), each with its own dimension and colour; the list filters by dimension and by deaths; markers float in the world with name and distance; a HUD panel in the bottom-left lists the nearest with distances; a death waypoint is left where you died (Death 1, Death 2, ...). Create with N, the list with B or M; the editor sets position (with a Use My Position button), dimension, one of sixteen colours, and visibility. Keys rebind on the mod's page in Options > Mods, where the three settings also live: Markers, Labels, HUD Panel. Commands: /wp add, del, list, rename, color (a colour name or #rrggbb), clear, edit (shows a waypoint), hide, show, help. Not included: minimap size and position settings (the minimap is fixed at 100 in the top-right corner), opening the list or editor with the keyboard path the original uses (its list and editor are its own screens; the port's are the standard ones the platform gives mods — names are changed with /wp rename, since mods get no text field), and the original's own file format (waypoints live in the mod's storage, in the same per-world shape). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/waymap"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "chat", "hud", "input", "map", "render", "storage", "ui"]
+experimental = ["input", "map", "render", "ui"]

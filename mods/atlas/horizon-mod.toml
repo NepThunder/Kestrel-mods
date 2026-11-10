@@ -1,0 +1,9 @@
+id = "atlas"
+name = "Atlas"
+version = "0.1.0"
+description = "A behaviour port of Atlas by MrCloudy2, MIT (https://github.com/MrCloudy2/horizon-atlas). Ported for Kestrel by NepThunder. A clone of Xaero's Minimap and World Map: a minimap that turns with you, with entity dots, and a full-screen world map (M) of everywhere you have been, drawn from the game's own map tiles and kept in the mod's storage per world, server and dimension. Waypoints with sets (U list, B new, H toggles the in-world labels), deathpoints, temporary waypoints, Share and Teleport, the chunk-grid and slime-chunk overlays (/atlas seed), and settings on Y and in Options > Mods > Atlas; /atlas set changes a setting by name. It sends something only when you click Teleport (a /tp command) or Share (a chat message with the waypoint). Not included: mob and player faces and item icons on the minimap (the SDK exposes no skin or dropped-item read), the light overlay and per-column block light at night (the game's tiles carry no light), and waypoint editing in a text field (names are set with /atlas rename). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/atlas"
+authors = ["NepThunder"]
+api = "0.1"
+side = "client"
+capabilities = ["game-read", "chat", "command", "entity", "input", "map", "render", "storage", "ui", "world"]
+experimental = ["entity", "input", "map", "render", "ui"]

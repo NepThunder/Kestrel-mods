@@ -3,9 +3,12 @@
 # no chat appears), and with a player facing north the mod
 # registers its frame hook. The compass maths — headings, which
 # letters and ticks are visible at a facing, the bar's geometry,
-# the settings labels — are covered by the unit tests in
-# src/lib.rs. The original has no commands, so there is no
-# command step here.
+# the settings labels, the death marks — are covered by the unit
+# tests in src/lib.rs. The original has no commands, so there is
+# no command step here. The last two steps exercise 0.2.0's death
+# points: entering a world with a last death seeds a point, and a
+# death appends one; the mod never speaks, so chat stays empty
+# throughout.
 
 [[step]]
 ticks = 12
@@ -16,6 +19,21 @@ chat = []
 yaw = 180.0
 
 [[step]]
+ticks = 12
+[step.expect]
+chat = []
+commands = []
+
+[[step]]
+map-context = { dimension = "minecraft:overworld", world = "Probe World" }
+last-death = { dimension = "minecraft:overworld", x = 40, y = 64, z = 0 }
+ticks = 12
+[step.expect]
+chat = []
+commands = []
+
+[[step]]
+died-at = { dimension = "minecraft:overworld", x = 10, y = 64, z = 0 }
 ticks = 12
 [step.expect]
 chat = []

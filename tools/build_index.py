@@ -109,6 +109,9 @@ ALLOW_IDS = {
     "inventory_wizard",
     "inventory_profiles",
     "mousetweaks",
+    "atlas",
+    "worldmap",
+    "waymap",
 }
 
 
