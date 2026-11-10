@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-11-09T23:16:05Z",
+  "generated": "2026-11-10T00:33:46Z",
   "projects": [
     {
       "id": "accurate_block_placement",
@@ -314,6 +314,46 @@
       ]
     },
     {
+      "id": "clientsort",
+      "kind": "mod",
+      "name": "ClientSort",
+      "summary": "A behaviour port of ClientSort by TerminalMC (https://github.com/TerminalMC/ClientSort), Apache-2.0, Horizon port by DeportedToHell.",
+      "description": "A behaviour port of ClientSort by TerminalMC (https://github.com/TerminalMC/ClientSort), Apache-2.0, Horizon port by DeportedToHell. Ported for Kestrel by NepThunder. Buttons beside the container and beside your inventory sort that side, restock it (moves in the items that side already holds) or transfer into it (moves as much as fits); the game's own sort buttons step aside while ClientSort's are shown. Middle-clicking an inventory sorts the part under the pointer. Sort order is the creative inventory's order by default; hold Shift while triggering for quantity, Ctrl for name (A-Z). The order, the click speed, hotbar-as-its-own-group, restock-by-item-type and the buttons themselves are settings in Options > Mods > ClientSort, and there are keys for sort, restock, transfer and fill stacks. Every action is an ordinary container click, so it works the same on servers. Three differences from the original, all limits of the surface: the creative inventory's exact order crosses no SDK read, so the default order sorts by the game's item registry order, which follows it closely (the quantity, name and ID orders are exact); the Alt-for-item-ID modifier has no key mapping to read, so the ID order is picked as the default order in the settings instead; and the trigger keys only fire while playing with no screen open, so in a screen the operations live on the buttons, and fill stacks tops the hotbar up from the main inventory. Button tooltips are not ported: a sandbox button carries a label only. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/clientsort",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/clientsort",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release clientsort-0.1.0 (SDK API 24).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "input",
+            "inventory",
+            "inventory-actions",
+            "recipes",
+            "screen",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "clientsort.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/clientsort-0.1.0/clientsort.kmod",
+            "size": 60899,
+            "sha256": "e7de6c11e062916392c872138e35abf3d7180f364d38959ed2080e673d492a0c"
+          }
+        }
+      ]
+    },
+    {
       "id": "compass_bar",
       "kind": "mod",
       "name": "Compass Bar",
@@ -355,7 +395,7 @@
       "kind": "mod",
       "name": "Context Tool Swap",
       "summary": "A behaviour port of Context Tool Swap (MIT) by TTCjonasTTC and Qwen (https://github.com/TTCjonasTTC/context_toolswap).",
-      "description": "A behaviour port of Context Tool Swap (MIT) by TTCjonasTTC and Qwen (https://github.com/TTCjonasTTC/context_toolswap). Ported for Kestrel by NepThunder. Press middle click with a tool in hand, looking at a block — or simply start breaking a block — and the right tool for it is swapped out of your hotbar into your hand: the best one you carry there, correct for the block's drops first, then fastest, as the original picks. /toolswap turns it on or off (on by default), as in the original. PARTIAL, as the roadmap flagged: the swap reaches the hotbar only — a tool that is only in your bag cannot be moved into your hand until the SDK gains an inventory-actions district (B6), where the original reaches the whole inventory. Also: the original skips creative and spectator, which a client mod cannot detect (the SDK shows no game mode), and the middle click keeps its vanilla pick-block as well, because a registered key does not consume the button. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/context_tools",
+      "description": "A behaviour port of Context Tool Swap (MIT) by TTCjonasTTC and Qwen (https://github.com/TTCjonasTTC/context_toolswap). Ported for Kestrel by NepThunder. Press middle click with a tool in hand, looking at a block — or simply start breaking a block — and the right tool for it is swapped out of your inventory into your hand: the best one you carry, correct for the block's drops first, then fastest, as the original picks — from the hotbar by selecting it, from your bag with one swap click that trades it with the stack in your selected slot (SDK API 24). /toolswap turns it on or off (on by default), as in the original. Still partial in one rule: the original skips creative and spectator, which a client mod cannot detect (the SDK shows no game mode); and the middle click keeps its vanilla pick-block as well, because a registered key does not consume the button. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/context_tools",
       "authors": [
         "NepThunder"
       ],
@@ -366,23 +406,24 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/context_tools",
       "versions": [
         {
-          "version": "0.1.0",
-          "published": "2026-11-09",
-          "changelog": "",
+          "version": "0.2.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release context_tools-0.2.0 (SDK API 24).",
           "api": "0.1",
           "side": "client",
           "capabilities": [
             "input",
             "inventory",
             "actions",
+            "inventory-actions",
             "storage"
           ],
           "game": "26.3",
           "file": {
             "name": "context_tools.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/context_tools-0.1.0/context_tools.kmod",
-            "size": 29315,
-            "sha256": "3fbbe841d4139a50a96c8c599c0d012f309b3987d6945cf0cbcffe2278ddced1"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/context_tools-0.2.0/context_tools.kmod",
+            "size": 29594,
+            "sha256": "a5f8d085a5fdd708b7a5a813b539c089470c08e2d6ca0612a7c032f1eb463b73"
           }
         }
       ]
@@ -642,6 +683,45 @@
             "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fast_items-0.1.0/fast_items.kmod",
             "size": 16599,
             "sha256": "9dab449fd885e4047cf95c303779fc0802a9aa9d6efea6717d88a583385e7b34"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fast_trading",
+      "kind": "mod",
+      "name": "FastTrading",
+      "summary": "A behaviour port of FastTrading by bendy1234 (https://github.com/bendy1234/FastTrading), MIT, Horizon port by sparticle62ops.",
+      "description": "A behaviour port of FastTrading by bendy1234 (https://github.com/bendy1234/FastTrading), MIT, Horizon port by sparticle62ops. Ported for Kestrel by NepThunder. A Speed Trade button on the merchant screen repeats the selected trade as fast as the speed setting allows: each round picks the trade for you (which stages the payments and the result, as your own click on the trade list would) and takes the result out of the merchant's result slot with one quick-move click, until the trade locks, the payments run out, the result has nowhere to go, or you press the button again. The repeat speed is a setting in Options > Mods > FastTrading, and /fasttrading opens the same controls in game. One difference from the original, a limit of the surface: the loop runs on the game's ticks, not on frames, so the fastest cadence is one staged trade per two ticks — pick on one tick, take on the next — where the original could repeat within a frame. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fast_trading",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/fast_trading",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release fast_trading-0.1.0 (SDK API 24).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "command",
+            "inventory",
+            "inventory-actions",
+            "screen",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "fast_trading.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/fast_trading-0.1.0/fast_trading.kmod",
+            "size": 24242,
+            "sha256": "b6d259ac2bf5e3778eb622220e20e9d301d67bbb9b6201deb61fa02aee276b69"
           }
         }
       ]
@@ -1185,6 +1265,87 @@
       ]
     },
     {
+      "id": "inventory_profiles",
+      "kind": "mod",
+      "name": "Inventory Profiles",
+      "summary": "A behaviour port of Inventory Profiles Next and its Inventory Sorter companion mod, ported to Horizon by CayMac (MIT).",
+      "description": "A behaviour port of Inventory Profiles Next and its Inventory Sorter companion mod, ported to Horizon by CayMac (MIT). Ported for Kestrel by NepThunder. Press R or click the sort buttons to merge partial stacks and sort a chest or your inventory in four selectable modes — Category (Creative Tab), Alphabetical (A-Z), Stack Count (High-Low) and Item ID. Auto-Refill replaces a hand stack the moment it runs out, from your inventory; Tool Break Protection swaps a tool that is about to break for a healthier one (or parks it in a free slot) before the fatal use; and the G key or the Quick-Stack button moves every stack the open container already holds into it. The mode, auto-refill and tool protection are settings in Options > Mods > Inventory Profiles. Two differences from the original, limits of the surface: the Creative Tab mode's exact tab order crosses no SDK read, so it sorts by the game's item registry order, which follows the tabs closely (the other three modes are exact); and the R and G keys fire only while playing with no screen open, so in a screen the sort lives on the buttons and quick-stack on its button, and auto-refill and tool protection watch only while you play, not while a screen is open. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/inventory_profiles",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/inventory_profiles",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release inventory_profiles-0.1.0 (SDK API 24).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "input",
+            "inventory",
+            "inventory-actions",
+            "recipes",
+            "screen",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "inventory_profiles.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/inventory_profiles-0.1.0/inventory_profiles.kmod",
+            "size": 58024,
+            "sha256": "f75e51d505553a0340fc8b28b525f7652d43ca7911291d47f801c32df4532e2a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "inventory_wizard",
+      "kind": "mod",
+      "name": "Inventory Wizard",
+      "summary": "A behaviour port of InventoryWizard by VanishingTacos (https://github.com/VanishingTacos/InventoryWizard), MIT, version 2.3.3.",
+      "description": "A behaviour port of InventoryWizard by VanishingTacos (https://github.com/VanishingTacos/InventoryWizard), MIT, version 2.3.3. Ported for Kestrel by NepThunder. Smart sorting: items are sorted by category — stone, earth, wood, ores, blocks, tools, weapons, armor, food, redstone, transportation, decoration — worked out from item tags and components, and the hotbar is laid out survival-style: weapons, tools, food, building blocks, utility items, then the rest. Partial stacks merge, but enchanted or named items are never combined. Three sort modes — Default, Alphabetical, Stack-based — with sort buttons and a mode button (it shows the mode's letter) beside the inventory and container titles, the R key, and the /iwiz [hotbar|inventory|all|mode] command (also /inventorywizard). Slots can be locked so sorting never touches them, and locked slots survive restarts. Works on the inventory, hotbar, chests, barrels, shulker boxes and ender chests, in singleplayer and on servers; every sort is ordinary left clicks. Three differences from the original, all limits of the surface: Alt+Click locking and Shift+Right-Click sorting observe ordinary slot clicks, which no SDK surface reports, so locks live on the mod's page in Options > Mods instead (pick a slot, flip Locked) and the sort gestures are the buttons, the R key and the command; the R key and the command fire only while playing with no screen open, so in a screen the buttons carry the sorts, and R sorts the whole inventory rather than the part under the cursor; and the mode key ships unbound, as the original's does. The category a item lands in is judged from its tags and id — the game's own item data, not a creative-tab read. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/inventory_wizard",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/inventory_wizard",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release inventory_wizard-0.1.0 (SDK API 24).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "command",
+            "input",
+            "inventory",
+            "inventory-actions",
+            "recipes",
+            "screen",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "inventory_wizard.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/inventory_wizard-0.1.0/inventory_wizard.kmod",
+            "size": 67223,
+            "sha256": "c4681f0da0a7eeddca7d09ec772137d3921a3cc723b38770c347429c6ff4c28a"
+          }
+        }
+      ]
+    },
+    {
       "id": "itemnew",
       "kind": "mod",
       "name": "Item New",
@@ -1566,6 +1727,45 @@
       ]
     },
     {
+      "id": "mousetweaks",
+      "kind": "mod",
+      "name": "Mouse Tweaks",
+      "summary": "A behaviour port of Mouse Tweaks by YaLTeR (Ivan Molodetskikh) (https://github.com/YaLTeR/MouseTweaks), BSD-3-Clause, Horizon port by DeportedToHell.",
+      "description": "A behaviour port of Mouse Tweaks by YaLTeR (Ivan Molodetskikh) (https://github.com/YaLTeR/MouseTweaks), BSD-3-Clause, Horizon port by DeportedToHell. Ported for Kestrel by NepThunder. Hold the right button with a stack and drag to drop one item into each slot you pass; hold the left button with a stack and drag to gather the same items into your hand — with Shift, quick-move every slot you pass instead, and the same with an empty hand; turn the wheel over a slot to move items one at a time between the inventory and the container, crafting results included. Search order, scroll direction (normal, inverted, position-aware) and item scaling are settings in Options > Mods > Mouse Tweaks, with the three tweaks themselves, as in the original; while it is on it takes the place of the game's built-in Mouse Tweaks extra, which the player turns off in Extras. Three frictions, all limits of the sandbox: the drags have no preview (the game's own drag ghost is drawn for its drag, not a mod's); hovered slots are read once a tick, so a fast flick can skip a slot; and the game's own quick-craft drag still runs underneath — a mod cannot consume the player's press — so on release the game also distributes what is left in your hand over the slots it tracked, which can add an item to a slot the tweak already served. The creative inventory screen is not served: its slots run on a different protocol. This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/mousetweaks",
+      "authors": [
+        "NepThunder"
+      ],
+      "owners": [
+        "NepThunder"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/mousetweaks",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release mousetweaks-0.1.0 (SDK API 24).",
+          "api": "0.1",
+          "side": "client",
+          "capabilities": [
+            "input",
+            "inventory",
+            "inventory-actions",
+            "screen",
+            "storage",
+            "ui"
+          ],
+          "game": "26.3",
+          "file": {
+            "name": "mousetweaks.kmod",
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/mousetweaks-0.1.0/mousetweaks.kmod",
+            "size": 40534,
+            "sha256": "88bd7e192a553b1886ee4303dd6091968c012658ec7a9b657804f1d075ba9a8e"
+          }
+        }
+      ]
+    },
+    {
       "id": "movement_status",
       "kind": "mod",
       "name": "Movement Status",
@@ -1752,7 +1952,7 @@
       "kind": "mod",
       "name": "Right-Click Crops",
       "summary": "A behaviour port of Right-Click Crops (MIT) by AyanoKaito (https://github.com/AyanoKaito/horizon-right-click-crops).",
-      "description": "A behaviour port of Right-Click Crops (MIT) by AyanoKaito (https://github.com/AyanoKaito/horizon-right-click-crops). Ported for Kestrel by NepThunder. Right-click a mature plant to harvest it with the game's own loot and replant it for one matching planting item — from the harvest itself first, then your inventory: wheat, carrots, potatoes, beetroot, nether wart, cocoa, torchflower and pitcher crop are replanted; sugar cane, cactus, bamboo, kelp and the vines keep their base or anchor; pumpkin and melon keep their attached stem. Each of the sixteen families can be switched off in Options > Mods > Right-Click Crops. The click is left alone when bone meal is in either hand, when you crouch holding an item, and when you use shears on a pumpkin; sweet and glow berries are never touched. Differences from the original, all limits of the client SDK: payment can only come from your hand, your hotbar or your offhand — a planting item deeper in the bag cannot be moved to your hand yet, so the crop is then harvested without replanting; the survival-only gate cannot be applied because the SDK shows a client mod no game mode; and the tall plants, the torchflower's farmland check and the pumpkin/melon stem check read the world's blocks, which the SDK lends to client mods in single player only, so on a server those families wait (the soil crops still harvest and replant there). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/right_click_crops",
+      "description": "A behaviour port of Right-Click Crops (MIT) by AyanoKaito (https://github.com/AyanoKaito/horizon-right-click-crops). Ported for Kestrel by NepThunder. Right-click a mature plant to harvest it with the game's own loot and replant it for one matching planting item — from the harvest itself first, then your inventory, bag included (a bag stack is brought into your hand with one swap click, SDK API 24): wheat, carrots, potatoes, beetroot, nether wart, cocoa, torchflower and pitcher crop are replanted; sugar cane, cactus, bamboo, kelp and the vines keep their base or anchor; pumpkin and melon keep their attached stem. Each of the sixteen families can be switched off in Options > Mods > Right-Click Crops. The click is left alone when bone meal is in either hand, when you crouch holding an item, and when you use shears on a pumpkin; sweet and glow berries are never touched. Differences from the original, all limits of the client SDK: the survival-only gate cannot be applied because the SDK shows a client mod no game mode; and the tall plants, the torchflower's farmland check and the pumpkin/melon stem check read the world's blocks, which the SDK lends to client mods in single player only, so on a server those families wait (the soil crops still harvest and replant there). This port's home is https://github.com/NepThunder/Kestrel-mods/tree/main/mods/right_click_crops",
       "authors": [
         "NepThunder"
       ],
@@ -1763,9 +1963,9 @@
       "source": "https://github.com/NepThunder/Kestrel-mods/tree/main/mods/right_click_crops",
       "versions": [
         {
-          "version": "0.1.0",
-          "published": "2026-11-09",
-          "changelog": "",
+          "version": "0.2.0",
+          "published": "2026-11-10",
+          "changelog": "Behaviour port release right_click_crops-0.2.0 (SDK API 24).",
           "api": "0.1",
           "side": "client",
           "capabilities": [
@@ -1774,15 +1974,16 @@
             "world",
             "inventory",
             "actions",
+            "inventory-actions",
             "storage",
             "ui"
           ],
           "game": "26.3",
           "file": {
             "name": "right_click_crops.kmod",
-            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/right_click_crops-0.1.0/right_click_crops.kmod",
-            "size": 26789,
-            "sha256": "ece144640725b1e354ca455ab95b37721f07386a36ab623592594acd10580e26"
+            "url": "https://github.com/NepThunder/Kestrel-mods/releases/download/right_click_crops-0.2.0/right_click_crops.kmod",
+            "size": 27008,
+            "sha256": "c1f6e0b7438607f12fb91253e168707b5cabdfc2c696f4818711a2c1a4c27ef6"
           }
         }
       ]
